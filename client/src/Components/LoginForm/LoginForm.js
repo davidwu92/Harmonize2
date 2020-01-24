@@ -3,12 +3,11 @@ import UserContext from '../../utils/UserContext'
 
 const LoginForm = () => {
 
-  const { fullName, handleInputChange, handleFormSubmit } = useContext(UserContext)
+  const {handleInputChange, handleFormSubmit } = useContext(UserContext)
 
   return (
     <div className="container">
       <div className="row">
-        <h1>LOGIN</h1>
         <form action="" className="col s12">
           <div className="card blue-grey darken-1">
             <div className="card-content text-white">

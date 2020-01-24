@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 //Using Pages
 import {
@@ -39,7 +39,7 @@ function App() {
         </Route>
       </Switch>
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App
