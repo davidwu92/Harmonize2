@@ -1,4 +1,5 @@
 import React from 'react'
+import './App.css'
 
 //Using Pages
 import {
@@ -23,19 +24,19 @@ function App() {
       <Link to="/search">Search</Link>
       <Switch>
         <Route exact path="/">
-          <Home/>
+          <Home />
         </Route>
         <Route path="/login">
-          <LogIn/>
+          <LogIn />
         </Route>
         <Route path="/register">
-          <Register/>
+          <Register />
         </Route>
         <Route path="/profile">
-          <Profile/>
+          <Profile />
         </Route>
         <Route path="/search">
-          <Search/>
+          <Search />
         </Route>
       </Switch>
     </Router>
