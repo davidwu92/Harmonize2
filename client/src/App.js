@@ -7,6 +7,7 @@ import {
   Route,
   Link
 } from 'react-router-dom'
+import Navbar from './Components/Navbar'
 import Home from './Pages/Home'
 import LogIn from './Pages/LogIn'
 import Register from './Pages/Register'
@@ -16,6 +17,7 @@ import Search from './Pages/Search'
 function App() {
   return (
     <Router>
+      <Navbar/>
       <Link to="/">Home</Link>
       <Link to="/login">Log In</Link>
       <Link to="/register">Register</Link>
