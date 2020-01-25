@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import './App.css'
 
-//Using Pages
+// Using Pages
 import {
   BrowserRouter as Router,
   Switch,
@@ -35,26 +35,25 @@ function App() {
   return (
     <UserContext.Provider value={userState}>
       <Router>
-        <Navbar/>
-        <Link to="/">Home</Link>
-        <Link to="/login">Log In</Link>
-        <Link to="/register">Register</Link>
-        <Link to="/profile">Profile</Link>
-        <Link to="/search">Search</Link>
         <Switch>
           <Route exact path="/">
+            <Navbar/>
             <Home />
           </Route>
           <Route path="/login">
+            <Navbar/>
             <LogIn />
           </Route>
           <Route path="/register">
+            <Navbar/>
             <Register />
           </Route>
           <Route path="/profile">
+            <Navbar/>
             <Profile />
           </Route>
           <Route path="/search">
+            <Navbar/>
             <Search />
           </Route>
         </Switch>
