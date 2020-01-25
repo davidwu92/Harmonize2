@@ -1,11 +1,14 @@
 import React, {useContext, useState} from 'react'
-import UserContext from '../../Utils/UserContext'
-import UserAPI from '../../Utils/UserAPI'
+import UserContext from '../../utils/UserContext'
+import UserAPI from '../../utils/UserAPI'
 
-const {addUser} = UserAPI
+
+import axios from 'axios'
+
+const { addUser } = UserAPI
 
 const RegisterForm = () => {
-  const {name, email, username, handleInputChange } = useContext(UserContext)
+  const {name, email, username, password, handleInputChange, handleAddUser } = useContext(UserContext)
 
   const handleFormSubmit =  (event) => {
     event.preventDefault()
@@ -42,11 +45,11 @@ const RegisterForm = () => {
 
             {/* NEED A WAY TO PASS THIS TO BACKEND */}
             <div className="input-field">
-              <input placeholder="Password" type="password" id="password" name="password"/>
+              <input placeholder="Password" type="password" id="password" name="password" value={password} onChange={handleInputChange}/>
               <label htmlFor="password"></label>
 
               {/* SUBMIT BUTTON */}
-              <button onClick={handleFormSubmit} id="register" className="btn waves-effect waves-light col s12" type="submit" name="action">Submit
+              <button onClick={handleAddUser} id="register" className="btn waves-effect waves-light col s12" type="submit" name="action">Submit
                     <i className="material-icons right">send</i>
               </button>
             </div>
