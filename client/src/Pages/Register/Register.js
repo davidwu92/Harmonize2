@@ -3,6 +3,8 @@ import RegisterForm from '../../Components/RegisterForm'
 
 const Register = () => {
 
+
+
 return (
   <>
     <div className="container">

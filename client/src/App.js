@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import './App.css'
 
 //Using Pages
@@ -15,33 +15,51 @@ import Register from './Pages/Register'
 import Profile from './Pages/Profile'
 import Search from './Pages/Search'
 
+import UserContext from './Utils/UserContext'
+
+
+
 function App() {
+  const [userState, setUserState] = useState({
+    name: '',
+    email: '',
+    username: ''
+  })
+
+  // Working handleInputchange: call for any Text-Input field.
+  userState.handleInputChange = (event) => {
+    setUserState({...userState, [event.target.name]: event.target.value})
+  }
+
+
   return (
-    <Router>
-      <Navbar/>
-      <Link to="/">Home</Link>
-      <Link to="/login">Log In</Link>
-      <Link to="/register">Register</Link>
-      <Link to="/profile">Profile</Link>
-      <Link to="/search">Search</Link>
-      <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
-        <Route path="/login">
-          <LogIn />
-        </Route>
-        <Route path="/register">
-          <Register />
-        </Route>
-        <Route path="/profile">
-          <Profile />
-        </Route>
-        <Route path="/search">
-          <Search />
-        </Route>
-      </Switch>
-    </Router>
+    <UserContext.Provider value={userState}>
+      <Router>
+        <Navbar/>
+        <Link to="/">Home</Link>
+        <Link to="/login">Log In</Link>
+        <Link to="/register">Register</Link>
+        <Link to="/profile">Profile</Link>
+        <Link to="/search">Search</Link>
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/login">
+            <LogIn />
+          </Route>
+          <Route path="/register">
+            <Register />
+          </Route>
+          <Route path="/profile">
+            <Profile />
+          </Route>
+          <Route path="/search">
+            <Search />
+          </Route>
+        </Switch>
+      </Router>
+    </UserContext.Provider>
   )
 }
 
