@@ -2,8 +2,9 @@ module.exports = (model, Schema) => {
     const User = new Schema({
         name: String,
         email: {type: String, required:true, unique:true},
-        username: {type: String, required:true, unique:true}
-        // no password because we use real user authentication
+        username: {type: String, required:true, unique:true},
+        links: [{ type: Schema.Types.ObjectId, ref: 'Youtube' }]
+      
     })
 
   User.plugin(require('passport-local-mongoose'))
