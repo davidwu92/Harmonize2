@@ -1,12 +1,29 @@
-import React, {useContext} from 'react'
+import React, {useContext, useState} from 'react'
 import UserContext from '../../Utils/UserContext'
+import UserAPI from '../../Utils/UserAPI'
+
+const {addUser} = UserAPI
 
 const RegisterForm = () => {
   const {name, email, username, handleInputChange } = useContext(UserContext)
 
+  const handleFormSubmit =  (event) => {
+    event.preventDefault()
+    addUser({
+      name,
+      email,
+      username,
+    })
+    .then(()=>{
+      console.log("hi")
+      //Take the user to his/her profile page. 
+    })
+    .catch((e)=>console.error(e))
+  }
+
   return (
     <div className="row">
-      <form action="" className="col s12">
+      <form id="registerForm" action="" className="col s12">
         <div id="card" className="card">
           <div className="card-content green-text">
             <h3>Register</h3>
@@ -29,7 +46,7 @@ const RegisterForm = () => {
               <label htmlFor="password"></label>
 
               {/* SUBMIT BUTTON */}
-              <button id="register" className="btn waves-effect waves-light col s12" type="submit" name="action">Submit
+              <button onClick={handleFormSubmit} id="register" className="btn waves-effect waves-light col s12" type="submit" name="action">Submit
                     <i className="material-icons right">send</i>
               </button>
             </div>
