@@ -1,6 +1,6 @@
 import React from 'react';
 
-//Using Pages
+// Using Pages
 import {
   BrowserRouter as Router,
   Switch,
@@ -12,15 +12,17 @@ import LogIn from './Pages/LogIn'
 import Register from './Pages/Register'
 import Profile from './Pages/Profile'
 import Search from './Pages/Search'
+import Navbar from './Components/Navbar'
 
 function App() {
   return (
     <Router>
+      <Navbar/>
       <Link to="/">Home</Link>
-      <Link to="/login">Log In</Link>
-      <Link to="/register">Register</Link>
-      <Link to="/profile">Profile</Link>
-      <Link to="/search">Search</Link>
+      {/* <Link to="/login">Log In</Link> */}
+      {/* <Link to="/register">Register</Link> */}
+      {/* <Link to="/profile">Profile</Link> */}
+      {/* <Link to="/search">Search</Link> */}
       <Switch>
         <Route exact path="/">
           <Home/>

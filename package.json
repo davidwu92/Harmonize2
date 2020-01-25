@@ -1,7 +1,7 @@
 {
   "name": "Harmonize2",
   "version": "1.0.0",
-  "description": "",
+  "description": "READ ME",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -28,10 +28,13 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "if-env": "^1.0.4",
+    "init": "^0.1.2",
     "mongoose": "^5.8.9",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
-    "passport-local-mongoose": "^6.0.1"
-  }
+    "passport-local-mongoose": "^6.0.1",
+    "start": "^5.1.0"
+  },
+  "devDependencies": {}
 }
