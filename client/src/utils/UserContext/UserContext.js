@@ -1,4 +1,4 @@
-import React, { createContext } from 'react'
+import React, { createContext } from './node_modules/react'
 
 const UserContext = createContext({
   name: '',
