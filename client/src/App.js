@@ -15,20 +15,38 @@ import Register from './Pages/Register'
 import Profile from './Pages/Profile'
 import Search from './Pages/Search'
 
-import UserContext from './Utils/UserContext'
+import UserContext from './utils/UserContext'
 
+import UserAPI from './utils/UserAPI'
 
+const { addUser } = UserAPI
 
 function App() {
   const [userState, setUserState] = useState({
     name: '',
     email: '',
-    username: ''
+    username: '',
+    password: ''
   })
 
   // Working handleInputchange: call for any Text-Input field.
   userState.handleInputChange = (event) => {
     setUserState({...userState, [event.target.name]: event.target.value})
+  }
+
+  userState.handleAddUser = event => {
+    event.preventDefault()
+    addUser({ 
+      name: userState.name,
+      email: userState.email,
+      username: userState.username,
+      password: userState.password
+    })
+    .then(({ data }) => {
+      console.log('succecss')
+      setUserState({ ...userState, name: '', email: '', username: '', password: ''})
+    })
+    .catch(e => console.error(e))
   }
 
 
