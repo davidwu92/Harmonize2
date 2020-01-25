@@ -15,9 +15,9 @@ import Register from './Pages/Register'
 import Profile from './Pages/Profile'
 import Search from './Pages/Search'
 
-import UserContext from './utils/UserContext'
+import UserContext from './Utils/UserContext'
 
-import UserAPI from './utils/UserAPI'
+import UserAPI from './Utils/UserAPI'
 
 const { addUser } = UserAPI
 
