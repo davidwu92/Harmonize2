@@ -14,15 +14,15 @@ const RegisterForm = () => {
               <label htmlFor="fullName"></label>
             </div>
             <div className="input-field">
-              <input placeholder="Email" type="text" id="email" />
+              <input placeholder="Email" type="text" id="email"  />
               <label htmlFor="email"></label>
             </div>
             <div className="input-field">
-              <input placeholder="Username" type="text" id="username" />
+              <input placeholder="Username" type="text" id="username"  />
               <label htmlFor="username"></label>
             </div>
             <div className="input-field">
-              <input placeholder="Password" type="password" id="password" />
+              <input placeholder="Password" type="password" id="password"  />
               <label htmlFor="password"></label>
 
               <button id="register" className="btn waves-effect waves-light col s12" type="submit" name="action">Submit

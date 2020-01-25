@@ -3,8 +3,6 @@ import UserContext from '../../utils/UserContext'
 
 const LoginForm = () => {
 
-  const { handleInputChange, handleFormSubmit } = useContext(UserContext)
-
   return (
 
     <div className="row">
