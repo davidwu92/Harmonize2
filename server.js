@@ -11,7 +11,7 @@ const { User } = require('./models')
  
 //middlewares
 app.use(express.static(join(__dirname, 'client', 'build')))
-app.use(express.urlencoded({extended:true}))
+app.use(express.urlencoded({ extended:true }))
 app.use(express.json())
 
 // passport middleware
