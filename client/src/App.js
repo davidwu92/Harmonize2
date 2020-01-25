@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import './App.css'
 
-//Using Pages
+// Using Pages
 import {
   BrowserRouter as Router,
   Switch,
@@ -14,6 +14,7 @@ import LogIn from './Pages/LogIn'
 import Register from './Pages/Register'
 import Profile from './Pages/Profile'
 import Search from './Pages/Search'
+import Navbar from './Components/Navbar'
 
 import UserContext from './Utils/UserContext'
 
