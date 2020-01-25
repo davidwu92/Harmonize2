@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react'
-import UserContext from '../../Utils/UserContext'
-import UserAPI from '../../Utils/UserAPI'
+import UserContext from '../../utils/UserContext'
+import UserAPI from '../../utils/UserAPI'
 
 
 import axios from 'axios'

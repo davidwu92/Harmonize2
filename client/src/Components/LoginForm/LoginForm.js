@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import UserAPI from '../../Utils/UserAPI'
+import UserAPI from '../../utils/UserAPI'
 const {loginUser} = UserAPI
 
 const LoginForm = () => {
