@@ -9,17 +9,17 @@ import {
 
 const Navbar = () => {
   return (
-      <nav class="nav-extended">
-        <div class="nav-wrapper">
-          <a href="#" class="brand-logo"><Link to="/">Home</Link></a>
-          <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <nav className="nav-extended">
+        <div className="nav-wrapper">
+          <a href="#" className="brand-logo"><Link to="/">Home</Link></a>
+          <a href="#" data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
         </div>
-        <div class="nav-content">
-          <ul class="tabs tabs-transparent">
-            <li class="tab"><Link to="/register">Register</Link></li>
-            <li class="tab"><Link to="/profile">Profile</Link></li>
-            <li class="tab"><Link to="/login">Log In</Link></li>
-            <li class="tab"><Link to="/search">Search</Link></li>
+        <div className="nav-content">
+          <ul className="tabs tabs-transparent">
+            <li className="tab"><Link to="/register">Register</Link></li>
+            <li className="tab"><Link to="/profile">Profile</Link></li>
+            <li className="tab"><Link to="/login">Log In</Link></li>
+            <li className="tab"><Link to="/search">Search</Link></li>
           </ul>
         </div>
       </nav>
