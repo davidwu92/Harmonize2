@@ -2,7 +2,16 @@ import React from 'react'
 
 const Search = () => {
   return (
-    <h1>Search for a musician</h1>
+    <>
+      <div className="container">
+        <h4 className="center-align">Search for a musician</h4>
+        <br></br>
+        <form id="searchForm" action="">
+          <input id="searchInput" type="search" />
+          <i class="fa fa-search"></i>
+        </form>
+      </div>
+    </>
   )
 }
 

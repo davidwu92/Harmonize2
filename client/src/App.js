@@ -1,22 +1,14 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import './App.css'
-
-// Using Pages
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import Navbar from './Components/Navbar'
+import LoggedinNav from './Components/LoggedinNav'
 import Home from './Pages/Home'
 import LogIn from './Pages/LogIn'
 import Register from './Pages/Register'
 import Profile from './Pages/Profile'
 import Search from './Pages/Search'
-
 import UserContext from './utils/UserContext'
-
 import UserAPI from './utils/UserAPI'
 
 const { addUser } = UserAPI
@@ -31,22 +23,22 @@ function App() {
 
   // Working handleInputchange: call for any Text-Input field.
   userState.handleInputChange = (event) => {
-    setUserState({...userState, [event.target.name]: event.target.value})
+    setUserState({ ...userState, [event.target.name]: event.target.value })
   }
 
   userState.handleAddUser = event => {
     event.preventDefault()
-    addUser({ 
+    addUser({
       name: userState.name,
       email: userState.email,
       username: userState.username,
       password: userState.password
     })
-    .then(({ data }) => {
-      console.log('succecss')
-      setUserState({ ...userState, name: '', email: '', username: '', password: ''})
-    })
-    .catch(e => console.error(e))
+      .then(({ data }) => {
+        console.log('succecss')
+        setUserState({ ...userState, name: '', email: '', username: '', password: '' })
+      })
+      .catch(e => console.error(e))
   }
 
 
@@ -55,23 +47,23 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/">
-            <Navbar/>
+            <Navbar />
             <Home />
           </Route>
           <Route path="/login">
-            <Navbar/>
+            <Navbar />
             <LogIn />
           </Route>
           <Route path="/register">
-            <Navbar/>
+            <Navbar />
             <Register />
           </Route>
           <Route path="/profile">
-            <Navbar/>
+            <LoggedinNav />
             <Profile />
           </Route>
           <Route path="/search">
-            <Navbar/>
+            <LoggedinNav />
             <Search />
           </Route>
         </Switch>
