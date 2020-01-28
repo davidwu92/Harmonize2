@@ -46,7 +46,7 @@ const RegisterForm = () => {
             </div>
 
               {/* SUBMIT BUTTON */}
-              <button onClick={handleAddUser} id="register" className="btn black waves-effect waves-light col s12" type="submit" name="action">Submit
+              <button onClick={handleAddUser} id="register" className="btn black waves-effect waves-light col s12" type="submit" name="action">Register
                     <i className="material-icons right">send</i>
               </button>
       </form>
