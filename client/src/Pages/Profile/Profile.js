@@ -21,6 +21,7 @@ const Profile = () => {
               {/* BIO */}
               My main instrument is the cup-and-straw. I'm all about that jam sesh life!
             </h6>
+            <button id="editProfile"><i class=" fas fa-user-edit"></i></button>
           </div>
         </div>
         <div>
