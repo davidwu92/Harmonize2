@@ -1,6 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
+import UserAPI from '../../utils/UserAPI'
+import axios from 'axios'
+
+//function for making changes to profile
+const {getUser, updateUser} = UserAPI
 
 const Profile = () => {
+  //THIS WORKS OMG
+  let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
+  getUser(token)
+    .then((data)=>{console.log(data)})
+    .catch((e)=>console.error(e))
+  
+
+  const [profileState, setProfileState] = useState({
+
+  })
+
 
   return (
     <>
@@ -22,9 +38,18 @@ const Profile = () => {
               {/* BIO */}
               My main instrument is the cup-and-straw. I'm all about that jam sesh life!
             </h6>
-            <button id="editProfile"><i class=" fas fa-user-edit"></i></button>
+            {/* NEED EDITING FUNCTIONALITY */}
+            <button id="editProfile"><i className=" fas fa-user-edit"></i></button>
           </div>
         </div>
+        {/* FORM FOR POSTING LINKS */}
+        <form>
+          <div className="input-field">
+            <input placeholder="newLink" type="newLink" id="newLink" name="newLink"/>
+            <label htmlFor="password"></label>
+          </div>
+        </form>
+
         <div>
           <p>Embedded Video</p>
           <p>Embedded Video</p>
