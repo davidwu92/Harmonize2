@@ -2,27 +2,12 @@ import React, {useContext, useState} from 'react'
 import UserContext from '../../utils/UserContext'
 import UserAPI from '../../utils/UserAPI'
 
-
 import axios from 'axios'
 
 const { addUser } = UserAPI
 
 const RegisterForm = () => {
   const {name, email, username, password, handleInputChange, handleAddUser } = useContext(UserContext)
-
-  const handleFormSubmit =  (event) => {
-    event.preventDefault()
-    addUser({
-      name,
-      email,
-      username,
-    })
-    .then(()=>{
-      console.log("hi")
-      //Take the user to his/her profile page. 
-    })
-    .catch((e)=>console.error(e))
-  }
 
   return (
     <div className="row">

@@ -6,7 +6,8 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  
 } from 'react-router-dom'
 import Navbar from './Components/Navbar'
 import Home from './Pages/Home'
@@ -20,6 +21,10 @@ import UserContext from './utils/UserContext'
 import UserAPI from './utils/UserAPI'
 
 const { addUser } = UserAPI
+
+//useState into PAGEs.
+//useContext goes into components.
+
 
 function App() {
   const [userState, setUserState] = useState({

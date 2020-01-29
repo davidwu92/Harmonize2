@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import UserAPI from '../../utils/UserAPI'
+import {Redirect, useHistory} from 'react-router-dom'
+
 const {loginUser} = UserAPI
 
 const LoginForm = () => {
-  
+  let history = useHistory()
+
   //using LoginState to track username/password on this page only.
   const [loginState, setLoginState] = useState({
     username: '',
@@ -15,12 +18,20 @@ const LoginForm = () => {
   //defining function for LOG IN button.
   loginState.handleLogin = (event) => {
     event.preventDefault()
-    console.log(loginState.username + loginState.password)
     loginUser({
       username: loginState.username,
       password: loginState.password
     })
-    .then(()=>{console.log('You attempted a log in.')})
+    .then(({data})=>{
+      if(data.token) {
+        localStorage.setItem('token', data.token)
+        history.push('/profile')
+      } else {
+        //ALERT/TOAST HERE.
+        console.log('FAILED LOGIN')
+      }
+
+    })
     .catch((e)=>console.error(e))
   }
 
