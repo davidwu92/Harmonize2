@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import './App.css'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import Navbar from './Components/Navbar'
 import LoggedinNav from './Components/LoggedinNav'
@@ -10,6 +9,7 @@ import Profile from './Pages/Profile'
 import Search from './Pages/Search'
 import UserContext from './utils/UserContext'
 import UserAPI from './utils/UserAPI'
+import './App.css'
 
 const { addUser } = UserAPI
 
