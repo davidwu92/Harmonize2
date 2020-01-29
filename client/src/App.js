@@ -7,6 +7,7 @@ import {
   Switch,
   Route,
   Link,
+  useHistory
 } from 'react-router-dom'
 import Navbar from './Components/Navbar'
 import Home from './Pages/Home'
@@ -30,7 +31,9 @@ function App() {
     name: '',
     email: '',
     username: '',
+    password: '',
   })
+  
 
   // Working handleInputchange: call for any Text-Input field.
   userState.handleInputChange = (event) => {

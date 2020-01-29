@@ -1,8 +1,7 @@
 import React, {useContext, useState} from 'react'
 import UserContext from '../../utils/UserContext'
 import UserAPI from '../../utils/UserAPI'
-import {useHistory, Redirect} from 'react-router-dom'
-
+import {useHistory} from 'react-router-dom'
 import axios from 'axios'
 
 const { addUser } = UserAPI
@@ -15,17 +14,18 @@ const RegisterForm = () => {
   const handleAddUser = event => {
     event.preventDefault()
     addUser({ 
-      name: userState.name,
-      email: userState.email,
-      username: userState.username,
-      password: userState.password
+      name,
+      email,
+      username,
+      password
     })
     .then(({ data }) => {
-      console.log('success')
-      setUserState({ ...userState, name: '', email: '', username: '', password: ''})
       history.push('/login')
     })
-    .catch(e => console.error(e))
+    .catch(e => {
+      //ERROR MESSAGE HANDLE
+      console.error(e)
+    })
   }
 
   return (
