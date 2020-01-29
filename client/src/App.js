@@ -1,5 +1,14 @@
-import React, { useState } from 'react'
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
+import React, {useState} from 'react'
+import './App.css'
+
+// Using Pages
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useHistory
+} from 'react-router-dom'
 import Navbar from './Components/Navbar'
 import LoggedinNav from './Components/LoggedinNav'
 import Home from './Pages/Home'
@@ -13,33 +22,24 @@ import './App.css'
 
 const { addUser } = UserAPI
 
+//useState into PAGEs.
+//useContext goes into components.
+
+
 function App() {
   const [userState, setUserState] = useState({
     name: '',
     email: '',
     username: '',
-    password: ''
+    password: '',
   })
+  
 
   // Working handleInputchange: call for any Text-Input field.
   userState.handleInputChange = (event) => {
     setUserState({ ...userState, [event.target.name]: event.target.value })
   }
 
-  userState.handleAddUser = event => {
-    event.preventDefault()
-    addUser({
-      name: userState.name,
-      email: userState.email,
-      username: userState.username,
-      password: userState.password
-    })
-      .then(({ data }) => {
-        console.log('succecss')
-        setUserState({ ...userState, name: '', email: '', username: '', password: '' })
-      })
-      .catch(e => console.error(e))
-  }
 
 
   return (
