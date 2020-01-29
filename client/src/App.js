@@ -7,7 +7,6 @@ import {
   Switch,
   Route,
   Link,
-  
 } from 'react-router-dom'
 import Navbar from './Components/Navbar'
 import Home from './Pages/Home'
@@ -31,7 +30,6 @@ function App() {
     name: '',
     email: '',
     username: '',
-    password: ''
   })
 
   // Working handleInputchange: call for any Text-Input field.
@@ -39,20 +37,7 @@ function App() {
     setUserState({...userState, [event.target.name]: event.target.value})
   }
 
-  userState.handleAddUser = event => {
-    event.preventDefault()
-    addUser({ 
-      name: userState.name,
-      email: userState.email,
-      username: userState.username,
-      password: userState.password
-    })
-    .then(({ data }) => {
-      console.log('succecss')
-      setUserState({ ...userState, name: '', email: '', username: '', password: ''})
-    })
-    .catch(e => console.error(e))
-  }
+
 
 
   return (
