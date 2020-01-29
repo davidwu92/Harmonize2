@@ -14,6 +14,12 @@ app.use(express.static(join(__dirname, 'client', 'build')))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
+//DEPLOYING TO HEROKU
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
+
+
 // passport middleware
 // start the passport engine
 app.use(passport.initialize())
