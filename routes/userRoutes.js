@@ -6,9 +6,9 @@ module.exports = app => {
 
 // Register route
   app.post('/users', (req, res) => {
-      const { name, email, username } = req.body
+      const { name, email, username, links, bio, pfPic } = req.body
       // means registering a new user then pass the password seperately
-      User.register(new User({ name, email, username }), req.body.password, e => {
+      User.register(new User({ name, email, username, links, bio, pfPic }), req.body.password, e => {
         if (e) {
           res.json({ success: false, message: "Your account could not be saved. Error: ", e})
         }
