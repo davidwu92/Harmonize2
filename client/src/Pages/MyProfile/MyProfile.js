@@ -60,7 +60,7 @@ const MyProfile = () => {
   //EDITING PROFILE: FORM SUBMISSION
   const editPfButton = <Button className="btn black waves-effect right hoverable">Edit <i className="fas fa-user-edit"></i></Button>;
   const editProfile = (event) => {
-    // event.preventDefault()
+    event.preventDefault()
     //Any empty fields in editState will PUT old profile information.
     updateUser(profileState.id, {
       name: (editState.name==="") ? profileState.name : editState.name,
@@ -118,7 +118,7 @@ const MyProfile = () => {
           }
         </div>
 
-        {/* EDIT PROFILE MODAL BUTTON: form needs styling. */}
+        {/* EDIT PROFILE MODAL BUTTON: MODAL needs to be repositioned or floated. Form inside needs styling. */}
         <Modal 
           actions={[
             <Button onClick={editProfile} modal="close" node="button" className="black waves-effect waves-light white-text hoverable col s12" >
@@ -130,31 +130,25 @@ const MyProfile = () => {
             </Button>
           ]}
           header="Edit Your Basic Info" trigger={editPfButton}>
-          <form>
-            <div className="input-field">
-              <span>Username: </span>
-              <input placeholder={profileState.username} type="newUsername" id="newUsername" name="username" value={editState.username} onChange={editState.handleInputChange}/>
-            </div>
-            <div className="input-field">
-              <span>Full Name: </span>
-              <input placeholder={profileState.name} type="newName" id="newName" name="name" value={editState.name} onChange={editState.handleInputChange}/>
-            </div>
-            <div className="input-field">
-              <span>Email: </span>
-              <input placeholder={profileState.email} type="newEmail" id="newEmail" name="email" value={editState.email} onChange={editState.handleInputChange}/>
-            </div>
-            <div className="input-field">
-              <span>Bio: </span>
-              <input placeholder={profileState.bio} type="newBio" id="newBio" name="bio" value={editState.bio} onChange={editState.handleInputChange}/>
-            </div>
-            <div className="input-field">
-              <span>Profile Picture: </span>
-              <input placeholder={profileState.pfPic} type="newPfPic" id="newPfPic" name="pfPic" value={editState.pfPic} onChange={editState.handleInputChange}/>
-            </div>
-            {/* <button onClick={editProfile} id="editProfile" className="btn black waves-effect waves-light col s12" type="submit" name="action">Save changes
-                      <i className="material-icons right">send</i>
-            </button> */}
-          </form>
+            <form>
+              <div className="input-field">
+                <span>Username: </span>
+                <input placeholder={profileState.username} type="newUsername" id="newUsername" name="username" value={editState.username} onChange={editState.handleInputChange}/>
+              </div>
+              <div className="input-field">
+                <span>Full Name: </span>
+                <input placeholder={profileState.name} type="newName" id="newName" name="name" value={editState.name} onChange={editState.handleInputChange}/>
+              </div>
+              <div className="input-field">
+                <span>Email: </span>
+                <input placeholder={profileState.email} type="newEmail" id="newEmail" name="email" value={editState.email} onChange={editState.handleInputChange}/>
+              </div>
+              <div className="input-field">
+                {/* Needs a bigger input field for bio */}
+                <span>Bio: </span>
+                <input placeholder={profileState.bio} type="newBio" id="newBio" name="bio" value={editState.bio} onChange={editState.handleInputChange}/>
+              </div>
+            </form>
         </Modal>
       </div>
     </>
