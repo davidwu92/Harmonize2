@@ -4,7 +4,7 @@ const passport = require('passport')
 module.exports = app => {
   // always use a post route for login because get routes dont have a req body
 
-// Register route
+  // Register new user
   app.post('/users', (req, res) => {
       const { name, email, username, links, bio, pfPic } = req.body
       // means registering a new user then pass the password seperately
@@ -16,13 +16,20 @@ module.exports = app => {
       })
   })
 
-// GET PROFILE INFO (when logged in)
+  // GET MY PROFILE INFO (when logged in)
   app.get('/users', passport.authenticate('jwt', {session:false}), (req, res) => {
-    console.log(req.user)
+    // console.log(req.user)
     const {_id} = req.user
     User.findById(_id)
         .then(user => res.json(user))
         .catch(e => console.error(e))
+  })
+
+  // EDIT MY PROFILE INFO (when logged in)
+  app.put('/users/:id', (req, res)=>{
+    User.findByIdAndUpdate(req.params.id, {$set: req.body})
+    .then(()=>res.sendStatus(200))
+    .catch(e=>console.error(e))
   })
 
   // Login route

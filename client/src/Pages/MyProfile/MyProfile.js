@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import UserAPI from '../../utils/UserAPI'
 import axios from 'axios'
+import {Modal, Button} from 'react-materialize'
 
 //function for making changes to profile
-const {getUser, updateUser} = UserAPI
+const {getUser, updateUser, addYoutube} = UserAPI
 
 const MyProfile = () => {
-  
+
   //Setting up profileState Variables: CAN'T BE EDITED.
   const [profileState, setProfileState] = useState({
     name: '',
@@ -15,6 +16,8 @@ const MyProfile = () => {
     bio: '',
     links: [],
     pfPic: '',
+    //For put requests later...
+    id: '',
   })
   
   //using token to grab MY user data.
@@ -27,25 +30,49 @@ const MyProfile = () => {
         username: data.username,
         links: data.links,
         bio: data.bio,
-        pfPic: data.pfPic
+        pfPic: data.pfPic,
+        id: data._id
       })
     })
     .catch((e)=>console.error(e))
 
-  //Setting up PROFILE EDITING VARIABLES
-  //Allows us to edit values before submitting PUT requests to db
+  //Setting up editState VARIABLES: Allows us to edit values before submitting PUT requests to db
   const [editState, setEditState] = useState({
-    newName: '', newEmail: '', newUsername: '', newBio: '', newLinks: [], newPfPic: '',
+    name: '', email: '', username: '', bio: '', pfPic: '',
     newLink: '',
   })
+
   //handles input changes for EDITING FORMS on this page.
   editState.handleInputChange =   (event) => {
     setEditState({ ...editState, [event.target.name]: event.target.value })
   }
-  //addLink form.
+
+  //addLink form CURRENTLY NOT WORKING: UNAUTHORIZED ERROR CODE.
   const addLink = (event) => {
     event.preventDefault()
-    console.log(editState.newLink)
+    console.log(editState)
+    console.log("adding link")
+    addYoutube(token, editState.newLink)
+      .then(()=>{console.log("Link added.")})
+      .catch(e=>console.error(e))
+  }
+
+  //EDITING PROFILE: FORM SUBMISSION
+  const editPfButton = <Button className="btn black waves-effect right"> Edit<i className="fas fa-user-edit"></i></Button>;
+  const editProfile = (event) => {
+    event.preventDefault()
+    //Any empty fields in editState will PUT old profile information.
+    updateUser(profileState.id, {
+      name: (editState.name==="") ? profileState.name : editState.name,
+      email: (editState.email==="") ? profileState.email : editState.email,
+      username: (editState.username==="") ? profileState.username : editState.username,
+      bio: (editState.bio==="") ? profileState.bio : editState.bio,
+      pfPic: (editState.pfPic==="") ? profileState.pfPic : editState.pfPic,
+    })
+      .then(()=>{
+        console.log("You edited the profile.")
+      })
+      .catch(e=>console.error(e))
   }
 
   return (
@@ -62,11 +89,10 @@ const MyProfile = () => {
             <h4 className="black-text">{profileState.username}</h4>
             {/* NAME */}
             <h5>{profileState.name}</h5>
+            <h5>{profileState.email}</h5>
             {/* BIO */}
             <h6 className="grey-text">{profileState.bio}</h6>
           </div>
-          {/* EDIT PROFILE BUTTON */}
-          <button id="editProfile">Edit<i className=" fas fa-user-edit"></i></button>
         </div>
 
         {/* POST A NEW LINK  */}
@@ -82,8 +108,8 @@ const MyProfile = () => {
           </form>
         </div>
 
-        <div>
           {/* LINKS/POSTS HERE */}
+        <div>
           {
             profileState.links.length ? profileState.links.map(link=>(
               <span>{link}</span>
@@ -91,6 +117,36 @@ const MyProfile = () => {
             : null
           }
         </div>
+
+        {/* EDIT PROFILE MODAL BUTTON */}
+          <Modal header="Edit Your Basic Info" trigger={editPfButton}>
+            <form>
+              <div className="input-field">
+                <span>Username: </span>
+                <input placeholder={profileState.username} type="newUsername" id="newUsername" name="username" value={editState.username} onChange={editState.handleInputChange}/>
+              </div>
+              <div className="input-field">
+                <span>Full Name: </span>
+                <input placeholder={profileState.name} type="newName" id="newName" name="name" value={editState.name} onChange={editState.handleInputChange}/>
+              </div>
+              <div className="input-field">
+                <span>Email: </span>
+                <input placeholder={profileState.email} type="newEmail" id="newEmail" name="email" value={editState.email} onChange={editState.handleInputChange}/>
+              </div>
+              <div className="input-field">
+                <span>Bio: </span>
+                <input placeholder={profileState.bio} type="newBio" id="newBio" name="bio" value={editState.bio} onChange={editState.handleInputChange}/>
+              </div>
+              <div className="input-field">
+                <span>Profile Picture: </span>
+                <input placeholder={profileState.pfPic} type="newPfPic" id="newPfPic" name="pfPic" value={editState.pfPic} onChange={editState.handleInputChange}/>
+              </div>
+              <button onClick={editProfile} id="editProfile" className="btn black waves-effect waves-light col s12" type="submit" name="action">Save changes
+                        <i className="material-icons right">send</i>
+              </button>
+            </form>
+          </Modal>
+
       </div>
     </>
   )
