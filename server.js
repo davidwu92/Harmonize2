@@ -4,15 +4,21 @@ const { join } = require('path')
 // passport modules
 const passport = require('passport')
 const { Strategy } = require('passport-local')
-const { Strategy: JWTStrategy, ExtractJwt }  = require('passport-jwt')
+const { Strategy: JWTStrategy, ExtractJwt } = require('passport-jwt')
 
 const app = express()
 const { User } = require('./models')
- 
-//middlewares
+
+//middleware
 app.use(express.static(join(__dirname, 'client', 'build')))
-app.use(express.urlencoded({ extended:true }))
+app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
+
+//DEPLOYING TO HEROKU
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
+
 
 // passport middleware
 // start the passport engine
@@ -27,21 +33,23 @@ passport.deserializeUser(User.deserializeUser())
 
 // grabbing the token authentication process
 passport.use(new JWTStrategy({
-    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: process.env.SECRET
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: process.env.SECRET
 }, ({ id }, cb) => User.findById(id)
-.then(user => cb(null, user))
-.catch(e => cb(e))))
- 
+  .then(user => cb(null, user))
+  .catch(e => cb(e))))
+
+//routes
 require("./routes")(app)
 
+//connect to the database and listen on a port
 require('mongoose')
   .connect(process.env.NODE_ENV === 'production' ? process.env.MONGODB_URI : 'mongodb://localhost/harmonizedb', {
-  // these methods are rarely used
-  useCreateIndex: true,
-  useFindAndModify: true,
-  useNewUrlParser: true,
-  useUnifiedTopology: true
+    // these methods are rarely used
+    useCreateIndex: true,
+    useFindAndModify: true,
+    useNewUrlParser: true,
+    useUnifiedTopology: true
   })
-  .then(()=>app.listen(process.env.PORT || 3001))
-  .catch(e=>console.error(e))
+  .then(() => app.listen(process.env.PORT || 3001))
+  .catch(e => console.error(e))
