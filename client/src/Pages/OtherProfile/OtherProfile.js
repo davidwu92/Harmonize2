@@ -17,7 +17,7 @@ const OtherProfile = () => {
   })
 
 
-  //use an ID TO GRAB user data.
+  //use an ID TO GRAB user data; ID is grabbed from Search page.
   let profileId = JSON.parse(JSON.stringify(sessionStorage.getItem("token")))
   //need a get new Other User API and route.
   visitProfile(profileId)
