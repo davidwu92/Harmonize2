@@ -48,11 +48,35 @@ const MyProfile = () => {
   }
 
   //addLink form CURRENTLY NOT WORKING: UNAUTHORIZED ERROR CODE.
+
+  // const addLink = (event) => {
+  //   event.preventDefault()
+  //   let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
+  //   let splitLink = editState.newLink
+  //   let youtubeLink = {
+  //     link: editState.newLink,
+  //     userLink: editState.id
+  //   }
+  //   console.log(youtubeLink)
+  //   console.log(token)
+  //   console.log(profileState.id)
+  //   addYoutube(profileState.id, youtubeLink)
+  //     .then(()=>{console.log("Link added.")})
+  //     .catch(e=>console.error(e))
+  // }
+
+  // test function
   const addLink = (event) => {
     event.preventDefault()
-    console.log(editState)
-    console.log("adding link")
-    addYoutube(token, editState.newLink)
+    let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
+    let splitLink = editState.newLink
+    let youtubeLink = {
+      link: editState.newLink
+    }
+    console.log(youtubeLink)
+    console.log(token)
+    
+    addYoutube(token, youtubeLink)
       .then(()=>{console.log("Link added.")})
       .catch(e=>console.error(e))
   }
@@ -108,7 +132,7 @@ const MyProfile = () => {
           </form>
         </div>
 
-          {/* LINKS/POSTS HERE */}
+          {/* LINKS/POSTS HERE
         <div>
           {
             profileState.links.length ? profileState.links.map(link=>(
@@ -116,7 +140,11 @@ const MyProfile = () => {
             ))
             : null
           }
-        </div>
+        </div> */}
+
+        {/* <div>
+        {profileState.links.map(link => <div>{link}</div>)}
+        </div> */}
 
         {/* EDIT PROFILE MODAL BUTTON: MODAL needs to be repositioned or floated. Form inside needs styling. */}
         <Modal 
