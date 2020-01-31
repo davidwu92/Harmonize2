@@ -6,48 +6,40 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  useHistory
 } from 'react-router-dom'
 import Navbar from './Components/Navbar'
+import LoggedinNav from './Components/LoggedinNav'
 import Home from './Pages/Home'
 import LogIn from './Pages/LogIn'
 import Register from './Pages/Register'
 import Profile from './Pages/Profile'
 import Search from './Pages/Search'
-
 import UserContext from './utils/UserContext'
-
 import UserAPI from './utils/UserAPI'
+import './App.css'
 
 const { addUser } = UserAPI
+
+//useState into PAGEs.
+//useContext goes into components.
+
 
 function App() {
   const [userState, setUserState] = useState({
     name: '',
     email: '',
     username: '',
-    password: ''
+    password: '',
   })
+  
 
   // Working handleInputchange: call for any Text-Input field.
   userState.handleInputChange = (event) => {
-    setUserState({...userState, [event.target.name]: event.target.value})
+    setUserState({ ...userState, [event.target.name]: event.target.value })
   }
 
-  userState.handleAddUser = event => {
-    event.preventDefault()
-    addUser({ 
-      name: userState.name,
-      email: userState.email,
-      username: userState.username,
-      password: userState.password
-    })
-    .then(({ data }) => {
-      console.log('succecss')
-      setUserState({ ...userState, name: '', email: '', username: '', password: ''})
-    })
-    .catch(e => console.error(e))
-  }
 
 
   return (
@@ -55,23 +47,23 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/">
-            <Navbar/>
+            <Navbar />
             <Home />
           </Route>
           <Route path="/login">
-            <Navbar/>
+            <Navbar />
             <LogIn />
           </Route>
           <Route path="/register">
-            <Navbar/>
+            <Navbar />
             <Register />
           </Route>
           <Route path="/profile">
-            <Navbar/>
+            <LoggedinNav />
             <Profile />
           </Route>
           <Route path="/search">
-            <Navbar/>
+            <LoggedinNav />
             <Search />
           </Route>
         </Switch>

@@ -1,6 +1,6 @@
 const { User } = require('../models')
 const jwt = require('jsonwebtoken')
-
+const passport = require('passport')
 module.exports = app => {
   // always use a post route for login because get routes dont have a req body
 
@@ -16,9 +16,12 @@ module.exports = app => {
       })
   })
 
-  app.get('/users', (req, res) => {
-    User.find({})
-        .then(users => res.json(users))
+// GET PROFILE INFO (when logged in)
+  app.get('/users', passport.authenticate('jwt', {session:false}), (req, res) => {
+    console.log(req.user)
+    const {_id} = req.user
+    User.findById(_id)
+        .then(user => res.json(user))
         .catch(e => console.error(e))
   })
 
