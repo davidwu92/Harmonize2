@@ -23,6 +23,7 @@ const UserAPI = {
   
   //login existing user.
   loginUser: (user) => axios.post('/login', user)
+  
 }
 
 export default UserAPI
