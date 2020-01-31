@@ -12,10 +12,17 @@ const Navbar = () => {
           <li className="tab left"><Link to="/"><i className="fas fa-home"></i></Link></li>
           <li className="tab"><Link to="/login">Log In</Link></li>
           <li className="tab"><Link to="/register">Register</Link></li>
+          <li className="tab"><Link to="/profile">Profile</Link></li>
         </ul>
       </div>
     </nav>
+    
   )
 }
+
+
+
+
+
 
 export default Navbar
