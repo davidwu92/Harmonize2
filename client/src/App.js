@@ -10,15 +10,15 @@ import {
   useHistory
 } from 'react-router-dom'
 import Navbar from './Components/Navbar'
+import LoggedinNav from './Components/LoggedinNav'
 import Home from './Pages/Home'
 import LogIn from './Pages/LogIn'
 import Register from './Pages/Register'
-import Profile from './Pages/Profile'
+import MyProfile from './Pages/MyProfile'
 import Search from './Pages/Search'
-
 import UserContext from './utils/UserContext'
-
 import UserAPI from './utils/UserAPI'
+import './App.css'
 
 const { addUser } = UserAPI
 
@@ -37,9 +37,8 @@ function App() {
 
   // Working handleInputchange: call for any Text-Input field.
   userState.handleInputChange = (event) => {
-    setUserState({...userState, [event.target.name]: event.target.value})
+    setUserState({ ...userState, [event.target.name]: event.target.value })
   }
-
 
 
 
@@ -48,23 +47,23 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/">
-            <Navbar/>
+            <Navbar />
             <Home />
           </Route>
           <Route path="/login">
-            <Navbar/>
+            <Navbar />
             <LogIn />
           </Route>
           <Route path="/register">
-            <Navbar/>
+            <Navbar />
             <Register />
           </Route>
-          <Route path="/profile">
-            <Navbar/>
-            <Profile />
+          <Route path="/myprofile">
+            <LoggedinNav />
+            <MyProfile />
           </Route>
           <Route path="/search">
-            <Navbar/>
+            <LoggedinNav />
             <Search />
           </Route>
         </Switch>
