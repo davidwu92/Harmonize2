@@ -10,11 +10,6 @@ const UserAPI = {
   //edit profile
   updateUser: (id, values) => axios.put(`/users/${id}`, values),
 
-  //add YouTube to profile? CURRENTLY NOT WORKING
-  addYoutube: (token, link) => axios.post('/youtubes', {
-    headers: {"Authorization": "Bearer "+ token}
-  }, link),
-
   //Register new user
   addUser: (user) => axios.post('/users', user),
   
