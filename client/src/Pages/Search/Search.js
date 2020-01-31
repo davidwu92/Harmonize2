@@ -8,7 +8,7 @@ const Search = () => {
         <br></br>
         <form id="searchForm" action="">
           <input id="searchInput" type="search" />
-          <i class="fa fa-search"></i>
+          <i className="fa fa-search"></i>
         </form>
       </div>
     </>
