@@ -14,7 +14,7 @@ import LoggedinNav from './Components/LoggedinNav'
 import Home from './Pages/Home'
 import LogIn from './Pages/LogIn'
 import Register from './Pages/Register'
-import Profile from './Pages/Profile'
+import MyProfile from './Pages/MyProfile'
 import Search from './Pages/Search'
 import UserContext from './utils/UserContext'
 import UserAPI from './utils/UserAPI'
@@ -58,9 +58,9 @@ function App() {
             <Navbar />
             <Register />
           </Route>
-          <Route path="/profile">
+          <Route path="/myprofile">
             <LoggedinNav />
-            <Profile />
+            <MyProfile />
           </Route>
           <Route path="/search">
             <LoggedinNav />

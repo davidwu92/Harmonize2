@@ -19,6 +19,8 @@ const LoggedinNav = () => {
           <li className="tab left"><Link to="/search"><i className="far fa-compass"></i></Link></li>
           <li className="tab"><Link to="/profile"><i className="fas fa-user-alt"></i></Link></li>
           <li className="tab right" onClick={logout}><Link to="/"><i className="fas fa-sign-out-alt"></i></Link></li>
+          <li className="tab"><Link to="/myprofile"><i className="fas fa-user-alt"></i></Link></li>
+          <li className="tab right"><Link to="/"><i className="fas fa-sign-out-alt"></i></Link></li>
         </ul>
       </div>
     </nav>
