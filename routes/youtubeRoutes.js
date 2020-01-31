@@ -9,7 +9,7 @@ module.exports = app => {
           .then(userLink => res.json(userLink))
           .catch(e => console.error(e))
     })
-
+    // POST LINK
     app.post('/youtubes', passport.authenticate('jwt', { session: false }), (req, res) => {
         const { _id: userLink } = req.user
         const { link } = req.body

@@ -28,7 +28,7 @@ const LoginForm = () => {
     .then(({data})=>{
       if(data.token) {
         localStorage.setItem('token', data.token)
-        history.push('/profile')
+        history.push('/myprofile')
       } else {
         //ALERT/TOAST HERE.
         console.log('FAILED LOGIN')

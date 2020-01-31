@@ -17,7 +17,11 @@ const RegisterForm = () => {
       name,
       email,
       username,
-      password
+      password,
+      //other relevant pf info that can be edited from profile.
+      links: [],
+      bio: `You currently don't have a bio. Click on the edit profile button to tell others about yourself!`,
+      pfPic: ``
     })
     .then(({ data }) => {
       history.push('/login')
