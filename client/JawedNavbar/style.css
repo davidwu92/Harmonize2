@@ -1,3 +1,20 @@
+
 .nav-extended{
-    background-color: rgb(25, 25, 26);
-}
+    background-color: rgb(25, 25, 26); 
+         text-align: center;
+       
+    }
+
+    .brand-logo{
+        font-family: 'Molle', cursive;
+        text-align: center;
+           
+
+    }
+
+    .nav-content{
+        text-align: center;
+    }
+    .kam{
+        background-image: url("./image/ins1.jpg");
+    }
