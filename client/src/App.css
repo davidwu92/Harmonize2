@@ -11,7 +11,9 @@ body {
   width: 100%;
 }
 
+
 /* SEARCH BAR*/
+
 #searchForm {
   position: relative;
   top: 50%;
@@ -75,5 +77,62 @@ body {
 }
 
 #searchForm:hover .fa {
+  color: white;
+}
+
+/* BUTTONS */
+
+#editBtn {
+  cursor: pointer;
+  outline: none;
+    position: relative;
+    z-index: 3;
+    background: transparent;
+    color: #07051a;
+    font-size: 14px;
+    border-color: #07051a;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 22px;
+    padding: 10px 40px;
+    text-transform: uppercase;
+    transition: all 0.2s linear;
+}
+
+  #editBtn:hover {
+    color: white;
+    background: #07051a;
+    border-color: white;
+    transition: all 0.2s linear;
+  }
+  #editBtn:active {
+    border-radius: 22px;
+  }
+  #editBtn {
+    font-weight: 700;
+    color: #07051a;
+    border-color: white;
+    background: white;
+  }
+  #editBtn:hover {
+    color: white;
+    background: #07051a;
+    border-color: white;
+  }
+
+  #addLink{
+    font-size: 35px;
+    margin-top: 20px;
+    background-color: white;
+    color: black;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+}
+
+#addLink:hover{
+  background-color: black;
   color: white;
 }
