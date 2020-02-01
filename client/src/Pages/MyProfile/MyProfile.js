@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import UserAPI from '../../utils/UserAPI'
 import axios from 'axios'
 import { Modal, Button, Textarea } from 'react-materialize'
 
 //function for making changes to profile
-const { getUser, updateUser, addYoutube } = UserAPI
+const { getUser, updateUser, addYoutube, getYoutube } = UserAPI
 
 const MyProfile = () => {
 
@@ -47,15 +47,34 @@ const MyProfile = () => {
   editState.handleInputChange = (event) => {
     setEditState({ ...editState, [event.target.name]: event.target.value })
   }
+const [youtubeState, setYoutubeState] = useState({
+  links: []
+})
 
-  //addLink form CURRENTLY NOT WORKING: UNAUTHORIZED ERROR CODE.
+
+
+getYoutube(token)
+    .then(({ data }) => {
+      let links = []
+      links.push(data)
+      setYoutubeState({ ...youtubeState, links })
+    })
+    .catch(e => console.error(e))
+
+
+
+
+
+
+  // Add link is working now 01/31/20 with json token authorization
   const addLink = (event) => {
     event.preventDefault()
-    console.log(editState)
-    console.log("adding link")
-    addYoutube(token, editState.newLink)
-      .then(() => { console.log("Link added.") })
-      .catch(e => console.error(e))
+    let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
+    let youtubeLink = editState.newLink
+
+    addYoutube(token, youtubeLink)
+      .then(()=>{console.log("Link added.")})
+      .catch(e=>console.error(e))
   }
 
   //EDITING PROFILE: FORM SUBMISSION
@@ -142,10 +161,21 @@ const MyProfile = () => {
         {/* LINKS/POSTS HERE */}
         <div>
           {
-            profileState.links.length ? profileState.links.map(link => (
-              <span>{link}</span>
-            ))
-              : null
+            youtubeState.links.map(link => link.map(ylink => {
+              // let newstr = `"></iframe>`
+              // let str = ylink.link.slice(15, -27) + `${newstr}`
+             let str = ylink.link
+             let newStr = str.split(/"/)[5]
+           
+
+              return (
+                <div>
+                {<iframe width="560" height="315" src={newStr} frameborder="0"
+    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>}
+                </div>
+              )
+              
+            }))
           }
         </div>
       </div>
