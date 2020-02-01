@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import UserAPI from '../../utils/UserAPI'
 import axios from 'axios'
 import { Modal, Button, TextInput, Textarea } from 'react-materialize'
+import LinksCards from '../../Components/LinksCards'
+import ProfileContext from '../../utils/ProfileContext'
 
 //function for making changes to profile
 const { getUser, updateUser, addYoutube, getYoutube } = UserAPI
@@ -47,20 +49,33 @@ const MyProfile = () => {
   editState.handleInputChange = (event) => {
     setEditState({ ...editState, [event.target.name]: event.target.value })
   }
-  const [youtubeState, setYoutubeState] = useState({
-    links: []
-  })
 
-  // on page load
-  useEffect(() => {
-    getYoutube(token)
-      .then(({ data }) => {
-        let links = []
-        links.push(data)
-        setYoutubeState({ ...youtubeState, links })
+  const editPicture = (event) => {
+    event.preventDefault()
+    //Any empty fields in editState will PUT old profile information.
+    updateUser(profileState.id, {
+      pfPic: (editState.pfPic === "") ? profileState.pfPic : editState.pfPic
+    })
+      .then(() => {
+        console.log("You edited the profile picture.")
       })
       .catch(e => console.error(e))
-  }, [])
+  }
+
+const [youtubeState, setYoutubeState] = useState({
+  links: []
+})
+
+// on page load
+useEffect(() => {
+  getYoutube(token)
+    .then(({ data }) => {
+      let links = []
+      links.push(data)
+      setYoutubeState({ ...youtubeState, links })
+    })
+    .catch(e => console.error(e))
+}, [])
 
 
   // Add link is working now 01/31/20 with json token authorization
@@ -114,6 +129,22 @@ const MyProfile = () => {
           {/* PROFILE PIC */}
           <div className="col s4 m2">
             <img className="circle responsive-img" src={profileState.pfPic} alt="Your pf pic" />
+              <Modal
+              actions={[
+                <Button onClick={editPicture} modal="close" node="button" className="black waves-effect waves-light white-text hoverable" >
+                  Save Changes <i className="material-icons right">send</i>
+                </Button>,
+                <span> </span>,
+                <Button flat modal="close" node="button" className="black waves-effect waves-light white-text hoverable" >
+                  Close
+            </Button>
+              ]}
+              header="Edit Your Profile Picture" trigger={editPfButton}>
+              <form>
+                <h6>Profile Picture: </h6>
+                <TextInput placeholder={profileState.pfPicture} type="newPfPicture" id="newPfpicture" name="pfPic" value={editState.pfPic} onChange={editState.handleInputChange} />
+              </form>
+            </Modal>
           </div>
           {/* BASIC INFO */}
           <div className="col s8 m10">
@@ -187,31 +218,11 @@ const MyProfile = () => {
             </button>
           </form>
         </div>
-      </div>
-      {/* EMBEDED LINKS/POSTS HERE */}
-      <div>
-        {
-          youtubeState.links.map(link => link.map(ylink => {
-            // let newstr = `"></iframe>`
-            // let str = ylink.link.slice(15, -27) + `${newstr}`
-            let str = ylink.link
-            let newStr = str.split(/"/)[5]
 
-
-            return (
-              <>
-                <div className="container">
-                  <div className="row">
-                    <div className="col">
-                      {<iframe id="vidLink" src={newStr} frameBorder="0"
-                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>}
-                    </div>
-                  </div>
-                </div>
-              </>
-            )
-          }))
-        }
+        {/* LINKS/POSTS HERE */}
+        <ProfileContext.Provider value={youtubeState}>
+        <LinksCards />
+        </ProfileContext.Provider>
       </div>
     </>
   )
