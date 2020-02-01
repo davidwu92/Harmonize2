@@ -134,5 +134,21 @@ body {
 
 #addLink:hover{
   background-color: black;
+  color: rgb(117, 117, 116);
+}
+
+.center-align{
+  background-color: rgb(8, 8, 8);
+  margin-bottom: -3px;
+  padding-top: 15px;
+  color: rgb(226, 223, 222);
+}
+
+.nav-extended{
+  margin-bottom: -25px;
+}
+.row{
+  background-color: rgb(54, 52, 48);
   color: white;
+  margin-top: -10px
 }
