@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import UserAPI from '../../utils/UserAPI'
 import axios from 'axios'
 import { Modal, Button, Textarea } from 'react-materialize'
 
 //function for making changes to profile
-const { getUser, updateUser, addYoutube } = UserAPI
+const { getUser, updateUser, addYoutube, getYoutube } = UserAPI
 
 const MyProfile = () => {
 
@@ -47,47 +47,34 @@ const MyProfile = () => {
   editState.handleInputChange = (event) => {
     setEditState({ ...editState, [event.target.name]: event.target.value })
   }
+const [youtubeState, setYoutubeState] = useState({
+  links: []
+})
 
-  //addLink form CURRENTLY NOT WORKING: UNAUTHORIZED ERROR CODE.
 
-  // const addLink = (event) => {
-  //   event.preventDefault()
-  //   let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
-  //   let splitLink = editState.newLink
-  //   let youtubeLink = {
-  //     link: editState.newLink,
-  //     userLink: editState.id
-  //   }
-  //   console.log(youtubeLink)
-  //   console.log(token)
-  //   console.log(profileState.id)
-  //   addYoutube(profileState.id, youtubeLink)
-  //     .then(()=>{console.log("Link added.")})
-  //     .catch(e=>console.error(e))
-  // }
 
-  // test function
+getYoutube(token)
+    .then(({ data }) => {
+      let links = []
+      links.push(data)
+      setYoutubeState({ ...youtubeState, links })
+    })
+    .catch(e => console.error(e))
+
+
+
+
+
+
+  // Add link is working now 01/31/20 with json token authorization
   const addLink = (event) => {
     event.preventDefault()
-<<<<<<< HEAD
     let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
-    let splitLink = editState.newLink
-    let youtubeLink = {
-      link: editState.newLink
-    }
-    console.log(youtubeLink)
-    console.log(token)
-    
+    let youtubeLink = editState.newLink
+
     addYoutube(token, youtubeLink)
       .then(()=>{console.log("Link added.")})
       .catch(e=>console.error(e))
-=======
-    console.log(editState)
-    console.log("adding link")
-    addYoutube(token, editState.newLink)
-      .then(() => { console.log("Link added.") })
-      .catch(e => console.error(e))
->>>>>>> c40589b0a3e0a4b4d686a88886ad0aeb7dd9dc7e
   }
 
   //EDITING PROFILE: FORM SUBMISSION
@@ -171,17 +158,24 @@ const MyProfile = () => {
           </form>
         </div>
 
-<<<<<<< HEAD
-          {/* LINKS/POSTS HERE
-=======
         {/* LINKS/POSTS HERE */}
->>>>>>> c40589b0a3e0a4b4d686a88886ad0aeb7dd9dc7e
         <div>
           {
-            profileState.links.length ? profileState.links.map(link => (
-              <span>{link}</span>
-            ))
-              : null
+            youtubeState.links.map(link => link.map(ylink => {
+              // let newstr = `"></iframe>`
+              // let str = ylink.link.slice(15, -27) + `${newstr}`
+             let str = ylink.link
+             let newStr = str.split(/"/)[5]
+           
+
+              return (
+                <div>
+                {<iframe width="560" height="315" src={newStr} frameborder="0"
+    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>}
+                </div>
+              )
+              
+            }))
           }
         </div>
       </div>

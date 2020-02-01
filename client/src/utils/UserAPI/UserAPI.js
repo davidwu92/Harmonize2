@@ -25,6 +25,15 @@ const UserAPI = {
       }
     }),
 
+    getYoutube: (token) => axios({
+      method: 'get',
+      url: '/youtubes',
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+      }
+    }),
+
   //Register new user
   addUser: (user) => axios.post('/users', user),
   
