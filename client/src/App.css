@@ -123,7 +123,6 @@ body {
 
 #addLink {
   font-size: 35px;
-  margin-top: 20px;
   background-color: white;
   color: black;
   border-radius: 15px;
@@ -148,7 +147,7 @@ body {
   border-radius: 20px;
 }
 
-#newUsername, #newName, #newEmail, #newBio {
+#newUsername, #newName, #newEmail, #newBio, #newLink {
   border: 2px solid black;
   padding: .25em .5em .3125em;
   color: black;

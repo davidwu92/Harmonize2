@@ -157,17 +157,17 @@ const MyProfile = () => {
             >
 
               <form>
-                <h6>Username</h6>
+                <h6>USERNAME</h6>
                 <TextInput placeholder={profileState.username} type="newUsername" id="newUsername" name="username" value={editState.username} onChange={editState.handleInputChange} />
 
-                <h6>Full Name</h6>
+                <h6>FULL NAME</h6>
                 <TextInput placeholder={profileState.name} type="newName" id="newName" name="name" value={editState.name} onChange={editState.handleInputChange} />
 
-                <h6>Email</h6>
+                <h6>EMAIL</h6>
                 <TextInput placeholder={profileState.email} type="newEmail" id="newEmail" name="email" value={editState.email} onChange={editState.handleInputChange} />
 
                 {/* BIO */}
-                <h6>Bio</h6>
+                <h6>BIO</h6>
                 <TextInput placeholder={profileState.bio} type="newBio" id="newBio" name="bio" value={editState.bio} onChange={editState.handleInputChange} />
               </form>
             </Modal>
@@ -181,7 +181,7 @@ const MyProfile = () => {
       <div className="container">
         <div className="row">
           <form>
-            <Textarea placeholder="Add a link" type="newLink" id="newLink" name="newLink" value={editState.newLink} onChange={editState.handleInputChange} />
+            <TextInput placeholder="Add a link" type="newLink" id="newLink" name="newLink" value={editState.newLink} onChange={editState.handleInputChange} />
 
             <button onClick={addLink} id="addLink" className="waves-effect waves-light" type="submit" name="action"><i className="material-icons">publish</i>
             </button>
