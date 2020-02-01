@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import UserAPI from '../../utils/UserAPI'
 import axios from 'axios'
-import { Modal, Button, Textarea } from 'react-materialize'
+import { Modal, Button, TextInput } from 'react-materialize'
 
 //function for making changes to profile
 const { getUser, updateUser, addYoutube } = UserAPI
@@ -93,6 +93,7 @@ const MyProfile = () => {
             {/* EMAIL */}
             <h6>{profileState.email}</h6>
             {/* BIO */}
+
             <h6 className="grey-text">{profileState.bio}</h6>
 
 
@@ -102,7 +103,7 @@ const MyProfile = () => {
                 <Button onClick={editProfile} modal="close" node="button" className="black waves-effect waves-light white-text hoverable" >
                   Save Changes <i className="material-icons right">send</i>
                 </Button>,
-                <span> </span>, //Janky way to create space between buttons? LOL
+                <span> </span>,
                 <Button flat modal="close" node="button" className="black waves-effect waves-light white-text hoverable" >
                   Close
             </Button>
@@ -110,21 +111,22 @@ const MyProfile = () => {
               header="Edit Your Basic Info" trigger={editPfButton}>
               <form>
                 <h6>Username: </h6>
-                <Textarea placeholder={profileState.username} type="newUsername" id="newUsername" name="username" value={editState.username} onChange={editState.handleInputChange} />
+                <TextInput placeholder={profileState.username} type="newUsername" id="newUsername" name="username" value={editState.username} onChange={editState.handleInputChange} />
 
                 <h6>Full Name: </h6>
-                <Textarea placeholder={profileState.name} type="newName" id="newName" name="name" value={editState.name} onChange={editState.handleInputChange} />
+                <TextInput placeholder={profileState.name} type="newName" id="newName" name="name" value={editState.name} onChange={editState.handleInputChange} />
 
                 <h6>Email: </h6>
-                <Textarea placeholder={profileState.email} type="newEmail" id="newEmail" name="email" value={editState.email} onChange={editState.handleInputChange} />
+                <TextInput placeholder={profileState.email} type="newEmail" id="newEmail" name="email" value={editState.email} onChange={editState.handleInputChange} />
 
                 {/* BIO */}
                 <h6>Bio: </h6>
-                <Textarea placeholder={profileState.bio} type="newBio" id="newBio" name="bio" value={editState.bio} onChange={editState.handleInputChange} />
+                <TextInput placeholder={profileState.bio} type="newBio" id="newBio" name="bio" value={editState.bio} onChange={editState.handleInputChange} />
               </form>
             </Modal>
           </div>
         </div>
+
         <div className="divider"></div>
       </div>
 
@@ -132,7 +134,7 @@ const MyProfile = () => {
       <div className="container">
         <div className="row">
           <form>
-            <Textarea placeholder="Add a link" type="newLink" id="newLink" name="newLink" value={editState.newLink} onChange={editState.handleInputChange} />
+            <TextInput placeholder="Add a link" type="newLink" id="newLink" name="newLink" value={editState.newLink} onChange={editState.handleInputChange} />
 
             <button onClick={addLink} id="addLink" className="waves-effect waves-light" type="submit" name="action"><i class="material-icons">publish</i>
             </button>
