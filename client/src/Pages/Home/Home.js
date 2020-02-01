@@ -1,6 +1,6 @@
 //Landing Page
 import React from 'react'
-
+import LinksCards from '../../Components/LinksCards'
 
 const Home = () => {
   return (
