@@ -4,7 +4,8 @@ const passport = require('passport')
 module.exports = app => {
     // GET LINKS
     app.get('/youtubes', passport.authenticate('jwt', { session: false }), (req, res) => {
-        Youtube.find()
+       const { _id } = req.user
+        Youtube.find({ userLink: _id })
           .populate('userLink')
           .then(userLink => res.json(userLink))
           .catch(e => console.error(e))
@@ -21,5 +22,16 @@ module.exports = app => {
             })
             .catch(e => console.error(e))
     })
+
+
+    // app.post('/youtubes/:id', (req, res) => {
+    //   Youtube.create(req.body)
+    //       .then(youtube => {
+    //         User.updateOne({ _id: req.params.id }, { $push: { links: youtube } })   
+    //         .then(() => res.sendStatus(200))
+    //         .catch(e => console.error(e))
+    //       })
+    //       .catch(e => console.error(e))
+    // })
 
 }
