@@ -92,11 +92,11 @@ body {
     font-size: 14px;
     border-color: #07051a;
     border-style: solid;
-    border-width: 2px;
+    border-width: 1px;
     border-radius: 22px;
-    padding: 10px 40px;
     text-transform: uppercase;
     transition: all 0.2s linear;
+    margin: 2px;
 }
 
   #editBtn:hover {
@@ -111,8 +111,7 @@ body {
   #editBtn {
     font-weight: 700;
     color: #07051a;
-    border-color: white;
-    background: white;
+    border-color: black;
   }
   #editBtn:hover {
     color: white;
