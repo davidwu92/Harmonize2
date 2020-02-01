@@ -19,7 +19,7 @@ const Home = () => {
         </div>
          <div className="col s6">
             <div className="guitar">
-              <img src="https://24.media.tumblr.com/4168812b2f1dbbec1159be8341eee03d/tumblr_ml96f34grU1qzoxl6o1_500.gif"
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQLy8uHxTnSFPYfUhbUC_VSwKvR0U1j3YWirHTWhsYc4tL9fo3H"
               // style="width:100%;"
               />
             </div>

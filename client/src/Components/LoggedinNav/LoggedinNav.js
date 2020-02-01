@@ -12,7 +12,7 @@ const LoggedinNav = () => {
   return (
     <nav id="bottomNav" className="nav-extended black">
       <div className="nav-wrapper" id="navWrapper">
-        <a href="#" className="brand-logo" id="nav"><Link to="/">Harmonize</Link></a>
+        <div className="brand-logo" id="nav"><Link to="/">Harmonize</Link></div>
       </div>
       <div className="nav-content">
         <ul className="tabs tabs-transparent">
