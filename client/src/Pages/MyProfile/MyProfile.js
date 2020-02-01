@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import UserAPI from '../../utils/UserAPI'
 import axios from 'axios'
-import { Modal, Button, TextInput } from 'react-materialize'
+import { Modal, Button, TextInput, Textarea } from 'react-materialize'
 import LinksCards from '../../Components/LinksCards'
 import ProfileContext from '../../utils/ProfileContext'
 
@@ -83,25 +83,25 @@ useEffect(() => {
     event.preventDefault()
     let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
     let youtubeLink = editState.newLink
-    
-if (youtubeLink.includes("<iframe")) {
-    addYoutube(token, youtubeLink)
-      .then(()=>{
-        setEditState({ ...editState, newLink: ''})
-        getYoutube(token)
-          .then(({ data }) => {
-            let links = []
-            links.push(data)
-            setYoutubeState({ ...youtubeState, links })
-    })
-          .catch(e => console.error(e))
-  })
-      .catch(e=>console.error(e))
-      }  else {
-        setEditState({ ...editState, newLink: '' })
-        // need front end error message saying it has to be a youtube embedded Link
-        console.log('error')
-      }
+
+    if (youtubeLink.includes("<iframe")) {
+      addYoutube(token, youtubeLink)
+        .then(() => {
+          setEditState({ ...editState, newLink: '' })
+          getYoutube(token)
+            .then(({ data }) => {
+              let links = []
+              links.push(data)
+              setYoutubeState({ ...youtubeState, links })
+            })
+            .catch(e => console.error(e))
+        })
+        .catch(e => console.error(e))
+    } else {
+      setEditState({ ...editState, newLink: '' })
+      // need front end error message saying it has to be a youtube embedded Link
+      console.log('error')
+    }
   }
 
   //EDITING PROFILE: FORM SUBMISSION
@@ -160,29 +160,45 @@ if (youtubeLink.includes("<iframe")) {
 
 
             {/* EDIT PROFILE MODAL BUTTON */}
-            <Modal
+            <Modal id="edProfModal" className="center-align"
               actions={[
-                <Button onClick={editProfile} modal="close" node="button" className="black waves-effect waves-light white-text hoverable" >
-                  Save Changes <i className="material-icons right">send</i>
-                </Button>,
-                <span> </span>,
-                <Button flat modal="close" node="button" className="black waves-effect waves-light white-text hoverable" >
+                <Button flat modal="close" node="button" className="waves-effect waves-light" id="editBtn" >
                   Close
-            </Button>
+                </Button>,
+
+                <Button onClick={editProfile} flat modal="close" node="button" className="waves-effect waves-light" id="editBtn">
+                  Save Changes
+                </Button>
               ]}
-              header="Edit Your Basic Info" trigger={editPfButton}>
+              header="Edit Profile"
+              options={{
+                dismissible: true,
+                endingTop: '10%',
+                inDuration: 250,
+                onCloseEnd: null,
+                onCloseStart: null,
+                onOpenEnd: null,
+                onOpenStart: null,
+                opacity: 0.5,
+                outDuration: 250,
+                preventScrolling: true,
+                startingTop: '4%'
+              }}
+              trigger={editPfButton}
+            >
+
               <form>
-                <h6>Username: </h6>
+                <h6>USERNAME</h6>
                 <TextInput placeholder={profileState.username} type="newUsername" id="newUsername" name="username" value={editState.username} onChange={editState.handleInputChange} />
 
-                <h6>Full Name: </h6>
+                <h6>FULL NAME</h6>
                 <TextInput placeholder={profileState.name} type="newName" id="newName" name="name" value={editState.name} onChange={editState.handleInputChange} />
 
-                <h6>Email: </h6>
+                <h6>EMAIL</h6>
                 <TextInput placeholder={profileState.email} type="newEmail" id="newEmail" name="email" value={editState.email} onChange={editState.handleInputChange} />
 
                 {/* BIO */}
-                <h6>Bio: </h6>
+                <h6>BIO</h6>
                 <TextInput placeholder={profileState.bio} type="newBio" id="newBio" name="bio" value={editState.bio} onChange={editState.handleInputChange} />
               </form>
             </Modal>
@@ -198,7 +214,7 @@ if (youtubeLink.includes("<iframe")) {
           <form>
             <TextInput placeholder="Add a link" type="newLink" id="newLink" name="newLink" value={editState.newLink} onChange={editState.handleInputChange} />
 
-            <button onClick={addLink} id="addLink" className="waves-effect waves-light" type="submit" name="action"><i class="material-icons">publish</i>
+            <button onClick={addLink} id="addLink" className="waves-effect waves-light" type="submit" name="action"><i className="material-icons">publish</i>
             </button>
           </form>
         </div>
