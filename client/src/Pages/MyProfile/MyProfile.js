@@ -63,10 +63,6 @@ const MyProfile = () => {
   }, [])
 
 
-
-
-
-
   // Add link is working now 01/31/20 with json token authorization
   const addLink = (event) => {
     event.preventDefault()
