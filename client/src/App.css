@@ -142,7 +142,7 @@ body {
 #edProfModal {
   color: white;
   background: rgb(0, 0, 0);
-  background: linear-gradient(180deg, rgba(0, 0, 0, 1) 7%, rgba(67, 67, 67, 1) 43%, rgba(255, 255, 255, 1) 89%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(67, 67, 67, 1) 15%, rgba(255, 255, 255, 1) 89%);
   border: solid white 1px;
   border-radius: 20px;
 }
