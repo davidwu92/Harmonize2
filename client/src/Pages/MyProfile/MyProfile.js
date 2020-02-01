@@ -139,7 +139,7 @@ const MyProfile = () => {
                   Save Changes
                 </Button>
               ]}
-              header="Edit Your Profile Info"
+              header="Edit Profile"
               options={{
                 dismissible: true,
                 endingTop: '10%',
