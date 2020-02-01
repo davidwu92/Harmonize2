@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import UserAPI from '../../utils/UserAPI'
 import axios from 'axios'
-import { Modal, Button, Textarea } from 'react-materialize'
+import { Modal, Button, TextInput } from 'react-materialize'
 
 //function for making changes to profile
 const { getUser, updateUser, addYoutube, getYoutube } = UserAPI
@@ -51,15 +51,16 @@ const [youtubeState, setYoutubeState] = useState({
   links: []
 })
 
-
-
-getYoutube(token)
+// on page load
+useEffect(() => {
+  getYoutube(token)
     .then(({ data }) => {
       let links = []
       links.push(data)
       setYoutubeState({ ...youtubeState, links })
     })
     .catch(e => console.error(e))
+}, [])
 
 
 
@@ -71,10 +72,25 @@ getYoutube(token)
     event.preventDefault()
     let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
     let youtubeLink = editState.newLink
-
+    
+if (youtubeLink.includes("<iframe")) {
     addYoutube(token, youtubeLink)
-      .then(()=>{console.log("Link added.")})
+      .then(()=>{
+        setEditState({ ...editState, newLink: ''})
+        getYoutube(token)
+          .then(({ data }) => {
+            let links = []
+            links.push(data)
+            setYoutubeState({ ...youtubeState, links })
+    })
+          .catch(e => console.error(e))
+  })
       .catch(e=>console.error(e))
+      }  else {
+        setEditState({ ...editState, newLink: '' })
+        // need front end error message saying it has to be a youtube embedded Link
+        console.log('error')
+      }
   }
 
   //EDITING PROFILE: FORM SUBMISSION
@@ -112,6 +128,7 @@ getYoutube(token)
             {/* EMAIL */}
             <h6>{profileState.email}</h6>
             {/* BIO */}
+
             <h6 className="grey-text">{profileState.bio}</h6>
 
 
@@ -121,7 +138,7 @@ getYoutube(token)
                 <Button onClick={editProfile} modal="close" node="button" className="black waves-effect waves-light white-text hoverable" >
                   Save Changes <i className="material-icons right">send</i>
                 </Button>,
-                <span> </span>, //Janky way to create space between buttons? LOL
+                <span> </span>,
                 <Button flat modal="close" node="button" className="black waves-effect waves-light white-text hoverable" >
                   Close
             </Button>
@@ -129,21 +146,22 @@ getYoutube(token)
               header="Edit Your Basic Info" trigger={editPfButton}>
               <form>
                 <h6>Username: </h6>
-                <Textarea placeholder={profileState.username} type="newUsername" id="newUsername" name="username" value={editState.username} onChange={editState.handleInputChange} />
+                <TextInput placeholder={profileState.username} type="newUsername" id="newUsername" name="username" value={editState.username} onChange={editState.handleInputChange} />
 
                 <h6>Full Name: </h6>
-                <Textarea placeholder={profileState.name} type="newName" id="newName" name="name" value={editState.name} onChange={editState.handleInputChange} />
+                <TextInput placeholder={profileState.name} type="newName" id="newName" name="name" value={editState.name} onChange={editState.handleInputChange} />
 
                 <h6>Email: </h6>
-                <Textarea placeholder={profileState.email} type="newEmail" id="newEmail" name="email" value={editState.email} onChange={editState.handleInputChange} />
+                <TextInput placeholder={profileState.email} type="newEmail" id="newEmail" name="email" value={editState.email} onChange={editState.handleInputChange} />
 
                 {/* BIO */}
                 <h6>Bio: </h6>
-                <Textarea placeholder={profileState.bio} type="newBio" id="newBio" name="bio" value={editState.bio} onChange={editState.handleInputChange} />
+                <TextInput placeholder={profileState.bio} type="newBio" id="newBio" name="bio" value={editState.bio} onChange={editState.handleInputChange} />
               </form>
             </Modal>
           </div>
         </div>
+
         <div className="divider"></div>
       </div>
 
@@ -151,7 +169,7 @@ getYoutube(token)
       <div className="container">
         <div className="row">
           <form>
-            <Textarea placeholder="Add a link" type="newLink" id="newLink" name="newLink" value={editState.newLink} onChange={editState.handleInputChange} />
+            <TextInput placeholder="Add a link" type="newLink" id="newLink" name="newLink" value={editState.newLink} onChange={editState.handleInputChange} />
 
             <button onClick={addLink} id="addLink" className="waves-effect waves-light" type="submit" name="action"><i class="material-icons">publish</i>
             </button>
