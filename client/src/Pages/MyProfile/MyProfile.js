@@ -51,15 +51,16 @@ const [youtubeState, setYoutubeState] = useState({
   links: []
 })
 
-
-
-getYoutube(token)
+// on page load
+useEffect(() => {
+  getYoutube(token)
     .then(({ data }) => {
       let links = []
       links.push(data)
       setYoutubeState({ ...youtubeState, links })
     })
     .catch(e => console.error(e))
+}, [])
 
 
 
@@ -71,10 +72,25 @@ getYoutube(token)
     event.preventDefault()
     let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
     let youtubeLink = editState.newLink
-
+    
+if (youtubeLink.includes("<iframe")) {
     addYoutube(token, youtubeLink)
-      .then(()=>{console.log("Link added.")})
+      .then(()=>{
+        setEditState({ ...editState, newLink: ''})
+        getYoutube(token)
+          .then(({ data }) => {
+            let links = []
+            links.push(data)
+            setYoutubeState({ ...youtubeState, links })
+    })
+          .catch(e => console.error(e))
+  })
       .catch(e=>console.error(e))
+      }  else {
+        setEditState({ ...editState, newLink: '' })
+        // need front end error message saying it has to be a youtube embedded Link
+        console.log('error')
+      }
   }
 
   //EDITING PROFILE: FORM SUBMISSION
