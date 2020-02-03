@@ -62,20 +62,20 @@ const MyProfile = () => {
       .catch(e => console.error(e))
   }
 
-const [youtubeState, setYoutubeState] = useState({
-  links: []
-})
+  const [youtubeState, setYoutubeState] = useState({
+    links: []
+  })
 
-// on page load
-useEffect(() => {
-  getYoutube(token)
-    .then(({ data }) => {
-      let links = []
-      links.push(data)
-      setYoutubeState({ ...youtubeState, links })
-    })
-    .catch(e => console.error(e))
-}, [])
+  // on page load
+  useEffect(() => {
+    getYoutube(token)
+      .then(({ data }) => {
+        let links = []
+        links.push(data)
+        setYoutubeState({ ...youtubeState, links })
+      })
+      .catch(e => console.error(e))
+  }, [])
 
 
   // Add link is working now 01/31/20 with json token authorization
@@ -129,7 +129,7 @@ useEffect(() => {
           {/* PROFILE PIC */}
           <div className="col s4 m2">
             <img className="circle responsive-img" src={profileState.pfPic} alt="Your pf pic" />
-              <Modal
+            <Modal
               actions={[
                 <Button onClick={editPicture} modal="close" node="button" className="black waves-effect waves-light white-text hoverable" >
                   Save Changes <i className="material-icons right">send</i>
@@ -218,11 +218,12 @@ useEffect(() => {
             </button>
           </form>
         </div>
-
-        {/* LINKS/POSTS HERE */}
-        <ProfileContext.Provider value={youtubeState}>
-        <LinksCards />
-        </ProfileContext.Provider>
+        <div className="row">
+          {/* LINKS/POSTS HERE */}
+          <ProfileContext.Provider value={youtubeState}>
+            <LinksCards />
+          </ProfileContext.Provider>
+        </div>
       </div>
     </>
   )
