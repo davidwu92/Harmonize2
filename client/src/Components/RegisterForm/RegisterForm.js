@@ -4,12 +4,14 @@ import UserAPI from '../../utils/UserAPI'
 import {useHistory} from 'react-router-dom'
 import axios from 'axios'
 
+import SearchPlace from '../SearchPlace'
+
 const { addUser } = UserAPI
 
 const RegisterForm = () => {
   const history = useHistory()
 
-  const {name, email, username, password, handleInputChange } = useContext(UserContext)
+  const {name, email, username, password, bio, instruments, skills, handleInputChange } = useContext(UserContext)
 
   const handleAddUser = event => {
     event.preventDefault()
@@ -20,8 +22,11 @@ const RegisterForm = () => {
       password,
       //other relevant pf info that can be edited from profile.
       links: [],
-      bio: `You currently don't have a bio. Click on the edit profile button to tell others about yourself!`,
-      pfPic: ``
+      pfPic: ``,
+      //HARMONIZE INFO
+      bio: bio==='' ? `You currently don't have a bio. Click on the edit profile button to tell others about yourself!` : bio,
+      instruments: [],
+      skills: [],
     })
     .then(({ data }) => {
       history.push('/login')
@@ -54,6 +59,22 @@ const RegisterForm = () => {
               <input placeholder="Password" type="password" id="password" name="password" value={password} onChange={handleInputChange} />
               <label htmlFor="password"></label>
             </div>
+
+            {/* SEARCHPLACe */}
+            <SearchPlace/>
+
+            {/* BIO UPDATE--optional */}
+            <div className="input-field">
+              <input placeholder="(optional) Bio: Tell us about yourself!" type="text" id="bio" name="bio" value={bio} onChange={handleInputChange} />
+              <label htmlFor="bio"></label>
+            </div>
+
+            {/* INSTRUMENTS--optional*/}
+            
+
+            {/* SKILLS--optional */}
+
+
 
               {/* SUBMIT BUTTON */}
               <button onClick={handleAddUser} id="register" className="btn black waves-effect waves-light col s12" type="submit" name="action">Register
