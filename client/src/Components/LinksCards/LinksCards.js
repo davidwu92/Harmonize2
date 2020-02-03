@@ -18,15 +18,18 @@ const LinksCards = () => {
             let sound = str.split(/"/)[11]
             return (
               <div className="col s12 m6 l4">
-                <div className="card">
+                <div className="card black">
                   <div className="card-img">
                     <iframe id="iframe" className="activator" scrolling="no" frameborder="no" allow="autoplay" src={sound}></iframe>
                   </div>
-                  <div className="card-content">
-                    <span className="activator"><i className="material-icons right">more_vert</i></span>
+                  <div className="card-action">
+                    <span className="activator"><i className="material-icons right white-text">more_vert</i></span>
+                    <br></br>
                   </div>
-                  <div className="card-reveal">
-                    <a id="delPost" className="right" href="#">Delete This Post?<i className="material-icons">delete</i></a>
+                  <div id="cardReveal" className="card-reveal">
+                    <span class="card-title grey-text text-darken-4"><i class="material-icons white-text right">close</i></span>
+                    <h5>Would you like to delete this post?</h5>
+                    <a id="delPost" href="#"><i className="material-icons white-text">delete</i></a>
                   </div>
                 </div>
               </div>
@@ -35,19 +38,19 @@ const LinksCards = () => {
             let youtube = str.split(/"/)[5]
             return (
               <div className="col s12 m6 l4">
-                <div className="card">
+                <div className="card black">
                   <div className="card-img">
                     {<iframe id="iframe" className="activator" src={youtube} frameBorder="0"
                       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>}
                   </div>
                   <div className="card-action">
-                    <span className="activator"><i className="material-icons right">more_vert</i></span>
+                    <span className="activator"><i className="material-icons right white-text">more_vert</i></span>
                     <br></br>
                   </div>
-                  <div className="card-reveal">
-                    <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i></span>
+                  <div id="cardReveal" className="card-reveal">
+                    <span class="card-title grey-text text-darken-4"><i class="material-icons  white-text right">close</i></span>
                     <h5>Would you like to delete this post?</h5>
-                    <a id="delPost" href="#"><i className="material-icons">delete</i></a>
+                    <a id="delPost" href="#"><i className="material-icons white-text ">delete</i></a>
                   </div>
                 </div>
               </div>
