@@ -81,7 +81,7 @@ const RegisterForm = () => {
       break;
       case "voice":
         setInfoState({...infoState, familyChosen:document.getElementById('instrumentFamily').value,
-          familyInstruments:["Classical: Soprano", "Classical: Alto","Classical: Tenor", "Classical: Bass", "Pop/Rock", "Background", "Other"]
+          familyInstruments:["Classical: Soprano", "Classical: Alto","Classical: Tenor", "Classical: Bass", "Pop/Rock", "VP/Beatbox", "Other"]
         })
       break;
       default:
@@ -223,7 +223,7 @@ const RegisterForm = () => {
           <label htmlFor="bio"></label>
         </div>
 
-        {/* INSTRUMENTS--optional*/}
+        {/* INSTRUMENTS FORM--optional*/}
         <div className="row grey lighten-4">
           {/* DROPDOWN OF FAMILIES */}
           <Select
@@ -238,7 +238,7 @@ const RegisterForm = () => {
             //when family selected, run familySelect.
             onChange={familySelect}
           >
-            <option value="0" selected>Choose Family</option>
+            <option value="0" selected>Select Family</option>
             <option value="strings">Strings</option>
             <option value="woodwinds">Woodwinds</option>
             <option value="brass">Brass</option>
@@ -263,7 +263,7 @@ const RegisterForm = () => {
           {otherInstrumentField}   
         </div>
 
-        {/* SKILLS--optional*/}
+        {/* SKILLS FORM--optional*/}
         <div className="row grey lighten-4">
           {/* DROPDOWN OF SKILLS */}
           <Select
@@ -305,7 +305,6 @@ const RegisterForm = () => {
           {/* "OTHER SKILL" INPUT FIELD */}
           {otherSkillField}
         </div>
-
 
         {/* SUBMIT REGISTRATION BUTTON */}
         <button onClick={handleAddUser} id="register" className="btn black waves-effect waves-light col s12" type="submit" name="action">Register
