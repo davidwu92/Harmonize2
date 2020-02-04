@@ -8,7 +8,7 @@ module.exports = (model, Schema) => {
         bio: String,
         pfPic: String,
         instruments: Array,
-        Skills: Array,
+        skills: Array,
     })
 
   User.plugin(require('passport-local-mongoose'))

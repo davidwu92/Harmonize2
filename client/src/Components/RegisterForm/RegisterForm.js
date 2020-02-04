@@ -45,13 +45,15 @@ const RegisterForm = () => {
     // instrument variables
     familyChosen: '',
     familyInstruments: [],
-    otherChosen: false,
+    otherInstrumentSelected: false,
     otherInstrument: '',
     instrumentsAdded: [],
 
     // skill variables
     skillChosen:'',
-    skillsAdded:[]
+    skillsAdded:[],
+    otherSkill: '',
+    otherSkillSelected: false
   })
   infoState.handleInputChange = (event) => {
     setInfoState({ ...infoState, [event.target.name]: event.target.value })
@@ -89,21 +91,26 @@ const RegisterForm = () => {
   //Add selected instrument (from the familyDropdowns), push to infoState.instrumentsAdded.
   const instrumentSelected = () =>{
     if (document.getElementById("instrumentSelection").value!=="Other"){
-      let tempInstruments = infoState.instrumentsAdded
-      tempInstruments.push(document.getElementById("instrumentSelection").value)
-      setInfoState({...infoState, familyChosen:'', otherChosen:false, instrumentsAdded: tempInstruments})
-      document.getElementById('instrumentFamily').value='0'
+      if (!infoState.instrumentsAdded.includes(document.getElementById("instrumentSelection").value)){
+        let tempInstruments = infoState.instrumentsAdded
+        tempInstruments.push(document.getElementById("instrumentSelection").value)
+        setInfoState({...infoState, familyChosen:'', otherInstrumentSelected:false, instrumentsAdded: tempInstruments})
+        document.getElementById('instrumentFamily').value='0'
+      } else {
+        alert("You already added that instrument.")
+        document.getElementById('instrumentFamily').value='0'
+      }
     } else {
       //Selected "Other"
-      setInfoState({...infoState, otherChosen: true})
+      setInfoState({...infoState, otherInstrumentSelected: true})
     }
   }
   //"Add 'Other' instrument" button
-  const addOther = (event) =>{
+  const addOtherInstrument = (event) =>{
     event.preventDefault()
     let tempInstruments = infoState.instrumentsAdded
     tempInstruments.push(document.getElementById("otherInstrument").value)
-    setInfoState({...infoState, familyChosen:'', otherChosen:false, instrumentsAdded: tempInstruments})
+    setInfoState({...infoState, familyChosen:'', otherInstrumentSelected:false, instrumentsAdded: tempInstruments})
     document.getElementById('instrumentFamily').value='0'
   }
   //Remove an instrument
@@ -132,17 +139,57 @@ const RegisterForm = () => {
     </div>
     : null
   //text input created upon selecting Other. Disappears once Add Instrument btn clicked.
-  const otherSelected = infoState.otherChosen ? 
+  const otherInstrumentField = infoState.otherInstrumentSelected ? 
     <div className="input-field">
       <input placeholder="What instrument?" type="text" id="otherInstrument" name="otherInstrument" value={infoState.otherInstrument} onChange={infoState.handleInputChange} />
       <label htmlFor="otherInstrument"></label>
-      <button onClick={addOther}>Add Instrument</button>
+      <button onClick={addOtherInstrument}>Add Instrument</button>
     </div>
     : null
     
     //~~~~~~~~~~SKILLS FUNCTIONS~~~~~~~~~~~~~~
-  
-
+  //Selecting a Skill from Dropdown
+  const skillSelect = () => {
+    //Add a skill from the dropdown.
+    if (document.getElementById("skillsDropdown").value!=="Other"){
+      if(!infoState.skillsAdded.includes(document.getElementById("skillsDropdown").value)){
+        let tempSkills = infoState.skillsAdded
+        tempSkills.push(document.getElementById("skillsDropdown").value)
+        setInfoState({...infoState, skillsAdded: tempSkills, otherSkillSelected: false})
+        document.getElementById('skillsDropdown').value='0'
+      } else {
+        document.getElementById('skillsDropdown').value='0'
+        alert("You already added that skill.")
+      }
+    } else {
+      //Selected "Other"
+      setInfoState({...infoState, otherSkillSelected: true})
+    }
+  }
+  //"Add 'Other' skill" button
+  const addOtherSkill = (event) =>{
+    event.preventDefault()
+    let tempSkills = infoState.skillsAdded
+    tempSkills.push(document.getElementById("otherSkill").value)
+    setInfoState({...infoState, otherSkillSelected:false, skillssAdded: tempSkills})
+    document.getElementById('skillsDropdown').value='0'
+  }
+  //Remove a skill
+  const removeSkill = (event) =>{
+    event.preventDefault()
+    let tempSkills= infoState.skillsAdded.filter(function(value){
+      return value!==event.target.id
+    })
+    setInfoState({...infoState, skillsAdded: tempSkills})
+  }
+  //text input created upon selecting Other skill.
+  const otherSkillField = infoState.otherSkillSelected ? 
+  <div className="input-field">
+    <input placeholder="What skill?" type="text" id="otherSkill" name="otherSkill" value={infoState.otherSkill} onChange={infoState.handleInputChange} />
+    <label htmlFor="otherSkill"></label>
+    <button onClick={addOtherSkill}>Add Skill</button>
+  </div>
+  : null
 
   return (
     <div className="container">
@@ -177,17 +224,18 @@ const RegisterForm = () => {
         </div>
 
         {/* INSTRUMENTS--optional*/}
-        <div className="row grey lighten-5">
-          {/* INSTRUMENT FAMILIES */}
+        <div className="row grey lighten-4">
+          {/* DROPDOWN OF FAMILIES */}
           <Select
             id="instrumentFamily"
-            label="What instruments do you play?"
+            label="(Optional) What instruments do you play?"
             options={{classes: '',dropdownOptions: {alignment: 'left',
             autoTrigger: true,closeOnClick: true,constrainWidth: true,
             container: null,coverTrigger: true,hover: false,
             inDuration: 150,onCloseEnd: null,onCloseStart: null,
             onOpenEnd: null,onOpenStart: null,outDuration: 250    }
             }}
+            //when family selected, run familySelect.
             onChange={familySelect}
           >
             <option value="0" selected>Choose Family</option>
@@ -197,10 +245,8 @@ const RegisterForm = () => {
             <option value="percussion">Percussion</option>
             <option value="voice">Voice</option>
           </Select>
-          
-          {/* FAMILY'S DROPDOWN */}
+          {/* INSTRUMENT DROPDOWN of selected family*/}
           {familyDropdowns}
-
           {/* INSTRUMENTS ADDED SO FAR */}
           <div className="right-align">
             <h6>Instrument(s) added: </h6>
@@ -213,33 +259,53 @@ const RegisterForm = () => {
                 )) : null
               }
           </div> 
-
-          {/* "OTHER" INPUT FIELD*/}
-          {otherSelected}   
+          {/* "OTHER INSTRUMENT" INPUT FIELD*/}
+          {otherInstrumentField}   
         </div>
 
         {/* SKILLS--optional*/}
-        <div className="row grey lighten-1">
-          {/* SELECT SKILL */}
+        <div className="row grey lighten-4">
+          {/* DROPDOWN OF SKILLS */}
           <Select
             id="skillsDropdown"
-            label="What other skills can you list?"
+            label="(Optional) What other skills can you list?"
             options={{classes: '',dropdownOptions: {alignment: 'left',
             autoTrigger: true,closeOnClick: true,constrainWidth: true,
             container: null,coverTrigger: true,hover: false,
             inDuration: 150,onCloseEnd: null,onCloseStart: null,
             onOpenEnd: null,onOpenStart: null,outDuration: 250    }
             }}
+            //when skill selected, run skillSelect.
             onChange={skillSelect}
           >
-            <option value="0" selected>Choose Family</option>
-            <option value="strings">Strings</option>
-            <option value="woodwinds">Woodwinds</option>
-            <option value="brass">Brass</option>
-            <option value="percussion">Percussion</option>
-            <option value="voice">Voice</option>
+            <option value="0" selected>Select Skill(s)</option>
+            <option value="Live Performer">Live Performer</option>
+            <option value="Recording Artist">Recording Artist</option>
+            <option value="DJ">DJ</option>
+            <option value="Producer">Producer</option>
+            <option value="Composer (Classical)">Composer (Classical)</option>
+            <option value="Songwriter (Pop/Rock)">Songwriter (Pop/Rock)</option>
+            <option value="Lyricist">Lyricist</option>
+            <option value="Arranger">Arranger</option>
+            <option value="Amateur/Enthusiast">Amateur/Enthusiast</option>
+            <option value="Other">Other</option>
           </Select>
+          {/* SKILLS ADDED SO FAR */}
+          <div className="right-align">
+          <h6>Skill(s) added: </h6>
+            {
+              infoState.skillsAdded ? infoState.skillsAdded.map((skill)=>(
+                <p>
+                  {skill} 
+                  <i id={skill} onClick={removeSkill} className="tiny material-icons">clear</i>
+                </p>
+              )) : null
+            }
+          </div>
+          {/* "OTHER SKILL" INPUT FIELD */}
+          {otherSkillField}
         </div>
+
 
         {/* SUBMIT REGISTRATION BUTTON */}
         <button onClick={handleAddUser} id="register" className="btn black waves-effect waves-light col s12" type="submit" name="action">Register
