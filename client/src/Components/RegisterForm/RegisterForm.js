@@ -14,7 +14,6 @@ const RegisterForm = () => {
   const history = useHistory()
 
   const {name, email, username, password, bio, handleInputChange } = useContext(UserContext)
-  let skills = []
   // ADD USER/REGISTER BUTTON
   const handleAddUser = event => {
     event.preventDefault()
@@ -108,10 +107,14 @@ const RegisterForm = () => {
   //"Add 'Other' instrument" button
   const addOtherInstrument = (event) =>{
     event.preventDefault()
-    let tempInstruments = infoState.instrumentsAdded
-    tempInstruments.push(document.getElementById("otherInstrument").value)
-    setInfoState({...infoState, familyChosen:'', otherInstrumentSelected:false, instrumentsAdded: tempInstruments})
-    document.getElementById('instrumentFamily').value='0'
+    if(document.getElementById("otherInstrument").value && !infoState.instrumentsAdded.includes(document.getElementById("otherInstrument").value)){
+      let tempInstruments = infoState.instrumentsAdded
+      tempInstruments.push(document.getElementById("otherInstrument").value)
+      setInfoState({...infoState, familyChosen:'', otherInstrument:"", otherInstrumentSelected:false, instrumentsAdded: tempInstruments})
+      document.getElementById('instrumentFamily').value='0'
+    } else {
+      alert("Invalid instrument input.")
+    }
   }
   //Remove an instrument
   const removeInstrument = (event) =>{
@@ -143,7 +146,7 @@ const RegisterForm = () => {
     <div className="input-field">
       <input placeholder="What instrument?" type="text" id="otherInstrument" name="otherInstrument" value={infoState.otherInstrument} onChange={infoState.handleInputChange} />
       <label htmlFor="otherInstrument"></label>
-      <button onClick={addOtherInstrument}>Add Instrument</button>
+      <button className="btn black waves-effect waves-light col s12" onClick={addOtherInstrument}>Add Instrument</button>
     </div>
     : null
     
@@ -169,10 +172,14 @@ const RegisterForm = () => {
   //"Add 'Other' skill" button
   const addOtherSkill = (event) =>{
     event.preventDefault()
-    let tempSkills = infoState.skillsAdded
-    tempSkills.push(document.getElementById("otherSkill").value)
-    setInfoState({...infoState, otherSkillSelected:false, skillssAdded: tempSkills})
-    document.getElementById('skillsDropdown').value='0'
+    if(document.getElementById("otherSkill").value && !infoState.skillsAdded.includes(document.getElementById("otherSkill").value)){
+      let tempSkills = infoState.skillsAdded
+      tempSkills.push(document.getElementById("otherSkill").value)
+      setInfoState({...infoState, otherSkillSelected:false, otherSkill: "", skillssAdded: tempSkills})
+      document.getElementById('skillsDropdown').value='0'
+    } else {
+      alert("Invalid skill input.")
+    }
   }
   //Remove a skill
   const removeSkill = (event) =>{
@@ -187,7 +194,7 @@ const RegisterForm = () => {
   <div className="input-field">
     <input placeholder="What skill?" type="text" id="otherSkill" name="otherSkill" value={infoState.otherSkill} onChange={infoState.handleInputChange} />
     <label htmlFor="otherSkill"></label>
-    <button onClick={addOtherSkill}>Add Skill</button>
+    <button className="btn black waves-effect waves-light col s12" onClick={addOtherSkill}>Add Skill</button>
   </div>
   : null
 
