@@ -15,7 +15,10 @@ import Home from './Pages/Home'
 import LogIn from './Pages/LogIn'
 import Register from './Pages/Register'
 import MyProfile from './Pages/MyProfile'
+
 import Search from './Pages/Search'
+import Instruments from './Pages/Instruments'
+import Skills from './Pages/Skills'
 import UserContext from './utils/UserContext'
 import UserAPI from './utils/UserAPI'
 import './App.css'
@@ -61,7 +64,10 @@ function App() {
           <Route path="/myprofile">
             <LoggedinNav />
             <MyProfile />
+            <Instruments/>
+            <Skills />
           </Route>
+
           <Route path="/search">
             <LoggedinNav />
             <Search />
