@@ -47,6 +47,8 @@ const MyProfile = () => {
   const [editState, setEditState] = useState({
     name: '', email: '', username: '', bio: '', pfPic: '',
     newLink: '',
+    instruments: [],
+    skills: [],
   })
 
   //handles input changes for EDITING FORMS on this page.
@@ -129,7 +131,7 @@ const MyProfile = () => {
   return (
     <>
       <div className="container">
-        <div className="row">
+        <div className="row"> {/* TOP ROW: PF PIC, BASIC INFO */}
           {/* PROFILE PIC */}
           <div className="col s4 m2">
             <img className="circle responsive-img" src={profileState.pfPic} alt="Your pf pic" />
@@ -160,32 +162,6 @@ const MyProfile = () => {
             <h6>{profileState.email}</h6>
             {/* BIO */}
             <h6 className="grey-text">{profileState.bio}</h6>
-            {/* INSTRUMENTS/SKILLS */}
-            <div className="row grey lighten-5">
-                {/* INSTRUMENTS */}
-              <div className="col s6 m6">
-                {
-                  profileState.instruments.length ? <>
-                    <h6>My Instruments</h6>
-                    {profileState.instruments.map(instrument => (
-                      <p>{instrument + " "}</p>
-                    ))}
-                  </> : null
-                }
-              </div>
-                {/* SKILLS */}
-              <div className="col s6 m6">
-                {
-                  profileState.skills.length ? <>
-                  <h6>My Skills</h6>
-                  {profileState.skills.map(skill => (
-                    <p>{skill + " "}</p>
-                  ))}
-                  </> : null
-                }
-              </div>
-            </div>
-
             {/* EDIT PROFILE MODAL BUTTON */}
             <Modal id="edProfModal" className="center-align"
               actions={[
@@ -230,7 +206,31 @@ const MyProfile = () => {
             </Modal>
           </div>
         </div>
-
+        
+        <div className="row grey lighten-5"> {/* INSTRUMENTS/SKILLS */}
+            {/* INSTRUMENTS */}
+          <div className="col s6 m6">
+            {
+              profileState.instruments.length ? <>
+                <h6>My Instruments</h6>
+                {profileState.instruments.map(instrument => (
+                  <p>{instrument + " "}</p>
+                ))}
+              </> : null
+            }
+          </div>
+            {/* SKILLS */}
+          <div className="col s6 m6">
+            {
+              profileState.skills.length ? <>
+              <h6>My Skills</h6>
+              {profileState.skills.map(skill => (
+                <p>{skill + " "}</p>
+              ))}
+              </> : null
+            }
+          </div>
+        </div>
         <div className="divider"></div>
       </div>
 
