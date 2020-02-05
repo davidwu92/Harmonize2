@@ -110,6 +110,10 @@ const MyProfile = () => {
     }
   }
 
+  const deleteVideo = () => {
+    
+  }
+
   //EDITING PROFILE: FORM SUBMISSION
   const editPfButton = <button id="editBtn" className="waves-effect waves-light right"><i className="fas fa-user-edit"></i></button>;
   const editProfile = (event) => {
