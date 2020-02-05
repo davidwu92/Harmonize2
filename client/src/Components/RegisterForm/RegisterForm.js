@@ -24,7 +24,7 @@ const RegisterForm = () => {
       pfPic: ``
     })
       .then(({ data }) => {
-        if (addUser) {
+        if (addUser === true) {
           history.push('/login')
         } else {
           //ALERT MESSAGE 

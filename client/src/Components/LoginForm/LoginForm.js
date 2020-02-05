@@ -32,8 +32,8 @@ const LoginForm = () => {
         } else {
           // ALERT MESSAGE
           document.getElementById('alertMsg').innerHTML = `
-          *Please enter the correct Info
-          `
+            *Please enter the correct Info
+            `
           console.log('Failed Login Attempt')
         }
       })
