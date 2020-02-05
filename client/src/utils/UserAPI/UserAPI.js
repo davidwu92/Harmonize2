@@ -34,6 +34,8 @@ const UserAPI = {
       }
     }),
 
+    deleteYoutube: (id) => axios.delete(`youtubes/${id}`),
+
   //Register new user
   addUser: (user) => axios.post('/users', user),
   

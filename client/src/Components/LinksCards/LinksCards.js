@@ -13,7 +13,6 @@ const LinksCards = () => {
       {
         links.map(link => link.map(ylink => {
           let str = ylink.link
-
           if (str.includes('soundcloud')) {
             let sound = str.split(/"/)[11]
             return (
