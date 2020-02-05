@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import UserAPI from '../../utils/UserAPI'
+import SearchedAPI from '../../utils/SearchAPI'
 import axios from 'axios'
 
-//function for making changes to profile
-const {getUser} = UserAPI
+const {visitProfile} = SearchedAPI
 
 const OtherProfile = () => {
   
@@ -14,14 +13,16 @@ const OtherProfile = () => {
     username: '',
     bio: '',
     links: [],
-    pfPic: ''
+    pfPic: '',
+    instruments: [],
+    skills: [],
   })
 
 
-  //use an ID TO GRAB user data.
-  let profileId = JSON.parse(JSON.stringify(localStorage.getItem("token")))
+  //use an ID TO GRAB user data; ID is grabbed from Search page.
+  let profileId = JSON.parse(JSON.stringify(sessionStorage.getItem("token")))
   //need a get new Other User API and route.
-  getUser(profileId)
+  visitProfile(profileId)
     .then(({data})=>{
       setProfileState({ ...profileState, 
         name: data.name,
@@ -29,50 +30,58 @@ const OtherProfile = () => {
         username: data.username,
         links: data.links,
         bio: data.bio,
-        pfPic: data.pfPic
+        pfPic: data.pfPic,
+        instruments: data.instruments,
+        skills: data.skills,
       })
     })
     .catch((e)=>console.error(e))
 
-  //Trying some styling stuff.
-  let editStyle = {
-    position: "relative",
-    right: "0px",
-  }
-
   return (
     <>
       <div className="container">
-        <div className="row valign-wrapper">
-          <div className="col s2">
-            <img
-              className="circle responsive-img"
-              //PROFILE PIC
-              src={profileState.pfPic}
-              alt="Your pf pic"/>
+        <div className="row">
+          {/* PROFILE PIC */}
+          <div className="col s4 m2">
+            <img className="circle responsive-img" src={profileState.pfPic} alt="Your pf pic" />
           </div>
-          <div className="col s10">
-            <h4 className="black-text">
-              {/* USERNAME */}
-              {profileState.username}
-            </h4>
-            <h6 className="grey-text">
-              {/* NAME */}
-              {profileState.name}
-              {/* BIO */}
-              {profileState.bio}
-            </h6>
+          {/* BASIC INFO */}
+          <div className="col s8 m10">
+            {/* USERNAME */}
+            <h4 className="black-text">{profileState.name}</h4>
+            {/* NAME */}
+            <h5>{profileState.username}</h5>
+            {/* EMAIL */}
+            <h6>{profileState.email}</h6>
+            {/* BIO */}
+            <h6 className="grey-text">{profileState.bio}</h6>
+            {/* INSTRUMENTS/SKILLS */}
+            <div className="row grey lighten-5">
+                {/* INSTRUMENTS */}
+              <div className="col s6 m6">
+                {
+                  profileState.instruments.length ? <>
+                    <h6>My Instruments</h6>
+                    {profileState.instruments.map(instrument => (
+                      <p>{instrument + " "}</p>
+                    ))}
+                  </> : null
+                }
+              </div>
+                {/* SKILLS */}
+              <div className="col s6 m6">
+                {
+                  profileState.skills.length ? <>
+                  <h6>My Skills</h6>
+                  {profileState.skills.map(skill => (
+                    <p>{skill + " "}</p>
+                  ))}
+                  </> : null
+                }
+              </div>
+            </div>
           </div>
-          {/* EDIT PROFILE BUTTON */}
-          <button style={editStyle} id="editProfile">Edit<i className=" fas fa-user-edit"></i></button>
         </div>
-        {/* FORM FOR POSTING LINKS */}
-        <form>
-          <div className="input-field">
-            <input placeholder="newLink" type="newLink" id="newLink" name="newLink"/>
-            <label htmlFor="newLink"></label>
-          </div>
-        </form>
 
         <div>
           {/* LINKS/POSTS HERE */}

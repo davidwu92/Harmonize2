@@ -15,6 +15,7 @@ import Home from './Pages/Home'
 import LogIn from './Pages/LogIn'
 import Register from './Pages/Register'
 import MyProfile from './Pages/MyProfile'
+import OtherProfile from './Pages/OtherProfile'
 import Search from './Pages/Search'
 import UserContext from './utils/UserContext'
 import UserAPI from './utils/UserAPI'
@@ -32,6 +33,7 @@ function App() {
     email: '',
     username: '',
     password: '',
+    bio: '',
   })
   
 
@@ -65,6 +67,10 @@ function App() {
           <Route path="/search">
             <LoggedinNav />
             <Search />
+          </Route>
+          <Route path="/otherprofile">
+            <LoggedinNav />
+            <OtherProfile />
           </Route>
         </Switch>
       </Router>

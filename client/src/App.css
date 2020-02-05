@@ -11,7 +11,6 @@ body {
   width: 100%;
 }
 
-
 /* SEARCH BAR*/
 
 #searchForm {
@@ -85,54 +84,55 @@ body {
 #editBtn {
   cursor: pointer;
   outline: none;
-    position: relative;
-    z-index: 3;
-    background: transparent;
-    color: #07051a;
-    font-size: 14px;
-    border-color: #07051a;
-    border-style: solid;
-    border-width: 2px;
-    border-radius: 22px;
-    padding: 10px 40px;
-    text-transform: uppercase;
-    transition: all 0.2s linear;
+  position: relative;
+  z-index: 3;
+  background: transparent;
+  color: #07051a;
+  font-size: 14px;
+  border-color: #07051a;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 22px;
+  text-transform: uppercase;
+  transition: all 0.2s linear;
+  margin: 2px;
 }
 
-  #editBtn:hover {
-    color: white;
-    background: #07051a;
-    border-color: white;
-    transition: all 0.2s linear;
-  }
-  #editBtn:active {
-    border-radius: 22px;
-  }
-  #editBtn {
-    font-weight: 700;
-    color: #07051a;
-    border-color: white;
-    background: white;
-  }
-  #editBtn:hover {
-    color: white;
-    background: #07051a;
-    border-color: white;
-  }
-
-  #addLink{
-    font-size: 35px;
-    margin-top: 20px;
-    background-color: white;
-    color: black;
-    border-radius: 15px;
-    -webkit-border-radius: 15px;
-    -moz-border-radius: 15px;
-    -ms-border-radius: 15px;
-    -o-border-radius: 15px;
+#editBtn:hover {
+  color: white;
+  background: #07051a;
+  border-color: white;
+  transition: all 0.2s linear;
 }
 
-#addLink:hover{
+#editBtn:active {
+  border-radius: 22px;
+}
+
+#editBtn {
+  font-weight: 700;
+  color: #07051a;
+  border-color: black;
+}
+
+#editBtn:hover {
+  color: white;
+  background: #07051a;
+  border-color: white;
+}
+
+#addLink {
+  font-size: 35px;
+  background-color: white;
+  color: black;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+}
+
+#addLink:hover {
   background-color: black;
   color: rgb(117, 117, 116);
 }
@@ -151,6 +151,7 @@ body {
 .row{
   background-color: rgb(54, 52, 48);
   color: white;
+<<<<<<< HEAD
   margin-top: -10px
 }
 
@@ -161,4 +162,47 @@ body {
 
 .loading-img{
   margin-top: -20px;
+=======
+}
+
+/* Edit Prof Modal */
+
+#edProfModal {
+  color: white;
+  background: rgb(0, 0, 0);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(67, 67, 67, 1) 15%, rgba(255, 255, 255, 1) 89%);
+  border: solid white 1px;
+  border-radius: 20px;
+}
+
+#newUsername, #newName, #newEmail, #newBio, #newLink {
+  border: 2px solid black;
+  padding: .25em .5em .3125em;
+  color: black;
+  border-radius: .25em;
+  background: transparent;
+  transition: all .100s;
+  bottom: 4em;
+  left: 50%;
+  width: 18em;
+  box-sizing: border-box;
+}
+
+/* IFRAME*/
+
+#iframe {
+  height: 100%;
+  width: 100%;
+}
+
+#delPost {
+  color: black;
+  cursor: pointer;
+}
+
+#cardReveal {
+  background: rgb(13, 14, 14);
+  background: linear-gradient(180deg, rgba(13, 14, 14, 1) 0%, rgba(175, 175, 175, 1) 100%, rgba(255, 255, 255, 1) 100%);
+  color: white;
+>>>>>>> 1e908fe9d4e10f36ab9fa13723c675b339d1c0ce
 }
