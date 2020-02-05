@@ -37,7 +37,7 @@ const LoginForm = () => {
           console.log('Failed Login Attempt')
         }
       })
-      .catch((e) => console.error(e))
+      .catch(e => console.error(e))
   }
 
   return (
