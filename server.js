@@ -1,7 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const { join } = require('path')
-// passport modules
+// passport modules: STAY HERE PLS
 const passport = require('passport')
 const { Strategy } = require('passport-local')
 const { Strategy: JWTStrategy, ExtractJwt } = require('passport-jwt')
