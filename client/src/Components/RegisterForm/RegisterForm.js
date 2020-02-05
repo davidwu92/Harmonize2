@@ -85,7 +85,7 @@ const RegisterForm = () => {
       break;
       case "voice":
         setInfoState({...infoState, familyChosen:document.getElementById('instrumentFamily').value,
-          familyInstruments:["Classical: Soprano", "Classical: Alto","Classical: Tenor", "Classical: Bass", "Pop/Rock", "VP/Beatbox", "Other"]
+          familyInstruments:["Classical: Soprano", "Classical: Alto","Classical: Tenor", "Classical: Bass", "Pop/Rock Vocalist", "VP/Beatbox", "Other"]
         })
       break;
       default:
