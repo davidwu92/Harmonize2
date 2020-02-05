@@ -5,6 +5,9 @@ const UserContext = createContext({
   email: '',
   username: '',
   password: '',
+  bio: '',
+  instruments: [],
+  skills: [],
   handleInputChange: () => { },
   // handleFormSubmit: () => { }
 })
