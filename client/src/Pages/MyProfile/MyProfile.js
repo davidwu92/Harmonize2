@@ -121,6 +121,7 @@ const MyProfile = () => {
 
   //EDITING PROFILE: FORM SUBMISSION
   const editPfButton = <button id="editBtn" className="waves-effect waves-light right"><i id="editBtnIcon" className="fas fa-user-edit"></i></button>;
+  // When edit button is clicked, update infoState's instrumentsAdded/skillsAdded arrays.
   const updateInfoState =(event)=>{
     if(event.target.id === "editBtnIcon"){
       setInfoState({
@@ -327,7 +328,7 @@ const MyProfile = () => {
                 <span> </span>,
                 <Button flat modal="close" node="button" className="black waves-effect waves-light white-text hoverable" >
                   Close
-            </Button>
+                </Button>
               ]}
               header="Edit Your Profile Picture" trigger={editPfButton}>
               <form>
