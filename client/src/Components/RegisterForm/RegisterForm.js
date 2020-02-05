@@ -18,27 +18,30 @@ const RegisterForm = () => {
   const handleAddUser = event => {
     event.preventDefault()
     addUser({
-      name,
-      email,
-      username,
-      password,
+      name, email, username,
+      password: password.length >= 4 ? password : "",
       //other relevant pf info that can be edited from profile.
-      links: [],
-      pfPic: ``,
+      links: [], pfPic: ``,
       //HARMONIZE INFO
       bio: bio==='' ? `You currently don't have a bio. Click on the edit profile button to tell others about yourself!` : bio,
       instruments: infoState.instrumentsAdded,
       skills: infoState.skillsAdded,
     })
       .then(({ data }) => {
-        if (addUser === true) {
+        if (data === "OK") {
           history.push('/login')
+        } else if (data.e.name == "UserExistsError") {
+          //Error: username in use.
+          document.getElementById('alertMsg').innerHTML = `*That username is already in use.`
+        } else if (data.e.name == "MissingPasswordError") {
+          //Error: Password not long enough/missing.
+          document.getElementById('alertMsg').innerHTML = `*Your password must be at least 4 characters long.`
+        } else if (data.e.keyValue.email) {
+          //Error: email in use. 
+          document.getElementById('alertMsg').innerHTML = `*That email is already in use.`
         } else {
-          //ALERT MESSAGE 
-          document.getElementById('alertMsg').innerHTML = `
-          *Please enter the correct Info
-          `
-          console.error('Failed to Register')
+          //Default error; most likely never triggers.
+          document.getElementById('alertMsg').innerHTML = `*There is an issue with your registration.`
         }
       })
       .catch(e => console.error(e))
@@ -83,9 +86,13 @@ const RegisterForm = () => {
         setInfoState({...infoState, familyChosen:document.getElementById('instrumentFamily').value,
         familyInstruments:["Drumset", "Orchestral Percussion", "Marimba", "Xylophone", "Glockenspiel", "Other"]})
       break;
+      case "keyboard":
+        setInfoState({...infoState, familyChosen:document.getElementById('instrumentFamily').value,
+        familyInstruments:["Piano", "Organ", "Harpsichord", "Clavichord", "Electric Keyboard", "Other"]})
+      break;
       case "voice":
         setInfoState({...infoState, familyChosen:document.getElementById('instrumentFamily').value,
-          familyInstruments:["Classical: Soprano", "Classical: Alto","Classical: Tenor", "Classical: Bass", "Pop/Rock Vocalist", "VP/Beatbox", "Other"]
+          familyInstruments:["Classical: Soprano", "Classical: Alto","Classical: Tenor", "Classical: Bass", "Pop/Rock Vocalist", "Jazz Vocalist", "VP/Beatbox", "Other"]
         })
       break;
       default:
@@ -225,7 +232,7 @@ const RegisterForm = () => {
         </div>
         {/* PASSWORD */}
         <div className="input-field">
-          <input placeholder="Password" type="password" id="password" name="password" value={password} onChange={handleInputChange} />
+          <input placeholder="Password (4 character minimum)" type="password" id="password" name="password" value={password} onChange={handleInputChange} />
           <label htmlFor="password"></label>
         </div>
         {/* SEARCHPLACE */}
@@ -256,6 +263,7 @@ const RegisterForm = () => {
             <option value="woodwinds">Woodwinds</option>
             <option value="brass">Brass</option>
             <option value="percussion">Percussion</option>
+            <option value="keyboard">Keyboard</option>
             <option value="voice">Voice</option>
           </Select>
           {/* INSTRUMENT DROPDOWN of selected family*/}
