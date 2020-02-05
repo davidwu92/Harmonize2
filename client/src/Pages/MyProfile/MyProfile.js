@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import UserAPI from '../../utils/UserAPI'
-import axios from 'axios'
-import { Modal, Button, TextInput, Textarea } from 'react-materialize'
 import LinksCards from '../../Components/LinksCards'
 import ProfileContext from '../../utils/ProfileContext'
+import { Modal, Button, TextInput } from 'react-materialize'
+import axios from 'axios'
 
 //function for making changes to profile
 const { getUser, updateUser, addYoutube, getYoutube } = UserAPI

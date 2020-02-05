@@ -27,7 +27,7 @@ const LinksCards = () => {
                     <br></br>
                   </div>
                   <div id="cardReveal" className="card-reveal">
-                    <span class="card-title grey-text text-darken-4"><i class="material-icons white-text right">close</i></span>
+                    <span className="card-title grey-text text-darken-4"><i className="material-icons white-text right">close</i></span>
                     <h5>Would you like to delete this post?</h5>
                     <a id="delPost" href="#"><i className="material-icons white-text">delete</i></a>
                   </div>
@@ -48,7 +48,7 @@ const LinksCards = () => {
                     <br></br>
                   </div>
                   <div id="cardReveal" className="card-reveal">
-                    <span class="card-title grey-text text-darken-4"><i class="material-icons  white-text right">close</i></span>
+                    <span className="card-title grey-text text-darken-4"><i className="material-icons  white-text right">close</i></span>
                     <h5>Would you like to delete this post?</h5>
                     <a id="delPost" href="#"><i className="material-icons white-text ">delete</i></a>
                   </div>
