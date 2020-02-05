@@ -1,8 +1,14 @@
 require('dotenv').config()
 const express = require('express')
 const { join } = require('path')
+// passport modules
+const passport = require('passport')
+const { Strategy } = require('passport-local')
+const { Strategy: JWTStrategy, ExtractJwt } = require('passport-jwt')
+
 const app = express()
 const { User } = require('./models')
+
 
 //middleware
 app.use(express.static(join(__dirname, 'client', 'build')))
