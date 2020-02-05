@@ -89,16 +89,21 @@ const RegisterForm = () => {
         })
         break;
       case "percussion":
-        setInfoState({...infoState, familyChosen:document.getElementById('instrumentFamily').value,
-        familyInstruments:["Drumset", "Orchestral Percussion", "Marimba", "Xylophone", "Glockenspiel", "Other"]})
-      break;
+        setInfoState({
+          ...infoState, familyChosen: document.getElementById('instrumentFamily').value,
+          familyInstruments: ["Drumset", "Orchestral Percussion", "Marimba", "Xylophone", "Glockenspiel", "Other"]
+        })
+        break;
       case "keyboard":
-        setInfoState({...infoState, familyChosen:document.getElementById('instrumentFamily').value,
-        familyInstruments:["Piano", "Organ", "Harpsichord", "Clavichord", "Electric Keyboard", "Other"]})
-      break;
+        setInfoState({
+          ...infoState, familyChosen: document.getElementById('instrumentFamily').value,
+          familyInstruments: ["Piano", "Organ", "Harpsichord", "Clavichord", "Electric Keyboard", "Other"]
+        })
+        break;
       case "voice":
-        setInfoState({...infoState, familyChosen:document.getElementById('instrumentFamily').value,
-          familyInstruments:["Classical: Soprano", "Classical: Alto","Classical: Tenor", "Classical: Bass", "Pop/Rock Vocalist", "Jazz Vocalist", "VP/Beatbox", "Other"]
+        setInfoState({
+          ...infoState, familyChosen: document.getElementById('instrumentFamily').value,
+          familyInstruments: ["Classical: Soprano", "Classical: Alto", "Classical: Tenor", "Classical: Bass", "Pop/Rock Vocalist", "Jazz Vocalist", "VP/Beatbox", "Other"]
         })
         break;
       default:
