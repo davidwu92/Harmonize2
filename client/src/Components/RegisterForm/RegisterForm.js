@@ -287,6 +287,7 @@ const RegisterForm = () => {
                 <option value="woodwinds">Woodwinds</option>
                 <option value="brass">Brass</option>
                 <option value="percussion">Percussion</option>
+                <option value="keyboard">Keyboard</option>
                 <option value="voice">Voice</option>
               </Select>
             </div>
