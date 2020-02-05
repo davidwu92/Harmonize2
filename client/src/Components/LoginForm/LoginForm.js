@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import UserAPI from '../../utils/UserAPI'
-import {Redirect, useHistory} from 'react-router-dom'
+import { Redirect, useHistory } from 'react-router-dom'
 
-const {loginUser} = UserAPI
+const { loginUser } = UserAPI
 
 const LoginForm = () => {
   let history = useHistory()
@@ -25,25 +25,27 @@ const LoginForm = () => {
       username: loginState.username,
       password: loginState.password
     })
-    .then(({data})=>{
-      if(data.token) {
-        localStorage.setItem('token', data.token)
-        history.push('/myprofile')
-      } else {
-        //ALERT/TOAST HERE.
-        console.log('FAILED LOGIN')
-      }
-
-    })
-    .catch((e)=>console.error(e))
+      .then(({ data }) => {
+        if (data.token && loginUser) {
+          localStorage.setItem('token', data.token)
+          history.push('/myprofile')
+        } else {
+          // ALERT MESSAGE
+          document.getElementById('alertMsg').innerHTML = `
+            *Please enter the correct Info
+            `
+          console.log('Failed Login Attempt')
+        }
+      })
+      .catch((e) => console.error(e))
   }
 
   return (
 
     <div className="row">
       <form action="" className="col s12">
-
         <h3>Login</h3>
+        <div id="alertMsg" className="red-text"></div>
         <div className="input-field">
           <input placeholder="Username" type="text" id="username" name="username" value={loginState.username} onChange={loginState.handleInputChange} />
           <label htmlFor="username"></label>
@@ -60,7 +62,6 @@ const LoginForm = () => {
         <h6><Link to="/register">CREATE AN ACCOUNT</Link></h6>
       </form>
     </div>
-
   )
 }
 

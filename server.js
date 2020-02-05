@@ -1,11 +1,6 @@
 require('dotenv').config()
 const express = require('express')
 const { join } = require('path')
-// passport modules
-const passport = require('passport')
-const { Strategy } = require('passport-local')
-const { Strategy: JWTStrategy, ExtractJwt } = require('passport-jwt')
-
 const app = express()
 const { User } = require('./models')
 
@@ -18,7 +13,6 @@ app.use(express.json())
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
-
 
 // passport middleware
 // start the passport engine
