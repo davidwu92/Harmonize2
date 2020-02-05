@@ -33,6 +33,7 @@ function App() {
     email: '',
     username: '',
     password: '',
+    bio: '',
   })
   
 

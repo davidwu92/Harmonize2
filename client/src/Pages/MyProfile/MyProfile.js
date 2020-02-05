@@ -20,6 +20,8 @@ const MyProfile = () => {
     pfPic: '',
     //For put requests later...
     id: '',
+    instruments: [],
+    skills: [],
   })
 
   //using token to grab MY user data.
@@ -34,7 +36,9 @@ const MyProfile = () => {
         links: data.links,
         bio: data.bio,
         pfPic: data.pfPic,
-        id: data._id
+        id: data._id,
+        instruments: data.instruments,
+        skills: data.skills
       })
     })
     .catch((e) => console.error(e))
@@ -155,9 +159,32 @@ const MyProfile = () => {
             {/* EMAIL */}
             <h6>{profileState.email}</h6>
             {/* BIO */}
-
             <h6 className="grey-text">{profileState.bio}</h6>
-
+            {/* INSTRUMENTS/SKILLS */}
+            <div className="row grey lighten-5">
+                {/* INSTRUMENTS */}
+              <div className="col s6 m6">
+                {
+                  profileState.instruments.length ? <>
+                    <h6>My Instruments</h6>
+                    {profileState.instruments.map(instrument => (
+                      <p>{instrument + " "}</p>
+                    ))}
+                  </> : null
+                }
+              </div>
+                {/* SKILLS */}
+              <div className="col s6 m6">
+                {
+                  profileState.skills.length ? <>
+                  <h6>My Skills</h6>
+                  {profileState.skills.map(skill => (
+                    <p>{skill + " "}</p>
+                  ))}
+                  </> : null
+                }
+              </div>
+            </div>
 
             {/* EDIT PROFILE MODAL BUTTON */}
             <Modal id="edProfModal" className="center-align"
@@ -197,7 +224,6 @@ const MyProfile = () => {
                 <h6>EMAIL</h6>
                 <TextInput placeholder={profileState.email} type="newEmail" id="newEmail" name="email" value={editState.email} onChange={editState.handleInputChange} />
 
-                {/* BIO */}
                 <h6>BIO</h6>
                 <TextInput placeholder={profileState.bio} type="newBio" id="newBio" name="bio" value={editState.bio} onChange={editState.handleInputChange} />
               </form>

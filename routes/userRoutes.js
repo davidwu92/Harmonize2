@@ -6,14 +6,14 @@ module.exports = app => {
 
   // Register new user
   app.post('/users', (req, res) => {
-    const { name, email, username, links, bio, pfPic } = req.body
-    // means registering a new user then pass the password seperately
-    User.register(new User({ name, email, username, links, bio, pfPic }), req.body.password, e => {
-      if (e) {
-        res.json({ success: false, message: "Your account could not be saved. Error: ", e })
-      }
-      res.sendStatus(200)
-    })
+      const { name, email, username, links, bio, pfPic, instruments, skills } = req.body
+      // means registering a new user then pass the password seperately
+      User.register(new User({ name, email, username, links, bio, pfPic, instruments, skills }), req.body.password, e => {
+        if (e) {
+          res.json({ success: false, message: "Your account could not be saved. Error: ", e})
+        }
+        res.sendStatus(200)
+      })
   })
 
   // GET MY PROFILE INFO (when logged in)
