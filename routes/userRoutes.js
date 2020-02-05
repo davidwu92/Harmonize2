@@ -17,34 +17,34 @@ module.exports = app => {
   })
 
   // GET MY PROFILE INFO (when logged in)
-  app.get('/users', passport.authenticate('jwt', {session:false}), (req, res) => {
+  app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
     // console.log(req.user)
-    const {_id} = req.user
+    const { _id } = req.user
     User.findById(_id)
-        .then(user => res.json(user))
-        .catch(e => console.error(e))
+      .then(user => res.json(user))
+      .catch(e => console.error(e))
   })
 
   // EDIT MY PROFILE INFO (when logged in)
-  app.put('/users/:id', (req, res)=>{
-    User.findByIdAndUpdate(req.params.id, {$set: req.body})
-    .then(()=>res.sendStatus(200))
-    .catch(e=>console.error(e))
+  app.put('/users/:id', (req, res) => {
+    User.findByIdAndUpdate(req.params.id, { $set: req.body })
+      .then(() => res.sendStatus(200))
+      .catch(e => console.error(e))
   })
 
   // Login route
   app.post('/login', (req, res) => {
-      User.authenticate()(req.body.username, req.body.password, (e, user) => {
-          if (e) {
-            console.log(e)
-          }
-          if (user) {
-          res.json({
-            token: jwt.sign({ id: user._id }, process.env.SECRET)
-          })
-          } else {
-            res.sendStatus(404)
-          }
-      })
+    User.authenticate()(req.body.username, req.body.password, (e, user) => {
+      if (e) {
+        console.log(e)
+      }
+      if (user) {
+        res.json({
+          token: jwt.sign({ id: user._id }, process.env.SECRET)
+        })
+      } else {
+        res.sendStatus(200)
+      }
+    })
   })
 }
