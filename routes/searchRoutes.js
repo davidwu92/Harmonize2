@@ -4,7 +4,7 @@ module.exports = app => {
 
   // SEARCH ALL USERS
   app.get('/search/:query', (req, res) => {
-    User.find({"username": req.params.query} || {"name": req.params.query})
+    User.find({$text: {$search: req.params.query}})
         .then(users => res.json(users))
         .catch(e => console.error(e))
   })

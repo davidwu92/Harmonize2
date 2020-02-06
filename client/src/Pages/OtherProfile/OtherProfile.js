@@ -68,6 +68,7 @@ const OtherProfile = () => {
                   </> : null
                 }
               </div>
+
                 {/* SKILLS */}
               <div className="col s6 m6">
                 {

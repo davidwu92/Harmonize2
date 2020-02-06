@@ -160,6 +160,7 @@ const MyProfile = () => {
 
   //EDITING PROFILE: FORM SUBMISSION
   const editPfButton = <button id="editBtn" className="waves-effect waves-light right"><i id="editBtnIcon" className="fas fa-user-edit"></i></button>;
+  // When edit button is clicked, update infoState's instrumentsAdded/skillsAdded arrays.
   const updateInfoState =(event)=>{
     if(event.target.id === "editBtnIcon"){
       setInfoState({
@@ -229,9 +230,13 @@ const MyProfile = () => {
         setInfoState({...infoState, familyChosen:document.getElementById('instrumentFamily').value,
         familyInstruments:["Drumset", "Orchestral Percussion", "Marimba", "Xylophone", "Glockenspiel", "Other"]})
       break;
+      case "keyboard":
+        setInfoState({...infoState, familyChosen:document.getElementById('instrumentFamily').value,
+        familyInstruments:["Piano", "Organ", "Harpsichord", "Clavichord", "Electric Keyboard", "Other"]})
+      break;
       case "voice":
         setInfoState({...infoState, familyChosen:document.getElementById('instrumentFamily').value,
-          familyInstruments:["Classical: Soprano", "Classical: Alto","Classical: Tenor", "Classical: Bass", "Pop/Rock Vocalist", "VP/Beatbox", "Other"]
+          familyInstruments:["Classical: Soprano", "Classical: Alto","Classical: Tenor", "Classical: Bass", "Pop/Rock Vocalist", "Jazz Vocalist", "VP/Beatbox", "Other"]
         })
       break;
       default:
@@ -363,7 +368,7 @@ const MyProfile = () => {
                 <span> </span>,
                 <Button flat modal="close" node="button" className="black waves-effect waves-light white-text hoverable" >
                   Close
-            </Button>
+                </Button>
               ]}
               header="Edit Your Profile Picture" trigger={editPfButton}>
               <form action="#">
@@ -409,19 +414,10 @@ const MyProfile = () => {
                 </Button>
               ]}
               header="Edit Profile"
-              options={{
-                dismissible: true,
-                endingTop: '10%',
-                inDuration: 250,
-                onCloseEnd: null,
-                onCloseStart: null,
-                onOpenEnd: null,
-                onOpenStart: null,
-                opacity: 0.5,
-                outDuration: 250,
-                preventScrolling: true,
-                startingTop: '4%'
-              }}
+              options={{dismissible: true, endingTop: '10%', inDuration: 250, onCloseEnd: null,
+                        onCloseStart: null, onOpenEnd: null, onOpenStart: null, opacity: 0.5,
+                        outDuration: 250, preventScrolling: true, startingTop: '4%'
+                      }}
               trigger={editPfButton}
             >
               <form>
@@ -449,6 +445,7 @@ const MyProfile = () => {
                     <option value="woodwinds">Woodwinds</option>
                     <option value="brass">Brass</option>
                     <option value="percussion">Percussion</option>
+                    <option value="keyboard">Keyboard</option>
                     <option value="voice">Voice</option>
                   </select>
                   {/* INSTRUMENT DROPDOWN of selected family*/}
