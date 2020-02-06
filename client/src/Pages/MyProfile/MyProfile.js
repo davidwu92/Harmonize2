@@ -11,7 +11,7 @@ import {
 import axios from 'axios'
 
 //function for making changes to profile
-const { getUser, updateUser, addYoutube, getYoutube } = UserAPI
+const { getUser, updateUser, addYoutube, getYoutube, deleteYoutube } = UserAPI
 
 const MyProfile = () => {
 
@@ -27,6 +27,7 @@ const MyProfile = () => {
     id: '',
     instruments: [],
     skills: [],
+    profile: ''
   })
 
   //using token to grab MY user data.
@@ -43,7 +44,8 @@ const MyProfile = () => {
         pfPic: data.pfPic,
         id: data._id,
         instruments: data.instruments,
-        skills: data.skills
+        skills: data.skills,
+        profile: data.profile
       })
     })
     .catch((e) => console.error(e))
@@ -54,6 +56,7 @@ const MyProfile = () => {
     newLink: '',
     instruments: [],
     skills: [],
+    profile: ''
   })
 
   //handles input changes for EDITING FORMS on this page.
@@ -63,15 +66,40 @@ const MyProfile = () => {
 
   const editPicture = (event) => {
     event.preventDefault()
+  const file = document.getElementById('inputGroupFile01').files
+  const formData = new FormData()
+
+  formData.append('img', file[0])
     //Any empty fields in editState will PUT old profile information.
-    updateUser(profileState.id, {
-      pfPic: (editState.pfPic === "") ? profileState.pfPic : editState.pfPic
+     let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
+      document.getElementById('img').setAttribute('src', `http://localhost:3000/${file[0].name}`)
+      
+    axios({
+      method: 'post',
+      url: '/',
+      data: formData,
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+      }
+    })
+      .then(({ data }) => {
+        
+        let profile = JSON.parse(JSON.stringify(file[0].name))
+     setProfileState({ ...profileState, profile })
+      })
+       updateUser(profileState.id, {
+      profile: file[0].name
     })
       .then(() => {
-        console.log("You edited the profile picture.")
+        console.log("You edited the profile.")
       })
       .catch(e => console.error(e))
+      // .catch(e => console.error(e))
   }
+
+
+
 
   const [youtubeState, setYoutubeState] = useState({
     links: []
@@ -114,9 +142,20 @@ const MyProfile = () => {
       console.log('error')
     }
   }
+  
 
-  const deleteVideo = () => {
-    
+  youtubeState.deleteVideo = (token, id) => {
+    deleteYoutube(token, { _id: id })
+      .then(() => {
+          getYoutube(token)
+            .then(({ data }) => {
+              let links = []
+              links.push(data)
+              setYoutubeState({ ...youtubeState, links })
+            })
+            .catch(e => console.error(e))
+      })
+      .catch(e => console.error(e))
   }
 
   //EDITING PROFILE: FORM SUBMISSION
@@ -143,6 +182,7 @@ const MyProfile = () => {
       pfPic: (editState.pfPic === "") ? profileState.pfPic : editState.pfPic,
       instruments: infoState.instrumentsAdded,
       skills: infoState.skillsAdded,
+      profile: (editState.profile === '') ? profileState.profile : editState.profile
     })
       .then(() => {
         console.log("You edited the profile.")
@@ -307,18 +347,18 @@ const MyProfile = () => {
     <button className="btn black waves-effect waves-light col s12" onClick={addOtherSkill}>Add Skill</button>
   </div>
   : null
-  
+
   return (
     <>
       <div className="container">
         <div className="row"> {/* TOP ROW: PF PIC, BASIC INFO */}
           {/* PROFILE PIC */}
           <div className="col s4 m2">
-            <img className="circle responsive-img" src={profileState.pfPic} alt="Your pf pic" />
+            <img className="circle responsive-img"  alt="Your pf pic" id="img" src={profileState.profile} />
             <Modal
               actions={[
                 <Button onClick={editPicture} modal="close" node="button" className="black waves-effect waves-light white-text hoverable" >
-                  Save Changes <i className="material-icons right">send</i>
+                  Upload <i className="material-icons right">send</i>
                 </Button>,
                 <span> </span>,
                 <Button flat modal="close" node="button" className="black waves-effect waves-light white-text hoverable" >
@@ -326,10 +366,25 @@ const MyProfile = () => {
             </Button>
               ]}
               header="Edit Your Profile Picture" trigger={editPfButton}>
-              <form>
+              <form action="#">
+               <div class="file-field input-field">
+              <div class="btn">
+             <span>File</span>
+            <input type="file"
+                    className="custom-file-input"
+                    id="inputGroupFile01"
+                    aria-describedby="inputGroupFileAddon01"
+            ></input>
+              </div>
+            <div class="file-path-wrapper">
+        <input class="file-path validate" type="text"></input>
+      </div>
+    </div>
+  </form>
+              {/* <form>
                 <h6>Profile Picture: </h6>
                 <TextInput placeholder={profileState.pfPicture} type="newPfPicture" id="newPfpicture" name="pfPic" value={editState.pfPic} onChange={editState.handleInputChange} />
-              </form>
+              </form> */}
             </Modal>
           </div>
           {/* BASIC INFO */}

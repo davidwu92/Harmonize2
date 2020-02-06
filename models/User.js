@@ -6,9 +6,10 @@ module.exports = (model, Schema) => {
         links: [{ type: Schema.Types.ObjectId, ref: 'Youtube' }],
         //added by David 1/30 12 PM
         bio: String,
-        pfPic: String,
+        pfPic: Array,
         instruments: Array,
         skills: Array,
+        profile: String
     })
 
   User.plugin(require('passport-local-mongoose'))
