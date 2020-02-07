@@ -9,6 +9,8 @@ const UserContext = createContext({
   instruments: [],
   skills: [],
   profile: '',
+  resetPasswordToken: '',
+  resetPasswordExpires: '',
   handleInputChange: () => { },
   // handleFormSubmit: () => { }
 })

@@ -1,8 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import SearchedAPI from '../../utils/SearchAPI'
 import axios from 'axios'
+import ProfileContext from '../../utils/ProfileContext'
+import LinksCards from '../../Components/LinksCards'
+import UserAPI from '../../utils/UserAPI'
+
 
 const {visitProfile} = SearchedAPI
+
+const { getUser, updateUser, addYoutube, getYoutube, deleteYoutube, getOtherYoutube } = UserAPI
 
 const OtherProfile = () => {
   
@@ -36,6 +42,20 @@ const OtherProfile = () => {
       })
     })
     .catch((e)=>console.error(e))
+
+ const [youtubeState, setYoutubeState] = useState({
+    links: []
+  })
+
+ useEffect(() => {
+    getOtherYoutube(profileId)
+      .then(({ data }) => {
+        let links = []
+        links.push(data)
+        setYoutubeState({ ...youtubeState, links })
+      })
+      .catch(e => console.error(e))
+  }, [])  
 
   return (
     <>
@@ -84,15 +104,10 @@ const OtherProfile = () => {
           </div>
         </div>
 
-        <div>
-          {/* LINKS/POSTS HERE */}
-          {
-            profileState.links.length ? profileState.links.map((link)=>{
-              // <span>{link}</span>
-              console.log("hi")
-            })
-            : null
-          }
+        <div className="row">
+        <ProfileContext.Provider value={youtubeState}>
+            <LinksCards />
+          </ProfileContext.Provider>
         </div>
       </div>
     </>

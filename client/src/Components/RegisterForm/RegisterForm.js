@@ -13,7 +13,7 @@ const { addUser } = UserAPI
 const RegisterForm = () => {
   const history = useHistory()
 
-  const {profile, name, email, username, password, bio, handleInputChange } = useContext(UserContext)
+  const {profile, name, email, username, password, bio, handleInputChange, resetPasswordExpires, resetPasswordToken } = useContext(UserContext)
   // ADD USER/REGISTER BUTTON
   const handleAddUser = event => {
     event.preventDefault()
@@ -28,6 +28,8 @@ const RegisterForm = () => {
       bio: bio === '' ? `You currently don't have a bio. Click on the edit profile button to tell others about yourself!` : bio,
       instruments: infoState.instrumentsAdded,
       skills: infoState.skillsAdded,
+      resetPasswordToken: '',
+      resetPasswordExpires: ''
   
     })
       .then(({ data }) => {

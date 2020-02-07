@@ -13,6 +13,8 @@ module.exports = (model, Schema) => {
         pfPic: String,
         instruments: [String],
         skills: [String],
+        resetPasswordToken: String,
+        resetPasswordExpires: Date
     })
     User.plugin(require('passport-local-mongoose'))
     User.index({name: "text", username: "text", email: "text", instruments: "text", skills: "text"})

@@ -1,4 +1,4 @@
-const { User } = require('../models')
+const { User, Youtube } = require('../models')
 
 module.exports = app => {
 
@@ -15,4 +15,13 @@ module.exports = app => {
       .then(user => res.json(user))
       .catch(e => console.error(e))
   })
+
+  // GET USERS YOUTUBE LINKS 
+      app.get('/youtubes/:id', (req, res) => {
+        console.log(req.params.id)
+        Youtube.find({ userLink: req.params.id })
+          .populate('userLink')
+          .then(userLink => res.json(userLink))
+          .catch(e => console.error(e))
+    })
 }
