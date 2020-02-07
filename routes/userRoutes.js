@@ -6,7 +6,7 @@ module.exports = app => {
 
   // Register new user
   app.post('/users', (req, res) => {
-      const { name, email, username, links, bio, pfPic, cityState, instruments, skills, profile } = req.body
+      const { name, email, username, links, bio, pfPic, cityState, instruments, skills, profile, resetPasswordToken, resetPasswordExpires } = req.body
       // means registering a new user then pass the password seperately
       User.register(new User({ name, email, username, links, bio, pfPic, cityState, instruments, skills, profile }), req.body.password, e => {
         if (e) {
@@ -47,4 +47,5 @@ module.exports = app => {
       }
     })
   })
+  
 }

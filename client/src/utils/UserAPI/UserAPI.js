@@ -49,6 +49,8 @@ const UserAPI = {
       }
     }),
 
+  getOtherYoutube: (id) => axios.get(`/youtubes/${id}`),
+
   //Register new user
   addUser: (user) => axios.post('/users', user),
   
