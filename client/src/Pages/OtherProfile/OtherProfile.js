@@ -16,6 +16,7 @@ const OtherProfile = () => {
     pfPic: '',
     instruments: [],
     skills: [],
+    profile: '',
   })
 
 
@@ -33,6 +34,7 @@ const OtherProfile = () => {
         pfPic: data.pfPic,
         instruments: data.instruments,
         skills: data.skills,
+        profile: data.profile
       })
     })
     .catch((e)=>console.error(e))
@@ -43,7 +45,7 @@ const OtherProfile = () => {
         <div className="row">
           {/* PROFILE PIC */}
           <div className="col s4 m2">
-            <img className="circle responsive-img" src={profileState.pfPic} alt="Your pf pic" />
+            <img className="circle responsive-img" src={profileState.profile} alt="Profile Picture" />
           </div>
           {/* BASIC INFO */}
           <div className="col s8 m10">
@@ -55,45 +57,44 @@ const OtherProfile = () => {
             <h6>{profileState.email}</h6>
             {/* BIO */}
             <h6 className="grey-text">{profileState.bio}</h6>
-            {/* INSTRUMENTS/SKILLS */}
-            <div className="row grey lighten-5">
-                {/* INSTRUMENTS */}
-              <div className="col s6 m6">
-                {
-                  profileState.instruments.length ? <>
-                    <h6>My Instruments</h6>
-                    {profileState.instruments.map(instrument => (
-                      <p>{instrument + " "}</p>
-                    ))}
-                  </> : null
-                }
-              </div>
-
-                {/* SKILLS */}
-              <div className="col s6 m6">
-                {
-                  profileState.skills.length ? <>
-                  <h6>My Skills</h6>
-                  {profileState.skills.map(skill => (
-                    <p>{skill + " "}</p>
-                  ))}
-                  </> : null
-                }
-              </div>
-            </div>
           </div>
         </div>
-
-        <div>
-          {/* LINKS/POSTS HERE */}
+      </div>
+      
+      {/* INSTRUMENTS/SKILLS */}
+      <div className="row grey lighten-5">
+          {/* INSTRUMENTS */}
+        <div className="col s6 m6">
           {
-            profileState.links.length ? profileState.links.map((link)=>{
-              // <span>{link}</span>
-              console.log("hi")
-            })
-            : null
+            profileState.instruments.length ? <>
+              <h6>My Instruments</h6>
+              {profileState.instruments.map(instrument => (
+                <p>{instrument + " "}</p>
+              ))}
+            </> : null
           }
         </div>
+          {/* SKILLS */}
+        <div className="col s6 m6">
+          {
+            profileState.skills.length ? <>
+            <h6>My Skills</h6>
+            {profileState.skills.map(skill => (
+              <p>{skill + " "}</p>
+            ))}
+            </> : null
+          }
+        </div>
+      </div>
+        
+      {/* LINKS/POSTS HERE */}
+      <div>
+        {/* {
+          profileState.links.length ? profileState.links.map((link)=>{
+            
+          })
+          : null
+        } */}
       </div>
     </>
   )
