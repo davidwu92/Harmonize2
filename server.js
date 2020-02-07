@@ -5,8 +5,6 @@ const { join } = require('path')
 const passport = require('passport')
 const { Strategy } = require('passport-local')
 const { Strategy: JWTStrategy, ExtractJwt } = require('passport-jwt')
-// Socket IO
-const socketIo = require('socket.io')
 
 const app = express()
 const { User } = require('./models')
