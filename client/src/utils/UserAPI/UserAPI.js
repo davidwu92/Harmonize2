@@ -9,6 +9,9 @@ const UserAPI = {
     
   //edit profile
   updateUser: (id, values) => axios.put(`/users/${id}`, values),
+  
+
+
 
   //add YouTube to profile? CURRENTLY NOT WORKING
   // addYoutube: (id, youtubeLink) => axios.post(`/youtubes/${id}`, youtubeLink),
@@ -34,7 +37,17 @@ const UserAPI = {
       }
     }),
 
-    deleteYoutube: (id) => axios.delete(`youtubes/${id}`),
+    deleteYoutube: (token, id) => axios({
+      method: 'delete',
+      url: '/youtubes',
+      data: {
+        _id: id
+      },
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+      }
+    }),
 
   //Register new user
   addUser: (user) => axios.post('/users', user),

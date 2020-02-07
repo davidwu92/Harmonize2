@@ -11,6 +11,15 @@ const socketIo = require('socket.io')
 const app = express()
 const { User } = require('./models')
 
+const mongoURI = 'mongodb://localhost/harmonizedb'
+const mongoose = require('mongoose')
+const multer  = require('multer');
+const GridFsStorage = require('multer-gridfs-storage')
+var Grid = require('gridfs-stream')
+var crypto = require('crypto')
+const conn = mongoose.createConnection(mongoURI)
+// const url = 'mongodb://localhost/harmonizedb';
+
 //middleware
 app.use(express.static(join(__dirname, 'client', 'build')))
 app.use(express.urlencoded({ extended: true }))
@@ -43,14 +52,72 @@ passport.use(new JWTStrategy({
 //routes
 require("./routes")(app)
 
+// image routes
+const storage = new GridFsStorage({
+  url: 'mongodb://localhost/harmonizedb',
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+      crypto.randomBytes(16, (err, buf) => {
+        if (err) {
+          return reject(err)
+        }
+        const filename = file.originalname
+        const fileInfo = {
+          filename: filename,
+          bucketName: 'uploads',
+        }
+        resolve(fileInfo)
+      })
+    })
+  },
+})
+
+const upload = multer({ storage })
+
+  app.post('/', upload.single('img'), passport.authenticate('jwt', { session: false }), (req, res) => {
+    const { _id: id } = req.user
+    console.log(req.file)
+    User.findOneAndUpdate({ _id: id }, { pfPic: req.file })
+      .then(() => res.sendStatus(200))
+      .catch(e => console.error(e))
+    
+    // res.status(201).send()
+  })
+  app.get('/:filename', (req, res) => {
+  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+    // Check if file
+    if (!file || file.length === 0) {
+      return res.status(404).json({
+        err: 'No file exists',
+      })
+    }
+
+    // Check if image
+    if (file.contentType === 'image/jpeg' || file.contentType === 'image/png') {
+      // Read output to browser
+      const readstream = gfs.createReadStream(file.filename)
+      readstream.pipe(res)
+    } else {
+      res.status(404).json({
+        err: 'Not an image',
+      })
+    }
+  })
+})
+let gfs
 //connect to the database and listen on a port
 require('mongoose')
   .connect(process.env.NODE_ENV === 'production' ? process.env.MONGODB_URI : 'mongodb://localhost/harmonizedb', {
     // these methods are rarely used
     useCreateIndex: true,
-    useFindAndModify: true,
+    useFindAndModify: false,
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
-  .then(() => app.listen(process.env.PORT || 3001))
+  .then(() => {
+    gfs = Grid(conn.db, mongoose.mongo)
+    gfs.collection('uploads')
+    app.listen(process.env.PORT || 3001)})
   .catch(e => console.error(e))
+
+  // Create storage engine

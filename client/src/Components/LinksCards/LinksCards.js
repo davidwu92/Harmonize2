@@ -3,10 +3,11 @@ import ProfileContext from '../../utils/ProfileContext'
 import MyProfile from '../../Pages/MyProfile'
 
 
+
 const LinksCards = () => {
 
-
-  const { links } = useContext(ProfileContext)
+  let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
+  const { links, deleteVideo } = useContext(ProfileContext)
 
   return (
     <div>
@@ -28,7 +29,7 @@ const LinksCards = () => {
                   <div id="cardReveal" className="card-reveal">
                     <span className="card-title grey-text text-darken-4"><i className="material-icons white-text right">close</i></span>
                     <h5>Would you like to delete this post?</h5>
-                    <a id="delPost" href="#"><i className="material-icons white-text">delete</i></a>
+                    <a id="delPost" href="#" onClick={() => deleteVideo(token, ylink._id)}><i className="material-icons white-text">delete</i></a>
                   </div>
                 </div>
               </div>
@@ -49,7 +50,7 @@ const LinksCards = () => {
                   <div id="cardReveal" className="card-reveal">
                     <span className="card-title grey-text text-darken-4"><i className="material-icons  white-text right">close</i></span>
                     <h5>Would you like to delete this post?</h5>
-                    <a id="delPost" href="#"><i className="material-icons white-text ">delete</i></a>
+                    <a id="delPost" href="#" onClick={() => deleteVideo(token, ylink._id)}><i className="material-icons white-text ">delete</i></a>
                   </div>
                 </div>
               </div>
