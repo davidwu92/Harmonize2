@@ -13,12 +13,12 @@ const { addUser } = UserAPI
 const RegisterForm = () => {
   const history = useHistory()
 
-  const {profile, name, email, username, password, bio, handleInputChange } = useContext(UserContext)
+  const {profile, name, email, username, cityState, password, bio, handleInputChange } = useContext(UserContext)
   // ADD USER/REGISTER BUTTON
   const handleAddUser = event => {
     event.preventDefault()
     addUser({
-      name, email, username,
+      name, email, username, cityState,
       password: password.length >= 4 ? password : "",
       //other relevant pf info that can be edited from profile.
       profile: '',

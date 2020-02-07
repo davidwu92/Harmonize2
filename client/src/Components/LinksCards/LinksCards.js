@@ -56,7 +56,8 @@ const LinksCards = () => {
               </div>
             )
           }
-        }))
+        }).reverse()
+        )
       }
     </div>
 

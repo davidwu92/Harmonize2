@@ -9,8 +9,10 @@ const UserContext = createContext({
   instruments: [],
   skills: [],
   profile: '',
+  cityState: '',
   handleInputChange: () => { },
   // handleFormSubmit: () => { }
+  setCityState: () => {},
 })
 
 export default UserContext
