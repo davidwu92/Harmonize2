@@ -229,7 +229,7 @@ const RegisterForm = () => {
     : null
 
   return (
-    <div className="container1">
+    <div className="row1">
       <form id="registerForm" action="" className="col s12">
         <h3>Register</h3>
         <div id="alertMsg" className="red-text"></div>
@@ -263,11 +263,11 @@ const RegisterForm = () => {
           </div>
         </div>
 
-        <div className="col s12 m6 grey lighten-4 ">
+        <div className="col-s12-m6-grey-lighten-4">
           {/* INSTRUMENTS FORM--optional*/}
           <br></br>
           <br></br>
-          <div className="row">
+          <div className="row1">
             {/* DROPDOWN OF FAMILIES */}
             <label id="instrumentsLabel">(Optional) What instruments do you play?</label>
             <div className="col s12 m6">
@@ -314,7 +314,7 @@ const RegisterForm = () => {
             </div>
 
             {/* "OTHER INSTRUMENT" INPUT FIELD*/}
-            <div className="row">
+            <div className="row1">
               <div className="col">
                 {otherInstrumentField}
               </div>
@@ -322,7 +322,7 @@ const RegisterForm = () => {
           </div>
 
           {/* SKILLS FORM--optional*/}
-          <div className="row">
+          <div className="row1">
             <label id="instrumentsLabel">(Optional) What other skills can you list?</label>
             <br></br>
             {/* DROPDOWN OF SKILLS */}
@@ -367,7 +367,7 @@ const RegisterForm = () => {
                 )) : null
               }
             </div>
-            <div className="row">
+            <div className="row1">
               <div className="col">
                 {/* "OTHER SKILL" INPUT FIELD */}
                 {otherSkillField}
