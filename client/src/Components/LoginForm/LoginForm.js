@@ -31,9 +31,7 @@ const LoginForm = () => {
           history.push('/myprofile')
         } else {
           // ALERT MESSAGE
-          document.getElementById('alertMsg').innerHTML = `
-            *Please enter the correct Info
-            `
+          document.getElementById('alertMsg').innerHTML = `*Incorrect login information. Please try again.`
           console.log('Failed Login Attempt')
         }
       })

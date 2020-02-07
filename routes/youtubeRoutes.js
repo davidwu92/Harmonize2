@@ -25,14 +25,17 @@ module.exports = app => {
     })
 
 
-    // app.post('/youtubes/:id', (req, res) => {
-    //   Youtube.create(req.body)
-    //       .then(youtube => {
-    //         User.updateOne({ _id: req.params.id }, { $push: { links: youtube } })   
-    //         .then(() => res.sendStatus(200))
-    //         .catch(e => console.error(e))
-    //       })
-    //       .catch(e => console.error(e))
-    // })
+      app.delete('/youtubes', passport.authenticate('jwt', { session: false }), (req, res) => {
+        const { _id: userLink } = req.user
+        const { _id: id } = req.body
+
+          Youtube.deleteOne({ _id: id, userLink })
+            .then(youtube => {
+              User.updateOne({ _id: userLink }, { $pull: { links: id._id } })
+               .then(() => res.sendStatus(200))
+               .catch(e => console.error(e))
+            })
+            .catch(e => console.error(e))
+      })
 
 }
