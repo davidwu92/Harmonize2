@@ -95,7 +95,6 @@ const MyProfile = () => {
         console.log("You edited the profile.")
       })
       .catch(e => console.error(e))
-    // .catch(e => console.error(e))
   }
 
 

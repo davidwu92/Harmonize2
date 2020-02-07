@@ -5,7 +5,7 @@ const messages = () => {
 
   return (
     <>
-
+      <h1>Messages Page</h1>
     </>
   )
 }
