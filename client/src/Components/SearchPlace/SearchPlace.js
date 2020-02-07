@@ -30,8 +30,17 @@ const SearchPlace = () => {
                     const style = {
                       backgroundColor: suggestion.active ? "#41b6e6" : "#fff"
                     }
+                    console.log(suggestion)
                   return (
-                     <div {...getSuggestionItemProps(suggestion, { style })}>{suggestion.description}</div>
+                    <div {...getSuggestionItemProps(suggestion, { style })}>
+                        {
+                          suggestion.description.split(", ")[suggestion.description.split(", ").length-3]
+                          +
+                          ", "
+                          +
+                          suggestion.description.split(", ")[suggestion.description.split(", ").length-2]
+                        }
+                    </div>
                   )
                   })}
                 </div>
