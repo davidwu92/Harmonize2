@@ -203,8 +203,8 @@ const RegisterForm = () => {
   </div>
   : null
 
-  return (
-    <div className="container">
+  return (        
+    <div className="container1">   
       <form id="registerForm" action="" className="col s12">
         <h3>Register</h3>
         <div id="alertMsg" className="red-text"></div>
@@ -237,7 +237,7 @@ const RegisterForm = () => {
         </div>
 
         {/* INSTRUMENTS FORM--optional*/}
-        <div className="row grey lighten-4">
+        <div className="row-grey-lighten-4">
           {/* DROPDOWN OF FAMILIES */}
           <Select
             id="instrumentFamily"
@@ -277,7 +277,7 @@ const RegisterForm = () => {
         </div>
 
         {/* SKILLS FORM--optional*/}
-        <div className="row grey lighten-4">
+        <div className="row-grey-lighten-4">
           {/* DROPDOWN OF SKILLS */}
           <Select
             id="skillsDropdown"

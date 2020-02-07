@@ -42,7 +42,7 @@ const LoginForm = () => {
 
   return (
 
-    <div className="row">
+    <div className="row1">
       <form action="" className="col s12">
         <h3>Login</h3>
         <div id="alertMsg" className="red-text"></div>
