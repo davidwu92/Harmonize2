@@ -380,8 +380,8 @@ const MyProfile = () => {
               ]}
               header="Edit Your Profile Picture" trigger={editPfButton}>
               <form action="#">
-                <div className="file-field input-field">
-                  <div className="btn">
+                <div class="file-field input-field">
+                  <div class="btn">
                     <span>File</span>
                     <input type="file"
                       className="custom-file-input"
@@ -389,8 +389,8 @@ const MyProfile = () => {
                       aria-describedby="inputGroupFileAddon01"
                     ></input>
                   </div>
-                  <div className="file-path-wrapper">
-                    <input className="file-path validate" type="text"></input>
+                  <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text"></input>
                   </div>
                 </div>
               </form>
