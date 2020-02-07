@@ -13,7 +13,7 @@ const { addUser } = UserAPI
 const RegisterForm = () => {
   const history = useHistory()
 
-  const {profile, name, email, username, password, bio, handleInputChange, resetPasswordExpires, resetPasswordToken } = useContext(UserContext)
+  const {profile, name, email, username, password, bio, handleInputChange, resetPasswordExpires, resetPasswordToken, cityState } = useContext(UserContext)
   // ADD USER/REGISTER BUTTON
   const handleAddUser = event => {
     event.preventDefault()
