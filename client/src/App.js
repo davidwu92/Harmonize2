@@ -17,6 +17,8 @@ import Register from './Pages/Register'
 import MyProfile from './Pages/MyProfile'
 import OtherProfile from './Pages/OtherProfile'
 import Search from './Pages/Search'
+import ForgotLogin from './Pages/ForgotLogin'
+import ResetPass from './Pages/ResetPass'
 import UserContext from './utils/UserContext'
 import UserAPI from './utils/UserAPI'
 import './App.css'
@@ -76,6 +78,12 @@ function App() {
           <Route path="/otherprofile">
             <LoggedinNav />
             <OtherProfile />
+          </Route>
+          <Route path="/forgotLogin">
+            <ForgotLogin/>
+          </Route>
+          <Route path="/resetPass">
+            <ResetPass/>
           </Route>
         </Switch>
       </Router>
