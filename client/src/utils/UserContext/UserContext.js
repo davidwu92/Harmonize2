@@ -11,8 +11,10 @@ const UserContext = createContext({
   profile: '',
   resetPasswordToken: '',
   resetPasswordExpires: '',
+  cityState: '',
   handleInputChange: () => { },
   // handleFormSubmit: () => { }
+  setCityState: () => {},
 })
 
 export default UserContext

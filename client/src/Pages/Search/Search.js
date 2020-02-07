@@ -50,11 +50,12 @@ const Search = () => {
         {
           searchState.searchedUsers.length ? searchState.searchedUsers.map((user, index) =>(
             <div className = {(index%2)? "row grey lighten-4": "row grey lighten-2"}>
-              {/* USERNAME is clickable; needs styling. */}
-              <div className="col s6 m6"> {/* BASIC INFO */}
-                {/* <img src={user.pfPic}> NEED PROFILE PIC HERE </img> */}
-                <h4 onClick={()=>visitProfile(user._id)}>{user.name}</h4>
-                <h5>{user.username}</h5>
+              <div className="col s6 m6">
+                {/* PROFILE PIC */}
+                {(user.profile) ? <img className="circle responsive-img"  alt="Your pf pic" id="img" src={user.profile} /> : null}
+                {/* BASIC INFO */}
+                <h5 onClick={()=>visitProfile(user._id)}>{user.name}</h5>
+                <h6>{user.username}</h6>
                 <h6>{user.email}</h6>
                 {/* NEEDS LOCATION */}
               </div>

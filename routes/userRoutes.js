@@ -9,6 +9,9 @@ module.exports = app => {
       const { name, email, username, links, bio, pfPic, instruments, skills, profile, resetPasswordToken, resetPasswordExpires } = req.body
       // means registering a new user then pass the password seperately
       User.register(new User({ name, email, username, links, bio, pfPic, instruments, skills, profile, resetPasswordToken, resetPasswordExpires }), req.body.password, e => {
+      const { name, email, username, links, bio, pfPic, cityState, instruments, skills, profile } = req.body
+      // means registering a new user then pass the password seperately
+      User.register(new User({ name, email, username, links, bio, pfPic, cityState, instruments, skills, profile }), req.body.password, e => {
         if (e) {
           res.json({ success: false, message: "Your account could not be saved. Error: ", e})
         }

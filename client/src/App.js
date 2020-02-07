@@ -36,6 +36,7 @@ function App() {
     username: '',
     password: '',
     bio: '',
+    cityState: '',
   })
   
 
@@ -44,6 +45,10 @@ function App() {
     setUserState({ ...userState, [event.target.name]: event.target.value })
   }
 
+  //setting cityState
+  userState.setCityState = (value) => {
+    setUserState({...userState, cityState: value})
+  }
 
 
   return (

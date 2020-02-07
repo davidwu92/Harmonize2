@@ -18,7 +18,7 @@ const RegisterForm = () => {
   const handleAddUser = event => {
     event.preventDefault()
     addUser({
-      name, email, username,
+      name, email, username, cityState,
       password: password.length >= 4 ? password : "",
       //other relevant pf info that can be edited from profile.
       profile: '',

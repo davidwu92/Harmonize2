@@ -372,20 +372,20 @@ const MyProfile = () => {
               ]}
               header="Edit Your Profile Picture" trigger={editPfButton}>
               <form action="#">
-               <div class="file-field input-field">
-              <div class="btn">
-             <span>File</span>
-            <input type="file"
-                    className="custom-file-input"
-                    id="inputGroupFile01"
-                    aria-describedby="inputGroupFileAddon01"
-            ></input>
-              </div>
-            <div class="file-path-wrapper">
-        <input class="file-path validate" type="text"></input>
-      </div>
-    </div>
-  </form>
+                <div class="file-field input-field">
+                  <div class="btn">
+                    <span>File</span>
+                    <input type="file"
+                      className="custom-file-input"
+                      id="inputGroupFile01"
+                      aria-describedby="inputGroupFileAddon01"
+                    ></input>
+                  </div>
+                  <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text"></input>
+                  </div>
+                </div>
+              </form>
               {/* <form>
                 <h6>Profile Picture: </h6>
                 <TextInput placeholder={profileState.pfPicture} type="newPfPicture" id="newPfpicture" name="pfPic" value={editState.pfPic} onChange={editState.handleInputChange} />
@@ -510,7 +510,7 @@ const MyProfile = () => {
             </Modal>
           </div>
         </div>
-        
+
         <div className="row grey lighten-5"> {/* INSTRUMENTS/SKILLS */}
             {/* INSTRUMENTS */}
           <div className="col s6 m6">
