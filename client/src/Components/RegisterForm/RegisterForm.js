@@ -228,13 +228,8 @@ const RegisterForm = () => {
     </div>
     : null
 
-<<<<<<< HEAD
-  return (        
-    <div className="container1">   
-=======
   return (
-    <div className="row">
->>>>>>> fb0a4108d32095fef57b70eb9f7568ff6ccd6a0e
+    <div className="container1">
       <form id="registerForm" action="" className="col s12">
         <h3>Register</h3>
         <div id="alertMsg" className="red-text"></div>
@@ -268,35 +263,6 @@ const RegisterForm = () => {
           </div>
         </div>
 
-<<<<<<< HEAD
-        {/* INSTRUMENTS FORM--optional*/}
-        <div className="row-grey-lighten-4">
-          {/* DROPDOWN OF FAMILIES */}
-          <Select
-            id="instrumentFamily"
-            label="(Optional) What instruments do you play?"
-            options={{classes: '',dropdownOptions: {alignment: 'left',
-            autoTrigger: true,closeOnClick: true,constrainWidth: true,
-            container: null,coverTrigger: true,hover: false,
-            inDuration: 150,onCloseEnd: null,onCloseStart: null,
-            onOpenEnd: null,onOpenStart: null,outDuration: 250    }
-            }}
-            //when family selected, run familySelect.
-            onChange={familySelect}
-          >
-            <option value="0" selected>Select Family</option>
-            <option value="strings">Strings</option>
-            <option value="woodwinds">Woodwinds</option>
-            <option value="brass">Brass</option>
-            <option value="percussion">Percussion</option>
-            <option value="voice">Voice</option>
-          </Select>
-          {/* INSTRUMENT DROPDOWN of selected family*/}
-          {familyDropdowns}
-          {/* INSTRUMENTS ADDED SO FAR */}
-          <div className="right-align">
-            <h6>Instrument(s) added: </h6>
-=======
         <div className="col s12 m6 grey lighten-4 ">
           {/* INSTRUMENTS FORM--optional*/}
           <br></br>
@@ -337,7 +303,6 @@ const RegisterForm = () => {
             {/* INSTRUMENTS ADDED SO FAR */}
             <div className="col s12">
               <h6>Instrument(s) added: </h6>
->>>>>>> fb0a4108d32095fef57b70eb9f7568ff6ccd6a0e
               {
                 infoState.instrumentsAdded ? infoState.instrumentsAdded.map((instrument) => (
                   <p>
@@ -390,46 +355,6 @@ const RegisterForm = () => {
               </Select>
             </div>
 
-<<<<<<< HEAD
-        {/* SKILLS FORM--optional*/}
-        <div className="row-grey-lighten-4">
-          {/* DROPDOWN OF SKILLS */}
-          <Select
-            id="skillsDropdown"
-            label="(Optional) What other skills can you list?"
-            options={{classes: '',dropdownOptions: {alignment: 'left',
-            autoTrigger: true,closeOnClick: true,constrainWidth: true,
-            container: null,coverTrigger: true,hover: false,
-            inDuration: 150,onCloseEnd: null,onCloseStart: null,
-            onOpenEnd: null,onOpenStart: null,outDuration: 250    }
-            }}
-            //when skill selected, run skillSelect.
-            onChange={skillSelect}
-          >
-            <option value="0" selected>Select Skill(s)</option>
-            <option value="Live Performer">Live Performer</option>
-            <option value="Recording Artist">Recording Artist</option>
-            <option value="DJ">DJ</option>
-            <option value="Producer">Producer</option>
-            <option value="Composer (Classical)">Composer (Classical)</option>
-            <option value="Songwriter (Pop/Rock)">Songwriter (Pop/Rock)</option>
-            <option value="Lyricist">Lyricist</option>
-            <option value="Arranger">Arranger</option>
-            <option value="Amateur/Enthusiast">Amateur/Enthusiast</option>
-            <option value="Other">Other</option>
-          </Select>
-          {/* SKILLS ADDED SO FAR */}
-          <div className="right-align">
-          <h6>Skill(s) added: </h6>
-            {
-              infoState.skillsAdded ? infoState.skillsAdded.map((skill)=>(
-                <p>
-                  {skill} 
-                  <i id={skill} onClick={removeSkill} className="tiny material-icons">clear</i>
-                </p>
-              )) : null
-            }
-=======
             {/* SKILLS ADDED SO FAR */}
             <div className="col s12">
               <h6>Skill(s) added: </h6>
@@ -448,7 +373,6 @@ const RegisterForm = () => {
                 {otherSkillField}
               </div>
             </div>
->>>>>>> fb0a4108d32095fef57b70eb9f7568ff6ccd6a0e
           </div>
         </div>
 
