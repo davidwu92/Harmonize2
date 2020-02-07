@@ -13,7 +13,7 @@ const { addUser } = UserAPI
 const RegisterForm = () => {
   const history = useHistory()
 
-  const { name, email, username, password, bio, handleInputChange } = useContext(UserContext)
+  const {profile, name, email, username, password, bio, handleInputChange } = useContext(UserContext)
   // ADD USER/REGISTER BUTTON
   const handleAddUser = event => {
     event.preventDefault()
@@ -21,11 +21,14 @@ const RegisterForm = () => {
       name, email, username,
       password: password.length >= 4 ? password : "",
       //other relevant pf info that can be edited from profile.
-      links: [], pfPic: ``,
+      profile: '',
+      links: [],
+      pfPic: ``,
       //HARMONIZE INFO
       bio: bio === '' ? `You currently don't have a bio. Click on the edit profile button to tell others about yourself!` : bio,
       instruments: infoState.instrumentsAdded,
       skills: infoState.skillsAdded,
+  
     })
       .then(({ data }) => {
         if (data === "OK") {

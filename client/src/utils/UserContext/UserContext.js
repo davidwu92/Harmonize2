@@ -8,6 +8,7 @@ const UserContext = createContext({
   bio: '',
   instruments: [],
   skills: [],
+  profile: '',
   handleInputChange: () => { },
   // handleFormSubmit: () => { }
 })

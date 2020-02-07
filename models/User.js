@@ -6,6 +6,10 @@ module.exports = (model, Schema) => {
         links: [{ type: Schema.Types.ObjectId, ref: 'Youtube' }],
         //added by David 1/30 12 PM
         bio: String,
+        pfPic: Array,
+        instruments: Array,
+        skills: Array,
+        profile: String,
         pfPic: String,
         instruments: [String],
         skills: [String],
