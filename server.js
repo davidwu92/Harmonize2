@@ -49,6 +49,7 @@ passport.use(new JWTStrategy({
 
 //routes
 require("./routes")(app)
+app.get('*', (req, res) => res.sendFile(join(__dirname, 'client', 'build', 'index.html')))
 
 // image routes
 const storage = new GridFsStorage({
