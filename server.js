@@ -49,6 +49,7 @@ passport.use(new JWTStrategy({
 
 //routes
 require("./routes")(app)
+//Catches all; sends any routes NOT found in the server directly into our home.
 app.get('*', (req, res) => res.sendFile(join(__dirname, 'client', 'build', 'index.html')))
 
 // image routes

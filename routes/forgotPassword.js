@@ -94,12 +94,17 @@ module.exports = app => {
           from: 'harmonizedevteam@gmail.com',
           to: `${user.email}`,
           subject: 'Link To Reset Password',
-          text:
-          'You are reveiving this because you (or someone else) have requested the reset of the password for your account. \n\n' 
-          + 'Please click on the following link, or pase thisinto your browser to complete the process within one hour of receiving it: \n\n'
-          + `http://localhost:3000/resetPass/${token}\n\n`
-          + 'If you did not request this, pease ignore this email and your password will remain unchanged. \n'
         }
+        mailOptions.text = (process.env.NODE_ENV === 'production') ?
+        'You have received this email because you (or someone else) requested a password reset for your Harmonize account. \n\n' 
+        + 'Please click on the following link or paste this into your browser within one hour of receiving this email to reset your password: \n\n'
+        + `http://salty-dawn-09701.herokuapp.com/reset/${token}\n\n}`
+        + 'If you did not request this, ignore this email and your password will remain unchanged. \n' 
+        :
+        'You have received this email because you (or someone else) requested a password reset for your Harmonize account. \n\n' 
+          + 'Please click on the following link or paste this into your browser within one hour of receiving this email to reset your password: \n\n'
+          + `http://localhost:3000/reset/${token}\n\n}`
+          + 'If you did not request this, ignore this email and your password will remain unchanged. \n'
 
         console.log('sending mail')
 
