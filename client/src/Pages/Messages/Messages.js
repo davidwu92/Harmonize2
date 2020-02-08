@@ -1,7 +1,7 @@
-import react from 'react'
+import React from 'react'
 
 
-const messages = () => {
+const Messages = () => {
 
   return (
     <>

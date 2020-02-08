@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import './App.css'
 
 // Using Pages
@@ -19,9 +19,11 @@ import OtherProfile from './Pages/OtherProfile'
 import Search from './Pages/Search'
 import ForgotLogin from './Pages/ForgotLogin'
 import ResetPass from './Pages/ResetPass'
+import messages from './Pages/Messages'
 import UserContext from './utils/UserContext'
 import UserAPI from './utils/UserAPI'
 import './App.css'
+import Messages from './Pages/Messages'
 
 const { addUser } = UserAPI
 
@@ -38,7 +40,7 @@ function App() {
     bio: '',
     cityState: '',
   })
-  
+
 
   // Working handleInputchange: call for any Text-Input field.
   userState.handleInputChange = (event) => {
@@ -47,7 +49,7 @@ function App() {
 
   //setting cityState
   userState.setCityState = (value) => {
-    setUserState({...userState, cityState: value})
+    setUserState({ ...userState, cityState: value })
   }
 
 
@@ -75,15 +77,21 @@ function App() {
             <LoggedinNav />
             <Search />
           </Route>
+          <Route>
+            <Route path="/messages">
+              <LoggedinNav />
+              <Messages />
+            </Route>
+          </Route>
           <Route path="/otherprofile">
             <LoggedinNav />
             <OtherProfile />
           </Route>
           <Route path="/forgotLogin">
-            <ForgotLogin/>
+            <ForgotLogin />
           </Route>
           <Route path="/resetPass">
-            <ResetPass/>
+            <ResetPass />
           </Route>
         </Switch>
       </Router>
