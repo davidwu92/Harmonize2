@@ -72,8 +72,6 @@ passport.use(new JWTStrategy({
 
 //routes
 require("./routes")(app)
-//Catches all; sends any routes NOT found in the server directly into our home.
-app.get('*', (req, res) => res.sendFile(join(__dirname, 'client', 'build', 'index.html')))
 
 // image routes
 const storage = new GridFsStorage({
@@ -127,6 +125,11 @@ app.get('/:filename', (req, res) => {
   })
 })
 let gfs
+
+
+//Catches all; sends any routes NOT found in the server directly into our home.
+app.get('*', (req, res) => res.sendFile(join(__dirname, 'client', 'build', 'index.html')))
+
 //connect to the database and listen on a port
 require('mongoose')
   .connect(process.env.NODE_ENV === 'production' ? process.env.MONGODB_URI : 'mongodb://localhost/harmonizedb', {
