@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import SearchedAPI from '../../utils/SearchAPI'
-import axios from 'axios'
 import ProfileContext from '../../utils/ProfileContext'
 import LinksCards from '../../Components/LinksCards'
 import UserAPI from '../../utils/UserAPI'
@@ -8,7 +7,7 @@ import UserAPI from '../../utils/UserAPI'
 
 const {visitProfile} = SearchedAPI
 
-const { getUser, updateUser, addYoutube, getYoutube, deleteYoutube, getOtherYoutube } = UserAPI
+const { getOtherYoutube } = UserAPI
 
 const OtherProfile = () => {
   
