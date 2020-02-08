@@ -15,7 +15,11 @@ const multer  = require('multer');
 const GridFsStorage = require('multer-gridfs-storage')
 var Grid = require('gridfs-stream')
 var crypto = require('crypto')
-const conn = mongoose.createConnection(mongoURI)
+const conn = mongoose.createConnection(mongoURI,  {
+    // these methods are rarely used
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
 // const url = 'mongodb://localhost/harmonizedb';
 
 //middleware
@@ -52,7 +56,7 @@ require("./routes")(app)
 
 // image routes
 const storage = new GridFsStorage({
-  url: 'mongodb://localhost/harmonizedb',
+  url:  'mongodb://localhost/harmonizedb', 
   file: (req, file) => {
     return new Promise((resolve, reject) => {
       crypto.randomBytes(16, (err, buf) => {
