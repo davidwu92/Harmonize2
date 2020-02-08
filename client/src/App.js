@@ -9,6 +9,8 @@ import {
 } from 'react-router-dom'
 import Navbar from './Components/Navbar'
 import LoggedinNav from './Components/LoggedinNav'
+import Join from './Components/Join'
+import Chat from './Components/Chat'
 import Home from './Pages/Home'
 import LogIn from './Pages/LogIn'
 import Register from './Pages/Register'
@@ -17,11 +19,10 @@ import OtherProfile from './Pages/OtherProfile'
 import Search from './Pages/Search'
 import ForgotLogin from './Pages/ForgotLogin'
 import ResetPass from './Pages/ResetPass'
-import messages from './Pages/Messages'
 import UserContext from './utils/UserContext'
 import UserAPI from './utils/UserAPI'
 import './App.css'
-import Messages from './Pages/Messages'
+
 
 
 //useState into PAGEs.
@@ -75,9 +76,9 @@ function App() {
             <Search />
           </Route>
           <Route>
-            <Route path="/messages">
+            <Route path="/chat">
               <LoggedinNav />
-              <Messages />
+              <Chat />
             </Route>
           </Route>
           <Route path="/otherprofile">
@@ -85,10 +86,10 @@ function App() {
             <OtherProfile />
           </Route>
           <Route path="/forgotPassword">
-            <ForgotLogin/>
+            <ForgotLogin />
           </Route>
           <Route path="/reset/:token">
-            <ResetPass/>
+            <ResetPass />
           </Route>
         </Switch>
       </Router>

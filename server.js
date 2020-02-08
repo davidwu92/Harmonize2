@@ -5,6 +5,7 @@ const { join } = require('path')
 const passport = require('passport')
 const { Strategy } = require('passport-local')
 const { Strategy: JWTStrategy, ExtractJwt } = require('passport-jwt')
+// Reset Password stuffs
 const multer = require('multer')
 const GridFsStorage = require('multer-gridfs-storage')
 const Grid = require('gridfs-stream')
@@ -21,17 +22,14 @@ const io = socketio(server)
 
 const { User } = require('./models')
 
+// MongoDB
 const mongoURI = process.env.NODE_ENV === 'production' ? process.env.MONGODB_URI : 'mongodb://localhost/harmonizedb'
 const mongoose = require('mongoose')
-const multer  = require('multer');
-const GridFsStorage = require('multer-gridfs-storage')
-var Grid = require('gridfs-stream')
-var crypto = require('crypto')
-const conn = mongoose.createConnection(mongoURI,  {
-    // these methods are rarely used
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
+const conn = mongoose.createConnection(mongoURI, {
+  // these methods are rarely used
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
 // const url = 'mongodb://localhost/harmonizedb';
 
 // Socketio
@@ -42,7 +40,6 @@ io.on('connect', (socket) => {
     console.log('User left!!!')
   })
 })
-
 
 //middleware
 app.use(express.static(join(__dirname, 'client', 'build')))
