@@ -22,6 +22,7 @@ import ResetPass from './Pages/ResetPass'
 import UserContext from './utils/UserContext'
 import UserAPI from './utils/UserAPI'
 import './App.css'
+import Messages from './Pages/Messages'
 
 
 
@@ -76,6 +77,10 @@ function App() {
             <Search />
           </Route>
           <Route>
+            <Route path="/messages">
+              <LoggedinNav />
+              <Messages />
+            </Route>
             <Route path="/chat">
               <LoggedinNav />
               <Chat />
