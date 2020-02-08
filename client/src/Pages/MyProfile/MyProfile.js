@@ -5,14 +5,15 @@ import ProfileContext from '../../utils/ProfileContext'
 import {
    Modal,
     Button,
-     TextInput
+     TextInput,
+      Select
      } from 'react-materialize'
 import axios from 'axios'
 
 //function for making changes to profile
 const { getUser, updateUser, addYoutube, getYoutube, deleteYoutube } = UserAPI
 
-const MyProfile = () => {
+const MyProfile = () => { 
 
   //Setting up profileState Variables: CAN'T BE EDITED.
   const [profileState, setProfileState] = useState({
@@ -29,9 +30,8 @@ const MyProfile = () => {
     profile: ''
   })
 
-  let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
   //using token to grab MY user data.
-  useEffect(() => {
+  let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
   getUser(token)
     .then(({ data }) => {
       setProfileState({
@@ -49,8 +49,6 @@ const MyProfile = () => {
       })
     })
     .catch((e) => console.error(e))
-
-  }, [])
 
   //Setting up editState VARIABLES: Allows us to edit values before submitting PUT requests to db
   const [editState, setEditState] = useState({
@@ -357,10 +355,10 @@ const MyProfile = () => {
 
   return (
     <>
-      <div className="container">
+      <div className="container2">
         <div className="row"> {/* TOP ROW: PF PIC, BASIC INFO */}
           {/* PROFILE PIC */}
-          <div className="col s4 m2">
+          <div className="col-s4-m2">
             <img className="circle responsive-img"  alt="Your pf pic" id="img" src={profileState.profile} />
             <Modal
               actions={[
@@ -374,7 +372,7 @@ const MyProfile = () => {
               ]}
               header="Edit Your Profile Picture" trigger={editPfButton}>
               <form action="#">
-                <div class="file-field input-field">
+                <div class="file-field-input-field">
                   <div class="btn">
                     <span>File</span>
                     <input type="file"
@@ -395,7 +393,7 @@ const MyProfile = () => {
             </Modal>
           </div>
           {/* BASIC INFO */}
-          <div className="col s8 m10">
+          <div className="col-s8-m10">
             {/* USERNAME */}
             <h4 className="black-text">{profileState.name}</h4>
             {/* NAME */}
@@ -432,7 +430,7 @@ const MyProfile = () => {
                 <h6>BIO</h6>
                 <TextInput placeholder={profileState.bio} type="newBio" id="newBio" name="bio" value={editState.bio} onChange={editState.handleInputChange} />
                 {/* INSTRUMENTS FORM--optional*/}
-                <div className="row grey lighten-4">
+                <div className="row grey lighten 4">
                   {/* DROPDOWN OF FAMILIES */}
                   <select
                     id="instrumentFamily"
@@ -469,7 +467,7 @@ const MyProfile = () => {
                 </div>
 
                 {/* SKILLS FORM--optional*/}
-                <div className="row grey lighten-4">
+                <div className="row-grey-lighten-4">
                   {/* DROPDOWN OF SKILLS */}
                   <select
                     id="skillsDropdown"
@@ -513,7 +511,7 @@ const MyProfile = () => {
           </div>
         </div>
 
-        <div className="row grey lighten-5"> {/* INSTRUMENTS/SKILLS */}
+        <div className="row-grey-lighten-5"> {/* INSTRUMENTS/SKILLS */}
             {/* INSTRUMENTS */}
           <div className="col s6 m6">
             {
@@ -543,7 +541,7 @@ const MyProfile = () => {
 
       {/* POST A NEW LINK  */}
       <div className="container">
-        <div className="row">
+        <div className="row2">
           <form>
             <TextInput placeholder="Add a link" type="newLink" id="newLink" name="newLink" value={editState.newLink} onChange={editState.handleInputChange} />
 
@@ -551,7 +549,7 @@ const MyProfile = () => {
             </button>
           </form>
         </div>
-        <div className="row">
+        <div className="row2">
           {/* LINKS/POSTS HERE */}
           <ProfileContext.Provider value={youtubeState}>
             <LinksCards />
