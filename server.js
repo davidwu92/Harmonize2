@@ -9,7 +9,7 @@ const { Strategy: JWTStrategy, ExtractJwt } = require('passport-jwt')
 const app = express()
 const { User } = require('./models')
 
-const mongoURI = 'mongodb://localhost/harmonizedb'
+const mongoURI = process.env.NODE_ENV === 'production' ? process.env.MONGODB_URI : 'mongodb://localhost/harmonizedb'
 const mongoose = require('mongoose')
 const multer  = require('multer');
 const GridFsStorage = require('multer-gridfs-storage')
@@ -52,7 +52,7 @@ require("./routes")(app)
 
 // image routes
 const storage = new GridFsStorage({
-  url: 'mongodb://localhost/harmonizedb',
+  url: process.env.NODE_ENV === 'production' ? process.env.MONGODB_URI : 'mongodb://localhost/harmonizedb',
   file: (req, file) => {
     return new Promise((resolve, reject) => {
       crypto.randomBytes(16, (err, buf) => {
