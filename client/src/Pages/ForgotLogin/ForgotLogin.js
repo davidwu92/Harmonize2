@@ -13,7 +13,8 @@ const ForgotLogin = () => {
 const [forgotState, setForgotState] = useState({
   email: '',
   showError: false,
-  messageFromServer: ''
+  messageFromServer: '',
+  showNullError: false,
 })
 
 forgotState.handleInputChange = event => {
@@ -27,6 +28,7 @@ forgotState.sendEmail = e => {
     setForgotState({ ...forgotState,
       showError: false,
       messageFromServer: '',
+      showNullError: true
     })
   } else {
     let email = {
@@ -34,17 +36,19 @@ forgotState.sendEmail = e => {
     }
     sendForgot(email)
       .then(response => {
-        console.log(response.data)
+        console.log(response)
         if (response.data === 'email not in db') {
           setForgotState({ ...forgotState,
             showError: true,
-            messageFromServer: ''
+            messageFromServer: '',
+            showNullError: false
           })
         } else if (response.data === 'recovery email sent') {
           setForgotState({ ...forgotState,
             showError: false,
             messageFromServer: 'recovery email sent',
-            email: ''
+            email: '',
+            showNullError: false
           })
         }
       })

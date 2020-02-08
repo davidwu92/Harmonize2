@@ -1,8 +1,11 @@
 const { User } = require('../models')
 const crypto = require('crypto')
 const bcrypt = require('bcrypt')
+const saltRounds = 10;
+const myPlaintextPassword = 's0/\/\P4$$w0rD';
+const someOtherPlaintextPassword = 'not_bacon';
 
-const BCRYPT_SALT_ROUNDS = 12
+const BCRYPT_SALT_ROUNDS = 10
 
 require('dotenv').config()
 
@@ -17,16 +20,26 @@ module.exports = app => {
     .then(user => {
       if (user !== null) {
         console.log('user exists in db')
+        console.log(req.body.password)
         bcrypt
           .hash(req.body.password, BCRYPT_SALT_ROUNDS)
           .then(hashedPassword => {
-            user.update({
-              password: hashedPassword,
-              resetPasswordToken: null,
-              resetPasswordExpires: null
-            })
+            bcrypt.genSalt(saltRounds, function(err, salt) {
+            bcrypt.hash(myPlaintextPassword, salt, function(err, hash) {
+        // Store hash in your password DB.
+              console.log(hashedPassword)
+            user.password= hashedPassword
+            user.salt = salt
+            user.has = hash
+            // user.resetPasswordToken = null
+            // user.resetPasswordExpires = null
+            
+            user.save()
+    });
+});
           })
           .then(() => {
+        
             console.log('password updated')
             res.status(200).send({ message: 'password updated' })
           })
@@ -36,17 +49,19 @@ module.exports = app => {
       }
     })
   })
+
   // reset password and update
   app.get('/reset', (req, res, next) => {
     console.log(req.query.resetPasswordToken)
     User.findOne({
-      resetPasswordToken: req.query.resetPasswordToken
+      resetPasswordToken: req.query.resetPasswordToken,
       // change this out later
-      // resetPasswordExpires: {
-      //   $gt: Date.now()
-      // }
+      resetPasswordExpires: {
+        $gt: Date.now()
+      }
     })
     .then(user => {
+      console.log(user)
       if (user === null) {
         console.log('password reset link is invalid or has expired')
         res.json('password reset link is invalid or has expired')
@@ -62,17 +77,16 @@ module.exports = app => {
 // send forgot password email
   app.post('/forgotPassword', (req, res) => {
     if (req.body.email === undefined ) {
-      res.status(400).send('email require')
+      res.status(200).json('email require')
       return
     }
-    console.error(req.body.email)
     User.findOne({
       email: req.body.email
     })
     .then((user) => {
       if (user === null) {
         console.error('email not in database')
-        res.status(403).send('email not in db')
+        res.status(200).json('email not in db')
         return
       } else {
         const token = crypto.randomBytes(20).toString('hex')
@@ -94,14 +108,20 @@ module.exports = app => {
           from: 'harmonizedevteam@gmail.com',
           to: `${user.email}`,
           subject: 'Link To Reset Password',
-          text:
-          'You are reveiving this because you (or someone else) have requested the reset of the password for your account. \n\n' 
-          + 'Please click on the following link, or pase thisinto your browser to complete the process within one hour of receiving it: \n\n'
-          + `http://localhost:3000/resetPass/${token}\n\n`
-          + 'If you did not request this, pease ignore this email and your password will remain unchanged. \n'
         }
+        mailOptions.text = (process.env.NODE_ENV === 'production') ?
+        'You have received this email because you (or someone else) requested a password reset for your Harmonize account. \n\n' 
+        + 'Please click on the following link or paste this into your browser within one hour of receiving this email to reset your password: \n\n'
+        + `https://salty-dawn-09701.herokuapp.com/reset/${token}\n\n`
+        + 'If you did not request this, ignore this email and your password will remain unchanged. \n' 
+        :
+        'You have received this email because you (or someone else) requested a password reset for your Harmonize account. \n\n' 
+          + 'Please click on the following link or paste this into your browser within one hour of receiving this email to reset your password: \n\n'
+          + `http://localhost:3000/reset/${token}\n\n`
+          + 'If you did not request this, ignore this email and your password will remain unchanged. \n'
 
         console.log('sending mail')
+        res.status(200).json('recovery email sent')
 
         transporter.sendMail(mailOptions, (err, reponse) => {
           if (err) {
