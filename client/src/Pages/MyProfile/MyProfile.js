@@ -5,8 +5,7 @@ import ProfileContext from '../../utils/ProfileContext'
 import {
    Modal,
     Button,
-     TextInput,
-      Select
+     TextInput
      } from 'react-materialize'
 import axios from 'axios'
 
@@ -30,8 +29,9 @@ const MyProfile = () => {
     profile: ''
   })
 
-  //using token to grab MY user data.
   let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
+  //using token to grab MY user data.
+  useEffect(() => {
   getUser(token)
     .then(({ data }) => {
       setProfileState({
@@ -49,6 +49,8 @@ const MyProfile = () => {
       })
     })
     .catch((e) => console.error(e))
+
+  }, [])
 
   //Setting up editState VARIABLES: Allows us to edit values before submitting PUT requests to db
   const [editState, setEditState] = useState({
