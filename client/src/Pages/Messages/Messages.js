@@ -1,11 +1,14 @@
 import React from 'react'
+import Chat from '../../Components/Chat'
+import Join from '../../Components/Join'
 
 
 const Messages = () => {
 
   return (
     <>
-      <h1>Messages Page</h1>
+      <Join />
+      <Chat />
     </>
   )
 }

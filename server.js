@@ -1,22 +1,41 @@
 require('dotenv').config()
 const express = require('express')
 const { join } = require('path')
-// passport modules: STAY HERE PLS
+// passport modules
 const passport = require('passport')
 const { Strategy } = require('passport-local')
 const { Strategy: JWTStrategy, ExtractJwt } = require('passport-jwt')
+const multer = require('multer')
+const GridFsStorage = require('multer-gridfs-storage')
+const Grid = require('gridfs-stream')
+const crypto = require('crypto')
+// Socket.io
+const socketio = require('socket.io')
+const http = require('http')
 
 const app = express()
+
+// for Socketio use
+const server = http.createServer(app)
+const io = socketio(server)
+
 const { User } = require('./models')
 
+// MongoDB
 const mongoURI = 'mongodb://localhost/harmonizedb'
 const mongoose = require('mongoose')
-const multer  = require('multer');
-const GridFsStorage = require('multer-gridfs-storage')
-var Grid = require('gridfs-stream')
-var crypto = require('crypto')
 const conn = mongoose.createConnection(mongoURI)
 // const url = 'mongodb://localhost/harmonizedb';
+
+// Socketio
+io.on('connect', (socket) => {
+  console.log('We have a new connection!!')
+
+  socket.on('disconnect', () => {
+    console.log('User left!!!')
+  })
+})
+
 
 //middleware
 app.use(express.static(join(__dirname, 'client', 'build')))
@@ -72,15 +91,15 @@ const storage = new GridFsStorage({
 
 const upload = multer({ storage })
 
-  app.post('/', upload.single('img'), passport.authenticate('jwt', { session: false }), (req, res) => {
-    const { _id: id } = req.user
-    User.findOneAndUpdate({ _id: id }, { pfPic: req.file })
-      .then(() => res.sendStatus(200))
-      .catch(e => console.error(e))
-    
-    // res.status(201).send()
-  })
-  app.get('/:filename', (req, res) => {
+app.post('/', upload.single('img'), passport.authenticate('jwt', { session: false }), (req, res) => {
+  const { _id: id } = req.user
+  User.findOneAndUpdate({ _id: id }, { pfPic: req.file })
+    .then(() => res.sendStatus(200))
+    .catch(e => console.error(e))
+
+  // res.status(201).send()
+})
+app.get('/:filename', (req, res) => {
   gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
     // Check if file
     if (!file || file.length === 0) {
@@ -114,7 +133,8 @@ require('mongoose')
   .then(() => {
     gfs = Grid(conn.db, mongoose.mongo)
     gfs.collection('uploads')
-    app.listen(process.env.PORT || 3001)})
+    app.listen(process.env.PORT || 3001)
+  })
   .catch(e => console.error(e))
 
   // Create storage engine
