@@ -3,9 +3,6 @@ import TextField from '@material-ui/core/TextField'
 import ForgotContext from '../../utils/ForgotContext'
 
 
-
-
-
 const ForgotPassword = () =>  {
 
  const { email, messageFromServer, showNullError, showError, sendEmail, handleInputChange } = useContext(ForgotContext)

@@ -122,6 +122,7 @@ body {
 }
 
 #addLink {
+  margin-top: 5px;
   font-size: 35px;
   background-color: white;
   color: black;
@@ -160,6 +161,12 @@ body {
   box-sizing: border-box;
 }
 
+#instrumentsLabel {
+  font-size: 15px;
+  color: #7B7B7C;
+  padding: 10px;
+}
+
 /* IFRAME*/
 
 #iframe {
@@ -178,8 +185,9 @@ body {
   color: white;
 }
 
-#instrumentsLabel {
-  font-size: 15px;
-  color: #7B7B7C;
-  padding: 10px;
+/* PROFILE  IMG */
+#img {
+  height: auto;
+  width: auto;
+  margin-top: 25px;
 }

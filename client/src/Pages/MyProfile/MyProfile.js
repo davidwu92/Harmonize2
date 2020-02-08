@@ -366,7 +366,7 @@ const MyProfile = () => {
         <div className="row"> {/* TOP ROW: PF PIC, BASIC INFO */}
           {/* PROFILE PIC */}
           <div className="col s4 m2">
-            <img className="circle responsive-img" alt="Your pf pic" id="img" src={profileState.profile} />
+            <img className="responsive-img" alt="Your pf pic" id="img" src={profileState.profile} />
             <Modal
               actions={[
                 <Button onClick={editPicture} modal="close" node="button" className="black waves-effect waves-light white-text hoverable" >
@@ -379,8 +379,8 @@ const MyProfile = () => {
               ]}
               header="Edit Your Profile Picture" trigger={editPfButton}>
               <form action="#">
-                <div class="file-field input-field">
-                  <div class="btn">
+                <div className="file-field input-field">
+                  <div className="btn">
                     <span>File</span>
                     <input type="file"
                       className="custom-file-input"
@@ -388,8 +388,8 @@ const MyProfile = () => {
                       aria-describedby="inputGroupFileAddon01"
                     ></input>
                   </div>
-                  <div class="file-path-wrapper">
-                    <input class="file-path validate" type="text"></input>
+                  <div className="file-path-wrapper">
+                    <input className="file-path validate" type="text"></input>
                   </div>
                 </div>
               </form>
@@ -547,7 +547,6 @@ const MyProfile = () => {
             }
           </div>
         </div>
-
         <div className="divider"></div>
       </div>
 
