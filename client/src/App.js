@@ -5,9 +5,7 @@ import './App.css'
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link,
-  useHistory
+  Route
 } from 'react-router-dom'
 import Navbar from './Components/Navbar'
 import LoggedinNav from './Components/LoggedinNav'
@@ -23,7 +21,6 @@ import UserContext from './utils/UserContext'
 import UserAPI from './utils/UserAPI'
 import './App.css'
 
-const { addUser } = UserAPI
 
 //useState into PAGEs.
 //useContext goes into components.
@@ -79,10 +76,10 @@ function App() {
             <LoggedinNav />
             <OtherProfile />
           </Route>
-          <Route path="/forgotLogin">
+          <Route path="/forgotPassword">
             <ForgotLogin/>
           </Route>
-          <Route path="/resetPass">
+          <Route path="/reset/:token">
             <ResetPass/>
           </Route>
         </Switch>

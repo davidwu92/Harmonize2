@@ -19,11 +19,11 @@ const [resetState, setResetState] = useState({
   error: false
 })
   let { token } = useParams()
-let test = '96953f23d1d06a2f8e37fa01d1c67ae89c0c1d69'
+
 useEffect(() => {
-  console.log(test)
+  console.log(token)
   axios.get('/reset', { params: {
-    resetPasswordToken: test
+    resetPasswordToken: token
   }})
   .then(response => {
     console.log(response)
@@ -34,6 +34,7 @@ useEffect(() => {
         isLoading: false,
         error: false
       })
+      
     } else {
       setResetState({ ...resetState,
         update: false,
