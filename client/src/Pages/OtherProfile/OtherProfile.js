@@ -1,8 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import SearchedAPI from '../../utils/SearchAPI'
 import axios from 'axios'
+import ProfileContext from '../../utils/ProfileContext'
+import LinksCards from '../../Components/LinksCards'
+import UserAPI from '../../utils/UserAPI'
+
 
 const {visitProfile} = SearchedAPI
+
+const { getUser, updateUser, addYoutube, getYoutube, deleteYoutube, getOtherYoutube } = UserAPI
 
 const OtherProfile = () => {
   
@@ -39,6 +45,20 @@ const OtherProfile = () => {
     })
     .catch((e)=>console.error(e))
 
+ const [youtubeState, setYoutubeState] = useState({
+    links: []
+  })
+
+ useEffect(() => {
+    getOtherYoutube(profileId)
+      .then(({ data }) => {
+        let links = []
+        links.push(data)
+        setYoutubeState({ ...youtubeState, links })
+      })
+      .catch(e => console.error(e))
+  }, [])  
+
   return (
     <>
       <div className="container">
@@ -59,20 +79,11 @@ const OtherProfile = () => {
             <h6 className="grey-text">{profileState.bio}</h6>
           </div>
         </div>
-      </div>
-      
-      {/* INSTRUMENTS/SKILLS */}
-      <div className="row grey lighten-5">
-          {/* INSTRUMENTS */}
-        <div className="col s6 m6">
-          {
-            profileState.instruments.length ? <>
-              <h6>My Instruments</h6>
-              {profileState.instruments.map(instrument => (
-                <p>{instrument + " "}</p>
-              ))}
-            </> : null
-          }
+
+        <div className="row">
+        <ProfileContext.Provider value={youtubeState}>
+            <LinksCards />
+          </ProfileContext.Provider>
         </div>
           {/* SKILLS */}
         <div className="col s6 m6">

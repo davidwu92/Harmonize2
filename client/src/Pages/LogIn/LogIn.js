@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import LoginForm from '../../Components/LoginForm'
+import ForgotPassword from '../../Components/ForgotPassword'
+
 
 const LogIn = () => {
+
+
   return (
     <>
       <div className="container">

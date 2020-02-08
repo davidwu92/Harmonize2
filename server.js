@@ -74,7 +74,6 @@ const upload = multer({ storage })
 
   app.post('/', upload.single('img'), passport.authenticate('jwt', { session: false }), (req, res) => {
     const { _id: id } = req.user
-    console.log(req.file)
     User.findOneAndUpdate({ _id: id }, { pfPic: req.file })
       .then(() => res.sendStatus(200))
       .catch(e => console.error(e))

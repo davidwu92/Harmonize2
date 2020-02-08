@@ -24,7 +24,7 @@ module.exports = app => {
             .catch(e => console.error(e))
     })
 
-
+// delete Youtube link
       app.delete('/youtubes', passport.authenticate('jwt', { session: false }), (req, res) => {
         const { _id: userLink } = req.user
         const { _id: id } = req.body
