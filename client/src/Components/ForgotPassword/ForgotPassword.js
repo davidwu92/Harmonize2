@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import TextField from '@material-ui/core/TextField'
+// import TextField from '@material-ui/core/TextField'
 import ForgotContext from '../../utils/ForgotContext'
 
 
@@ -21,10 +21,15 @@ const ForgotPassword = () =>  {
       </form>
       {showNullError && (
         <div>
-        <p>
-          That email address isn't recognized. Please try again or register for a new account.
-        </p> 
-        <a href={'/register'}>Register</a>
+          <h3>The email address cannot be left blank</h3>
+        </div>
+      )}
+      {showError && (
+        <div>
+        <h3>
+          That email address isn't recognized. Please try again or <a href={'/register'}>Register</a> for a new account.
+        </h3> 
+        
 
          </div>
       )}
@@ -33,7 +38,7 @@ const ForgotPassword = () =>  {
           <h3>Password Reset Email Successfully Sent!</h3>
         </div>
       )}
-      <a href={'/'}>Home</a>
+      <h5><a href={'/'}>Home</a></h5>
     </div>        
  )
 }

@@ -16,11 +16,19 @@ if (error) {
       <div>
         <h4>Problem resetting password. Please send another reset link.</h4>
         <h6><Link to="/">Go Home</Link></h6>
-        <h6><Link to="/forgotLogin">Forgot Password?</Link></h6>
+        <h6><Link to="/forgotPassword">Forgot Password?</Link></h6>
       </div>
     </div>
   )
-} else if (isLoading) {
+} 
+if (isLoading) {
+  return(
+    <div>
+      <div>Loading User Data...</div>
+    </div>
+  )
+}
+
   return (
     <div>
     <h1>{title.pageTitle}</h1>
@@ -29,10 +37,11 @@ if (error) {
           <input placeholder="password" type="text" id="password" name="password" value={password} onChange={handleInputChange}/>
           <label htmlFor="password"></label>
         </div>
-        <button onClick={updatePassword} className="btn black waves-effect waves-light col s12" type="submit" name="action">Send Password Reset Email
+        <button onClick={updatePassword} className="btn black waves-effect waves-light col s12" type="submit" name="action">Update Password
                 <i className="material-icons right">send</i>
         </button>
       </form>
+
       {updated && (
         <div>
           <p>
@@ -44,9 +53,11 @@ if (error) {
       <h6><Link to="/">Go Home</Link></h6>
     </div>
   )
+
+
+
 }
 
 
-}
 
 export default PassReset

@@ -21,10 +21,17 @@ const io = socketio(server)
 
 const { User } = require('./models')
 
-// MongoDB
-const mongoURI = 'mongodb://localhost/harmonizedb'
+const mongoURI = process.env.NODE_ENV === 'production' ? process.env.MONGODB_URI : 'mongodb://localhost/harmonizedb'
 const mongoose = require('mongoose')
-const conn = mongoose.createConnection(mongoURI)
+const multer  = require('multer');
+const GridFsStorage = require('multer-gridfs-storage')
+var Grid = require('gridfs-stream')
+var crypto = require('crypto')
+const conn = mongoose.createConnection(mongoURI,  {
+    // these methods are rarely used
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
 // const url = 'mongodb://localhost/harmonizedb';
 
 // Socketio
@@ -68,10 +75,12 @@ passport.use(new JWTStrategy({
 
 //routes
 require("./routes")(app)
+//Catches all; sends any routes NOT found in the server directly into our home.
+app.get('*', (req, res) => res.sendFile(join(__dirname, 'client', 'build', 'index.html')))
 
 // image routes
 const storage = new GridFsStorage({
-  url: 'mongodb://localhost/harmonizedb',
+  url: process.env.NODE_ENV === 'production' ? process.env.MONGODB_URI : 'mongodb://localhost/harmonizedb',
   file: (req, file) => {
     return new Promise((resolve, reject) => {
       crypto.randomBytes(16, (err, buf) => {
