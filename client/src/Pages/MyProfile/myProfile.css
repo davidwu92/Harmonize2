@@ -1,9 +1,13 @@
 /* PROFILE  IMG */
 
 #img {
-  height: auto;
   width: auto;
+  height: auto;
   margin-top: 25px;
+}
+
+#inst{
+  margin-top: 20px;
 }
 
 /* BUTTONS */
