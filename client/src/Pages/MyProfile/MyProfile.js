@@ -106,6 +106,7 @@ const MyProfile = () => {
       .catch(e => console.error(e))
   }
 
+  //~~~~~~~~~~ADDING LINKS STUFF~~~~~~~~~
   const [youtubeState, setYoutubeState] = useState({
     links: []
   })
@@ -122,12 +123,11 @@ const MyProfile = () => {
       .catch(e => console.error(e))
   }, [])
 
+  //configure error messages for addLlink.
   toast.configure();
-  const toastOptions = {
-    autoClose: 7000,
-    hideProgressBar: true,
-    type: "error"
-  }
+  const toastOptions = {autoClose: 7000, hideProgressBar: true, type: "error"}
+  // COMMENTED OUT: createPost for a post modal?
+  // const createPost = <button id="editBtn" className="waves-effect waves-light center-align">Create a post</button>;
   // Add link is working now 01/31/20 with json token authorization
   const addLink = (event) => {
     event.preventDefault()
@@ -411,10 +411,6 @@ const MyProfile = () => {
                   </div>
                 </div>
               </form>
-              {/* <form>
-                <h6>Profile Picture: </h6>
-                <TextInput placeholder={profileState.pfPicture} type="newPfPicture" id="newPfpicture" name="pfPic" value={editState.pfPic} onChange={editState.handleInputChange} />
-              </form> */}
             </Modal>
           </div>
           {/* BASIC INFO */}
@@ -568,16 +564,36 @@ const MyProfile = () => {
 
       <div className="container">
       {/* POST A NEW LINK  */}
-        <div className="row">
-          <form>
-            {/* NEEDS STYLING */}
-            <h6>Create a youtube or soundcloud post!</h6>
-            <TextInput placeholder="Title" type="newTitle" id="newTitle" name="newTitle" value={editState.newTitle} onChange={editState.handleInputChange} />
-            <TextInput placeholder="Have anything to say about your post?" type="newBody" id="newBody" name="newBody" value={editState.newBody} onChange={editState.handleInputChange} />
-            <TextInput placeholder="Add a link" type="newLink" id="newLink" name="newLink" value={editState.newLink} onChange={editState.handleInputChange} />
-            <button onClick={addLink} id="addLink" className="waves-effect waves-light" type="submit" name="action"><i className="material-icons">publish</i>
-            </button>
-          </form>
+        <div className="row center-align">
+          {/* CREATEPOST MODAL BUTTON (commented out for now) */}
+          {/* <Modal id="edProfModal" className="center-align"
+            actions={[
+              <Button flat modal="close" node="button" className="waves-effect waves-light" id="editBtn" >
+                Close
+              </Button>,
+              <Button onClick={addLink} flat modal="close" node="button" className="waves-effect waves-light" id="editBtn">
+                Save Changes
+              </Button>
+            ]}
+            header="Create a post"
+            options={{
+              dismissible: true, endingTop: '10%', inDuration: 250, onCloseEnd: null,
+              onCloseStart: null, onOpenEnd: null, onOpenStart: null, opacity: 0.5,
+              outDuration: 250, preventScrolling: true, startingTop: '4%'
+            }}
+            trigger={createPost}
+          > */}
+            <form>
+              {/* NEEDS STYLING */}
+              <h6>Create a youtube or soundcloud post!</h6>
+              <TextInput placeholder="Title" type="newTitle" id="newTitle" name="newTitle" value={editState.newTitle} onChange={editState.handleInputChange} />
+              {/* STYLING: Make the BODY input fatter! */}
+              <TextInput placeholder="Have anything to say about your post?" type="newBody" id="newBody" name="newBody" value={editState.newBody} onChange={editState.handleInputChange} />
+              <TextInput placeholder="Add a link" type="newLink" id="newLink" name="newLink" value={editState.newLink} onChange={editState.handleInputChange} />
+              {/* Comment the button out if we put the createPost Modal back in. */}
+              <button onClick={addLink} id="addLink" className="waves-effect waves-light" type="submit" name="action"><i className="material-icons">publish</i></button>
+            </form>
+          {/* </Modal> */}
         </div>
 
       {/* LINKS AND POSTS */}
