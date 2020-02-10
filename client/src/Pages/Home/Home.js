@@ -6,22 +6,6 @@ import './home.css'
 const Home = () => {
   return (
     <>
-      {/* <div className="row">
-        <div className="col s12">
-          <div className="container">
-            <h5 className="center-align teal-text">HELPING MUSICIANS FIND MUSICIANS</h5>
-            <h6 className="center-align">
-              Looking to find musicians, jam buddies or band members in your area?<br></br>
-              Don't worry!  With HARMONIZE you can find bands and musicians of all levels looking for someone to jam and collaborate with near you!<br></br>
-              <h6><a><Link to="/register">Create Your Account To Get Started!</Link></a></h6>
-            </h6>
-
-            <img id="homeimg" src="https://cdn10.bostonmagazine.com/wp-content/uploads/2015/08/shutterstock_band.jpg" />
-          </div>
-        </div>
-      </div> */}
-
-      {/* TEST */}
       <div className="container center-align">
         <h5 className="white-text">FIND MUSICIONS, JAM BUDDIES, OR BAND MEMBERS IN YOUR AREA.</h5>
         <div id="homeCard" className="row">
