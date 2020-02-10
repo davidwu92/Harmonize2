@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import UserContext from '../../utils/UserContext'
 import UserAPI from '../../utils/UserAPI'
 import { useHistory } from 'react-router-dom'
-import axios from 'axios'
+
 
 import { Select } from 'react-materialize'
 
@@ -13,30 +13,40 @@ const { addUser } = UserAPI
 const RegisterForm = () => {
   const history = useHistory()
 
-  const { name, email, username, password, bio, handleInputChange } = useContext(UserContext)
+  const {profile, name, email, username, password, bio, handleInputChange, resetPasswordExpires, resetPasswordToken, cityState } = useContext(UserContext)
   // ADD USER/REGISTER BUTTON
   const handleAddUser = event => {
     event.preventDefault()
     addUser({
-      name, email, username,
-      password: password.length >= 4 ? password : "",
+      name, email, username, cityState,
+      password: password,
       //other relevant pf info that can be edited from profile.
-      links: [], pfPic: ``,
+      profile: '',
+      links: [],
+      pfPic: ``,
       //HARMONIZE INFO
       bio: bio === '' ? `You currently don't have a bio. Click on the edit profile button to tell others about yourself!` : bio,
       instruments: infoState.instrumentsAdded,
       skills: infoState.skillsAdded,
+      resetPasswordToken: '',
+      resetPasswordExpires: ''
+  
     })
       .then(({ data }) => {
+        console.log(data)
+        // need to come back to this for error handling
         if (data === "OK") {
           history.push('/login')
-        } else if (data.e.name == "UserExistsError") {
+        } else if (data === "password cant be left blank") {
+          //Error: Password not long enough/missing.
+          document.getElementById('alertMsg').innerHTML = `*Password must be entered`
+        } else if (data === 'need more') {
+          // Error: passwor not long enough
+          document.getElementById('alertMsg').innerHTML = `*Password must be at least 4 characters long`
+        } else if (data.e.keyValue.username || null ) {
           //Error: username in use.
           document.getElementById('alertMsg').innerHTML = `*That username is already in use.`
-        } else if (data.e.name == "MissingPasswordError") {
-          //Error: Password not long enough/missing.
-          document.getElementById('alertMsg').innerHTML = `*Your password must be at least 4 characters long.`
-        } else if (data.e.keyValue.email) {
+        }  else if (data.e.keyValue.email || null) {
           //Error: email in use. 
           document.getElementById('alertMsg').innerHTML = `*That email is already in use.`
         } else {

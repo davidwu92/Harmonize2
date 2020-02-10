@@ -1,14 +1,45 @@
 require('dotenv').config()
 const express = require('express')
 const { join } = require('path')
-// passport modules: STAY HERE PLS
+// passport modules
 const passport = require('passport')
 const { Strategy } = require('passport-local')
 const { Strategy: JWTStrategy, ExtractJwt } = require('passport-jwt')
+// Reset Password stuffs
+const multer = require('multer')
+const GridFsStorage = require('multer-gridfs-storage')
+const Grid = require('gridfs-stream')
+const crypto = require('crypto')
+// Socket.io
+const socketio = require('socket.io')
+const http = require('http')
 
 const app = express()
+
+// for Socketio use
+const server = http.createServer(app)
+const io = socketio(server)
+
 const { User } = require('./models')
 
+// MongoDB
+const mongoURI = process.env.NODE_ENV === 'production' ? process.env.MONGODB_URI : 'mongodb://localhost/harmonizedb'
+const mongoose = require('mongoose')
+const conn = mongoose.createConnection(mongoURI, {
+  // these methods are rarely used
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+// const url = 'mongodb://localhost/harmonizedb';
+
+// Socketio
+io.on('connect', (socket) => {
+  console.log('We have a new connection!!')
+
+  socket.on('disconnect', () => {
+    console.log('User left!!!')
+  })
+})
 
 //middleware
 app.use(express.static(join(__dirname, 'client', 'build')))
@@ -42,14 +73,77 @@ passport.use(new JWTStrategy({
 //routes
 require("./routes")(app)
 
+// image routes
+const storage = new GridFsStorage({
+  url: process.env.NODE_ENV === 'production' ? process.env.MONGODB_URI : 'mongodb://localhost/harmonizedb',
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+      crypto.randomBytes(16, (err, buf) => {
+        if (err) {
+          return reject(err)
+        }
+        const filename = file.originalname
+        const fileInfo = {
+          filename: filename,
+          bucketName: 'uploads',
+        }
+        resolve(fileInfo)
+      })
+    })
+  },
+})
+
+const upload = multer({ storage })
+
+app.post('/', upload.single('img'), passport.authenticate('jwt', { session: false }), (req, res) => {
+  const { _id: id } = req.user
+  User.findOneAndUpdate({ _id: id }, { pfPic: req.file })
+    .then(() => res.sendStatus(200))
+    .catch(e => console.error(e))
+
+  // res.status(201).send()
+})
+app.get('/:filename', (req, res) => {
+  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+    // Check if file
+    if (!file || file.length === 0) {
+      return res.status(404).json({
+        err: 'No file exists',
+      })
+    }
+
+    // Check if image
+    if (file.contentType === 'image/jpeg' || file.contentType === 'image/png') {
+      // Read output to browser
+      const readstream = gfs.createReadStream(file.filename)
+      readstream.pipe(res)
+    } else {
+      res.status(404).json({
+        err: 'Not an image',
+      })
+    }
+  })
+})
+let gfs
+
+
+//Catches all; sends any routes NOT found in the server directly into our home.
+app.get('*', (req, res) => res.sendFile(join(__dirname, 'client', 'build', 'index.html')))
+
 //connect to the database and listen on a port
 require('mongoose')
   .connect(process.env.NODE_ENV === 'production' ? process.env.MONGODB_URI : 'mongodb://localhost/harmonizedb', {
     // these methods are rarely used
     useCreateIndex: true,
-    useFindAndModify: true,
+    useFindAndModify: false,
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
-  .then(() => app.listen(process.env.PORT || 3001))
+  .then(() => {
+    gfs = Grid(conn.db, mongoose.mongo)
+    gfs.collection('uploads')
+    app.listen(process.env.PORT || 3001)
+  })
   .catch(e => console.error(e))
+
+  // Create storage engine

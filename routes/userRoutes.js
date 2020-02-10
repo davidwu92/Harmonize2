@@ -1,19 +1,42 @@
 const { User } = require('../models')
 const jwt = require('jsonwebtoken')
 const passport = require('passport')
+const BCRYPT_SALT_ROUNDS = 12;
+const bcrypt = require('bcrypt')
 module.exports = app => {
   // always use a post route for login because get routes dont have a req body
 
   // Register new user
   app.post('/users', (req, res) => {
-      const { name, email, username, links, bio, pfPic, instruments, skills } = req.body
-      // means registering a new user then pass the password seperately
-      User.register(new User({ name, email, username, links, bio, pfPic, instruments, skills }), req.body.password, e => {
-        if (e) {
-          res.json({ success: false, message: "Your account could not be saved. Error: ", e})
+      const { name, email, username, links, bio, pfPic, cityState, instruments, skills, profile, resetPasswordToken, resetPasswordExpires, password } = req.body
+      // changed password functionality
+      
+      bcrypt.hash(password, BCRYPT_SALT_ROUNDS).then(hashedPassword => {
+        
+        if (password === '') {
+          res.send('password cant be left blank')
+        } else if (password.length <= 3){
+          res.send('need more')
+        } else {
+        User.create({
+          name, email, username, links, bio, pfPic, cityState, instruments, skills, profile, password: hashedPassword
+        })
+        .then(() => res.sendStatus(200))
+        .catch(e => {
+          if (e) {
+            res.json({ success: false, message: "Your account could not be saved. Error: ", e})
+          }
+          
+        })
         }
-        res.sendStatus(200)
       })
+     
+      // User.register(new User({ name, email, username, links, bio, pfPic, cityState, instruments, skills, profile }), req.body.password, e => {
+      //   if (e) {
+      //     res.json({ success: false, message: "Your account could not be saved. Error: ", e})
+      //   }
+      //   res.sendStatus(200)
+      // })
   })
 
   // GET MY PROFILE INFO (when logged in)
@@ -34,17 +57,39 @@ module.exports = app => {
 
   // Login route
   app.post('/login', (req, res) => {
-    User.authenticate()(req.body.username, req.body.password, (e, user) => {
-      if (e) {
-        console.log(e)
-      }
-      if (user) {
-        res.json({
-          token: jwt.sign({ id: user._id }, process.env.SECRET)
+    User.findOne({ username: req.body.username })
+      .then(user => {
+        if (user === null) {
+          console.log('no user')
+          res.sendStatus(200)
+          return
+        }
+        bcrypt.compare(req.body.password, user.password).then(response => {
+          if (response !== true) {
+            console.log('passwords do not match')
+            res.sendStatus(200)
+            return 
+          }
+          console.log('user found & authenticated')
+          res.json({
+            token: jwt.sign({ id: user._id }, process.env.SECRET)
+          })
+          return 
         })
-      } else {
-        res.sendStatus(200)
-      }
-    })
+      })
+
+    // User.authenticate()(req.body.username, req.body.password, (e, user) => {
+    //   if (e) {
+    //     console.log(e)
+    //   }
+    //   if (user) {
+    //     res.json({
+    //       token: jwt.sign({ id: user._id }, process.env.SECRET)
+    //     })
+    //   } else {
+    //     res.sendStatus(200)
+    //   }
+    // })
   })
+  
 }

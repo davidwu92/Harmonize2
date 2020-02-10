@@ -6,9 +6,17 @@ module.exports = (model, Schema) => {
         links: [{ type: Schema.Types.ObjectId, ref: 'Youtube' }],
         //added by David 1/30 12 PM
         bio: String,
+        cityState: String,
+        pfPic: Array,
+        instruments: Array,
+        skills: Array,
+        profile: String,
         pfPic: String,
         instruments: [String],
         skills: [String],
+        resetPasswordToken: String,
+        resetPasswordExpires: Date,
+        password: { type: String, require: true}
     })
     User.plugin(require('passport-local-mongoose'))
     User.index({name: "text", username: "text", email: "text", instruments: "text", skills: "text"})

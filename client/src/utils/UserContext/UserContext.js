@@ -8,8 +8,13 @@ const UserContext = createContext({
   bio: '',
   instruments: [],
   skills: [],
+  profile: '',
+  resetPasswordToken: '',
+  resetPasswordExpires: '',
+  cityState: '',
   handleInputChange: () => { },
   // handleFormSubmit: () => { }
+  setCityState: () => {},
 })
 
 export default UserContext
