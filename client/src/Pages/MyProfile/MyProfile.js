@@ -106,6 +106,7 @@ const MyProfile = () => {
       .catch(e => console.error(e))
   }
 
+  //~~~~~~~~~~ADDING LINKS STUFF~~~~~~~~~
   const [youtubeState, setYoutubeState] = useState({
     links: []
   })
@@ -122,34 +123,39 @@ const MyProfile = () => {
       .catch(e => console.error(e))
   }, [])
 
+  //configure error messages for addLlink.
   toast.configure();
-  const toastOptions = {
-    autoClose: 7000,
-    hideProgressBar: true,
-    type: "error"
-  }
+  const toastOptions = {autoClose: 7000, hideProgressBar: true, type: "error"}
+  // COMMENTED OUT: createPost for a post modal?
+  // const createPost = <button id="editBtn" className="waves-effect waves-light center-align">Create a post</button>;
   // Add link is working now 01/31/20 with json token authorization
   const addLink = (event) => {
     event.preventDefault()
     let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
     let youtubeLink = {newLink: editState.newLink, newTitle: editState.newTitle, newBody: editState.newBody}
-    if (youtubeLink.newLink.includes("<iframe")) {
-      addYoutube(token, youtubeLink)
-        .then(() => {
-          setEditState({ ...editState, newLink: '', newBody: '', newTitle: '' })
-          getYoutube(token)
-            .then(({ data }) => {
-              let links = []
-              links.push(data)
-              setYoutubeState({ ...youtubeState, links })
-            })
-            .catch(e => console.error(e))
-        })
-        .catch(e => console.error(e))
+    if(youtubeLink.newTitle) {
+      if (youtubeLink.newLink.includes("<iframe")) {
+        addYoutube(token, youtubeLink)
+          .then(() => {
+            setEditState({ ...editState, newLink: '', newBody: '', newTitle: '' })
+            getYoutube(token)
+              .then(({ data }) => {
+                let links = []
+                links.push(data)
+                setYoutubeState({ ...youtubeState, links })
+              })
+              .catch(e => console.error(e))
+          })
+          .catch(e => console.error(e))
+      } else {
+        setEditState({ ...editState, newLink: ''})
+        return(toast(`Make sure you're providing an embedded link that starts with "<iframe>".`, toastOptions))
+      }
     } else {
-      setEditState({ ...editState, newLink: '', newBody: '', newTitle: ''  })
-      return(toast(`Make sure you're using the embedded link. It should start with "<iframe>"`, toastOptions))
+      setEditState({ ...editState, newLink: '', newTitle: ''  })
+      return(toast(`Please provide a title for your post.`, toastOptions))
     }
+    
   }
 
   //DELETE a Link
@@ -405,10 +411,6 @@ const MyProfile = () => {
                   </div>
                 </div>
               </form>
-              {/* <form>
-                <h6>Profile Picture: </h6>
-                <TextInput placeholder={profileState.pfPicture} type="newPfPicture" id="newPfpicture" name="pfPic" value={editState.pfPic} onChange={editState.handleInputChange} />
-              </form> */}
             </Modal>
           </div>
           {/* BASIC INFO */}
@@ -541,10 +543,9 @@ const MyProfile = () => {
             {
               profileState.instruments.length ? <>
                 <h6>My Instruments</h6>
-                {profileState.instruments.map(instrument => (
-                  <p>{instrument + " "}</p>
-                ))}
-              </> : null
+                {profileState.instruments.map(instrument => (<p>{instrument + " "}</p>))}
+              </> : 
+              <h6>You haven't added any instruments you play. Hit the edit profile button to add some instruments!</h6>
             }
           </div>
           {/* SKILLS */}
@@ -552,10 +553,9 @@ const MyProfile = () => {
             {
               profileState.skills.length ? <>
                 <h6>My Skills</h6>
-                {profileState.skills.map(skill => (
-                  <p>{skill + " "}</p>
-                ))}
-              </> : null
+                {profileState.skills.map(skill => (<p>{skill + " "}</p>))}
+              </> : 
+              <h6>You haven't added any skills to show off. Hit the edit profile button to add some instruments!</h6>
             }
           </div>
         </div>
@@ -564,16 +564,36 @@ const MyProfile = () => {
 
       <div className="container">
       {/* POST A NEW LINK  */}
-        <div className="row">
-          <form>
-            {/* NEEDS STYLING */}
-            <h6>Create a youtube or soundcloud post!</h6>
-            <TextInput placeholder="Title" type="newTitle" id="newTitle" name="newTitle" value={editState.newTitle} onChange={editState.handleInputChange} />
-            <TextInput placeholder="Have anything to say about your post?" type="newBody" id="newBody" name="newBody" value={editState.newBody} onChange={editState.handleInputChange} />
-            <TextInput placeholder="Add a link" type="newLink" id="newLink" name="newLink" value={editState.newLink} onChange={editState.handleInputChange} />
-            <button onClick={addLink} id="addLink" className="waves-effect waves-light" type="submit" name="action"><i className="material-icons">publish</i>
-            </button>
-          </form>
+        <div className="row center-align">
+          {/* CREATEPOST MODAL BUTTON (commented out for now) */}
+          {/* <Modal id="edProfModal" className="center-align"
+            actions={[
+              <Button flat modal="close" node="button" className="waves-effect waves-light" id="editBtn" >
+                Close
+              </Button>,
+              <Button onClick={addLink} flat modal="close" node="button" className="waves-effect waves-light" id="editBtn">
+                Save Changes
+              </Button>
+            ]}
+            header="Create a post"
+            options={{
+              dismissible: true, endingTop: '10%', inDuration: 250, onCloseEnd: null,
+              onCloseStart: null, onOpenEnd: null, onOpenStart: null, opacity: 0.5,
+              outDuration: 250, preventScrolling: true, startingTop: '4%'
+            }}
+            trigger={createPost}
+          > */}
+            <form>
+              {/* NEEDS STYLING */}
+              <h6>Create a youtube or soundcloud post!</h6>
+              <TextInput placeholder="Title" type="newTitle" id="newTitle" name="newTitle" value={editState.newTitle} onChange={editState.handleInputChange} />
+              {/* STYLING: Make the BODY input fatter! */}
+              <TextInput placeholder="Have anything to say about your post?" type="newBody" id="newBody" name="newBody" value={editState.newBody} onChange={editState.handleInputChange} />
+              <TextInput placeholder="Add a link" type="newLink" id="newLink" name="newLink" value={editState.newLink} onChange={editState.handleInputChange} />
+              {/* Comment the button out if we put the createPost Modal back in. */}
+              <button onClick={addLink} id="addLink" className="waves-effect waves-light" type="submit" name="action"><i className="material-icons">publish</i></button>
+            </form>
+          {/* </Modal> */}
         </div>
 
       {/* LINKS AND POSTS */}

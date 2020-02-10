@@ -3,10 +3,12 @@ import UserContext from '../../utils/UserContext'
 import UserAPI from '../../utils/UserAPI'
 import { useHistory } from 'react-router-dom'
 
-
 import { Select } from 'react-materialize'
 
 import SearchPlace from '../SearchPlace'
+
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const { addUser } = UserAPI
 
@@ -14,6 +16,15 @@ const RegisterForm = () => {
   const history = useHistory()
 
   const {profile, name, email, username, password, bio, handleInputChange, resetPasswordExpires, resetPasswordToken, cityState } = useContext(UserContext)
+  
+  //configure error message.
+  toast.configure();
+  const toastOptions = {
+    autoClose: 5000,
+    hideProgressBar: true,
+    type: "error"
+  }
+  
   // ADD USER/REGISTER BUTTON
   const handleAddUser = event => {
     event.preventDefault()
@@ -39,19 +50,19 @@ const RegisterForm = () => {
           history.push('/login')
         } else if (data === "password cant be left blank") {
           //Error: Password not long enough/missing.
-          document.getElementById('alertMsg').innerHTML = `*Password must be entered`
+          return(toast(`You must provide a password.`, toastOptions))
         } else if (data === 'need more') {
-          // Error: passwor not long enough
-          document.getElementById('alertMsg').innerHTML = `*Password must be at least 4 characters long`
+          // Error: password not long enough
+          return(toast(`Your password must be at least 4 characters long.`, toastOptions))
         } else if (data.e.keyValue.username || null ) {
           //Error: username in use.
-          document.getElementById('alertMsg').innerHTML = `*That username is already in use.`
+          return(toast(`That username is already in use.`, toastOptions))
         }  else if (data.e.keyValue.email || null) {
           //Error: email in use. 
-          document.getElementById('alertMsg').innerHTML = `*That email is already in use.`
+          return(toast(`That email is already in use.`, toastOptions))
         } else {
           //Default error; most likely never triggers.
-          document.getElementById('alertMsg').innerHTML = `*There is an issue with your registration.`
+          return(toast(`Login failed. Please check your username and password combination or click on "Forgot Password".`, toastOptions))
         }
       })
       .catch(e => console.error(e))
@@ -239,7 +250,7 @@ const RegisterForm = () => {
     <div className="row">
       <form id="registerForm" action="" className="col s12">
         <h3>Register</h3>
-        <div id="alertMsg" className="red-text"></div>
+        {/* <div id="alertMsg" className="red-text"></div>  USING TOASTS INSTEAD*/}
         <div className="col s12 m6">
           {/* NAME */}
           <div className="input-field">
