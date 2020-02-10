@@ -40,7 +40,7 @@ const Search = () => {
   return (
     <>
       <div className="container">
-        <h4 className="center-align">Search for a musician</h4>
+        <h4 className="center-align white-text">Search for a musician</h4>
         <br></br>
         <form id="searchForm">
           <input id="searchInput" type="search" name="searchBar" value={searchState.searchBar} onChange={searchState.handleInputChange} />
@@ -53,16 +53,17 @@ const Search = () => {
             <div className={(index % 2) ? "row grey lighten-4" : "row grey lighten-2"}>
               <div className="col s6 m6">
                 {/* PROFILE PIC */}
-                {(user.profile) ? <img className="circle responsive-img" alt="Your pf pic" id="img" src={user.profile} /> : null}
+                {(user.profile) ? <img className="responsive-img" alt="Your pf pic" id="img" src={user.profile} /> : null}
+                  </div>
+              <div className="col s6 m6">
                 {/* BASIC INFO */}
                 <h5 onClick={() => visitProfile(user._id)}>{user.name}</h5>
                 <h6>{user.username}</h6>
-                <h6>{user.email}</h6>
                 {/* NEEDS LOCATION */}
-              </div>
-              <div className="col s6 m6 grey lighten-5"> {/* INSTRUMENTS/SKILLS */}
+                </div>
+              <div className="col s12 m6 grey lighten-5"> {/* INSTRUMENTS/SKILLS */}
                 {/* INSTRUMENTS */}
-                <div className="col s6 m6">
+                <div className="col s12 m6">
                   <h6>Instruments</h6>
                   {
                     user.instruments.length ? <>
@@ -85,7 +86,7 @@ const Search = () => {
                 </div>
               </div>
             </div>
-          )) : <p>No users match your search query.</p>
+          )) : <p className="white-text center-align">No users match your search query.</p>
         }
       </div>
     </>

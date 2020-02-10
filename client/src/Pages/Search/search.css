@@ -11,8 +11,7 @@
   background: white;
   box-sizing: border-box;
   border-radius: 25px;
-  border: 4px solid white;
-  padding: 5px;
+  padding: 15px;
 }
 
 #searchInput {
@@ -28,8 +27,8 @@
   font-size: 1em;
   border-radius: 20px;
   padding: 5px;
-  background-color: #07051a;
-  color: #ffffff;
+  background-color: #ffffff;
+  color: black;
   text-align: center;
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
@@ -39,17 +38,22 @@
 
 .fa {
   box-sizing: border-box;
-  padding: 10px;
-  width: 42.5px;
-  height: 42.5px;
+  margin-top: 5px;
+  padding: 7px;
+  width: 42.0px;
+  height: 42.0px;
   position: absolute;
   top: 0;
   right: 0;
   border-radius: 50%;
   color: #07051a;
   text-align: center;
-  font-size: 2.2em;
+  font-size: 1.9em;
   transition: all 1s;
+  -webkit-transition: all 1s;
+  -moz-transition: all 1s;
+  -ms-transition: all 1s;
+  -o-transition: all 1s;
 }
 
 #searchForm:hover {
@@ -59,10 +63,16 @@
 
 #searchForm:hover input {
   display: block;
-  border: #009688 20px;
 }
 
 #searchForm:hover .fa {
-  color: white;
+  color: #009688;
   cursor: pointer;
+}
+
+/*POPULATED PROFILES */
+
+#img {
+  height: 100px;
+  width: 150px;
 }

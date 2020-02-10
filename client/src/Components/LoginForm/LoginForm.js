@@ -44,7 +44,7 @@ const LoginForm = () => {
           return(toast(`Login failed. Please check your username and password combination or click on "Forgot Password".`, toastOptions))
         }
       })
-      .catch((e) => console.error(e))
+      .catch(e => console.error(e))
   }
 
   return (
