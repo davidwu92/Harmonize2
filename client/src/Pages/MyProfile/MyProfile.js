@@ -9,6 +9,9 @@ import {
   TextInput,
 } from 'react-materialize'
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import axios from 'axios'
 
 //function for making changes to profile
@@ -119,15 +122,17 @@ const MyProfile = () => {
       .catch(e => console.error(e))
   }, [])
 
+  toast.configure();
+  const toastOptions = {
+    autoClose: 7000,
+    hideProgressBar: true,
+    type: "error"
+  }
   // Add link is working now 01/31/20 with json token authorization
   const addLink = (event) => {
     event.preventDefault()
     let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
-    // 2/10/2020 David's adding Title and Body
-    let youtubeLink = {newLink: editState.newLink,
-                      newTitle: editState.newTitle,
-                      newBody: editState.newBody}
-
+    let youtubeLink = {newLink: editState.newLink, newTitle: editState.newTitle, newBody: editState.newBody}
     if (youtubeLink.newLink.includes("<iframe")) {
       addYoutube(token, youtubeLink)
         .then(() => {
@@ -143,9 +148,7 @@ const MyProfile = () => {
         .catch(e => console.error(e))
     } else {
       setEditState({ ...editState, newLink: '', newBody: '', newTitle: ''  })
-      // need front end error message saying it has to be a youtube embedded Link
-      console.log('error')
-      alert('You failed.')
+      return(toast(`Make sure you're using the embedded link. It should start with "<iframe>"`, toastOptions))
     }
   }
 
@@ -572,6 +575,7 @@ const MyProfile = () => {
             </button>
           </form>
         </div>
+
       {/* LINKS AND POSTS */}
         <div className="row">
           {/* LINKS/POSTS HERE */}
