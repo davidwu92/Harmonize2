@@ -547,10 +547,9 @@ const MyProfile = () => {
             {
               profileState.instruments.length ? <>
                 <h6>My Instruments</h6>
-                {profileState.instruments.map(instrument => (
-                  <p>{instrument + " "}</p>
-                ))}
-              </> : null
+                {profileState.instruments.map(instrument => (<p>{instrument + " "}</p>))}
+              </> : 
+              <h6>You haven't added any instruments you play. Hit the edit profile button to add some instruments!</h6>
             }
           </div>
           {/* SKILLS */}
@@ -558,10 +557,9 @@ const MyProfile = () => {
             {
               profileState.skills.length ? <>
                 <h6>My Skills</h6>
-                {profileState.skills.map(skill => (
-                  <p>{skill + " "}</p>
-                ))}
-              </> : null
+                {profileState.skills.map(skill => (<p>{skill + " "}</p>))}
+              </> : 
+              <h6>You haven't added any skills to show off. Hit the edit profile button to add some instruments!</h6>
             }
           </div>
         </div>
