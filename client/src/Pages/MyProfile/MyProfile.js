@@ -133,23 +133,29 @@ const MyProfile = () => {
     event.preventDefault()
     let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
     let youtubeLink = {newLink: editState.newLink, newTitle: editState.newTitle, newBody: editState.newBody}
-    if (youtubeLink.newLink.includes("<iframe")) {
-      addYoutube(token, youtubeLink)
-        .then(() => {
-          setEditState({ ...editState, newLink: '', newBody: '', newTitle: '' })
-          getYoutube(token)
-            .then(({ data }) => {
-              let links = []
-              links.push(data)
-              setYoutubeState({ ...youtubeState, links })
-            })
-            .catch(e => console.error(e))
-        })
-        .catch(e => console.error(e))
+    if(youtubeLink.newTitle) {
+      if (youtubeLink.newLink.includes("<iframe")) {
+        addYoutube(token, youtubeLink)
+          .then(() => {
+            setEditState({ ...editState, newLink: '', newBody: '', newTitle: '' })
+            getYoutube(token)
+              .then(({ data }) => {
+                let links = []
+                links.push(data)
+                setYoutubeState({ ...youtubeState, links })
+              })
+              .catch(e => console.error(e))
+          })
+          .catch(e => console.error(e))
+      } else {
+        setEditState({ ...editState, newLink: ''})
+        return(toast(`Make sure you're providing an embedded link that starts with "<iframe>".`, toastOptions))
+      }
     } else {
-      setEditState({ ...editState, newLink: '', newBody: '', newTitle: ''  })
-      return(toast(`Make sure you're using the embedded link. It should start with "<iframe>"`, toastOptions))
+      setEditState({ ...editState, newLink: '', newTitle: ''  })
+      return(toast(`Please provide a title for your post.`, toastOptions))
     }
+    
   }
 
   //DELETE a Link

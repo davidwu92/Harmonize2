@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import UserAPI from '../../utils/UserAPI'
 import { Redirect, useHistory } from 'react-router-dom'
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const { loginUser } = UserAPI
 
 const LoginForm = () => {
@@ -18,6 +21,13 @@ const LoginForm = () => {
     setLoginState({ ...loginState, [event.target.name]: event.target.value })
   }
 
+  //configure error message.
+  toast.configure();
+  const toastOptions = {
+    autoClose: 7000,
+    hideProgressBar: true,
+    type: "error"
+  }
   //defining function for LOG IN button.
   loginState.handleLogin = (event) => {
     event.preventDefault()
@@ -31,8 +41,7 @@ const LoginForm = () => {
           history.push('/myprofile')
         } else {
           // ALERT MESSAGE
-          document.getElementById('alertMsg').innerHTML = `*Incorrect login information. Please try again.`
-          console.log('Failed Login Attempt')
+          return(toast(`Login failed. Please check your username and password combination or click on "Forgot Password".`, toastOptions))
         }
       })
       .catch((e) => console.error(e))
@@ -43,7 +52,6 @@ const LoginForm = () => {
     <div className="row">
       <form action="" className="col s12">
         <h3>Login</h3>
-        <div id="alertMsg" className="red-text"></div>
         <div className="input-field">
           <input placeholder="Username" type="text" id="username" name="username" value={loginState.username} onChange={loginState.handleInputChange} />
           <label htmlFor="username"></label>
