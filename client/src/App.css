@@ -13,3 +13,12 @@ body {
   padding: 10px;
 }
 
+a {
+  color: #004d40;
+
+}
+
+a:hover {
+  color: #009688;
+  cursor: pointer;
+}
