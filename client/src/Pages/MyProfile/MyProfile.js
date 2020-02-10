@@ -7,8 +7,8 @@ import {
   Modal,
   Button,
   TextInput,
-  Toast,
 } from 'react-materialize'
+
 import axios from 'axios'
 
 //function for making changes to profile
@@ -145,7 +145,7 @@ const MyProfile = () => {
       setEditState({ ...editState, newLink: '', newBody: '', newTitle: ''  })
       // need front end error message saying it has to be a youtube embedded Link
       console.log('error')
-      // Toast('I am a toast!', 4000)
+      alert('You failed.')
     }
   }
 
