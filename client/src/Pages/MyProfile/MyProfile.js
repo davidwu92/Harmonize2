@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react'
 import UserAPI from '../../utils/UserAPI'
 import LinksCards from '../../Components/LinksCards'
 import ProfileContext from '../../utils/ProfileContext'
+import './myProfile.css'
 import {
-   Modal,
-    Button,
-     TextInput
-     } from 'react-materialize'
+  Modal,
+  Button,
+  TextInput
+} from 'react-materialize'
 import axios from 'axios'
 
 //function for making changes to profile
@@ -32,23 +33,23 @@ const MyProfile = () => {
   let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
   //using token to grab MY user data.
   useEffect(() => {
-  getUser(token)
-    .then(({ data }) => {
-      setProfileState({
-        ...profileState,
-        name: data.name,
-        email: data.email,
-        username: data.username,
-        links: data.links,
-        bio: data.bio,
-        pfPic: data.pfPic,
-        id: data._id,
-        instruments: data.instruments,
-        skills: data.skills,
-        profile: data.profile
+    getUser(token)
+      .then(({ data }) => {
+        setProfileState({
+          ...profileState,
+          name: data.name,
+          email: data.email,
+          username: data.username,
+          links: data.links,
+          bio: data.bio,
+          pfPic: data.pfPic,
+          id: data._id,
+          instruments: data.instruments,
+          skills: data.skills,
+          profile: data.profile
+        })
       })
-    })
-    .catch((e) => console.error(e))
+      .catch((e) => console.error(e))
 
   }, [])
 

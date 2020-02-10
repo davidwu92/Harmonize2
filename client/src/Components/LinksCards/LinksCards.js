@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import ProfileContext from '../../utils/ProfileContext'
 import MyProfile from '../../Pages/MyProfile'
-
+import './linkCards.css'
 
 
 const LinksCards = () => {

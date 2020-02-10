@@ -9,20 +9,19 @@ import {
 } from 'react-router-dom'
 import Navbar from './Components/Navbar'
 import LoggedinNav from './Components/LoggedinNav'
-import Join from './Components/Join'
 import Chat from './Components/Chat'
 import Home from './Pages/Home'
 import LogIn from './Pages/LogIn'
 import Register from './Pages/Register'
 import MyProfile from './Pages/MyProfile'
 import OtherProfile from './Pages/OtherProfile'
+import Messages from './Pages/Messages'
 import Search from './Pages/Search'
 import ForgotLogin from './Pages/ForgotLogin'
 import ResetPass from './Pages/ResetPass'
 import UserContext from './utils/UserContext'
 import UserAPI from './utils/UserAPI'
 import './App.css'
-import Messages from './Pages/Messages'
 
 
 
