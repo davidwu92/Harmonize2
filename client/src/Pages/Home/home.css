@@ -2,7 +2,7 @@
   width: 100%;
 }
 
-#homeCard{
+#homeCard {
   margin-top: 100px;
 }
 
@@ -87,7 +87,6 @@ a {
   animation-delay: 14s;
 }
 
-
 .sp-circle-link {
   position: absolute;
   left: 50%;
@@ -96,7 +95,7 @@ a {
   text-align: center;
   line-height: 100px;
   padding: 4px;
-  background: #fff;
+  background: #e0e0e0;
   color: #3f1616;
   font-size: 25px;
   -webkit-border-radius: 50%;
