@@ -389,7 +389,7 @@ const MyProfile = () => {
 
           {/* PROFILE PIC */}
           <div className="col s4 m2">
-            <img className="responsive-img" alt="Your pf pic" id="img" src={profileState.profile} />
+            <img className="circle responsive-img" alt="Your pf pic" id="img" src={profileState.profile} />
             {/* EDIT PROF PIC */}
             <Modal
               actions={[
@@ -447,7 +447,7 @@ const MyProfile = () => {
           <div id="inst" className="col s6 m3">
             {
               profileState.skills.length ? <>
-                <h6 className="white-text"><b>MY SKILLS</b></h6>
+                <h6 className="white-text"><b>SKILLS</b></h6>
                 {profileState.skills.map(skill => (<p className="teal-text">{skill + " "}</p>))}
               </> :
                 <h6 className="white-text">You haven't added any skills to show off. Hit the edit profile button to add some instruments!</h6>
@@ -568,7 +568,7 @@ const MyProfile = () => {
 
         </div>
 
-        <div className="divider"></div>
+        <div className="divider grey"></div>
       </div>
 
       <div className="container">
@@ -594,13 +594,12 @@ const MyProfile = () => {
           > */}
           <form>
             {/* NEEDS STYLING */}
-            <h6 className="grey-text">Add a youtube or soundcloud post!</h6>
+            <h6 className="grey-text">Embed a youtube or soundcloud post!</h6>
             <TextInput placeholder="Title" type="newTitle" id="newTitle" name="newTitle" value={editState.newTitle} onChange={editState.handleInputChange} />
-            {/* STYLING: Make the BODY input fatter! */}
-            <TextInput placeholder="Have anything to say about your post?" type="newBody" id="newBody" name="newBody" value={editState.newBody} onChange={editState.handleInputChange} />
+            <TextInput placeholder="Comment about your post?" type="newBody" id="newBody" name="newBody" value={editState.newBody} onChange={editState.handleInputChange} />
             <TextInput placeholder="Add a link" type="newLink" id="newLink" name="newLink" value={editState.newLink} onChange={editState.handleInputChange} />
             {/* Comment the button out if we put the createPost Modal back in. */}
-            <button onClick={addLink} id="addLink" className="waves-effect waves-light" type="submit" name="action"><i className="material-icons">publish</i></button>
+            <button onClick={addLink} id="addLink" className="waves-effect waves-light btn" type="submit" name="action"><i className="material-icons">publish</i></button>
           </form>
           {/* </Modal> */}
         </div>

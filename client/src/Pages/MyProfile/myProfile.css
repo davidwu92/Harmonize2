@@ -6,7 +6,7 @@
   margin-top: 25px;
 }
 
-#inst{
+#inst {
   margin-top: 20px;
 }
 
@@ -30,9 +30,8 @@
 }
 
 #editBtn:hover {
+  background: #009688;
   color: white;
-  background: #07051a;
-  border-color: white;
   transition: all 0.2s linear;
 }
 
@@ -41,20 +40,14 @@
 }
 
 #editBtn {
+  padding:2px;
   font-weight: 700;
-  color: #07051a;
   border-color: black;
 }
 
-#editBtn:hover {
-  color: white;
-  background: #07051a;
-  border-color: white;
-}
-
 #addLink {
-  margin-top: 5px;
-  font-size: 35px;
+  margin-top: 15px;
+  font-size: 15px;
   background-color: white;
   color: black;
   border-radius: 15px;
@@ -75,11 +68,10 @@
   color: white;
   background: rgb(0, 0, 0);
   background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(67, 67, 67, 1) 15%, rgba(255, 255, 255, 1) 89%);
-  border: solid white 1px;
   border-radius: 20px;
 }
 
-#newUsername, #newName, #newEmail, #newBio, #newLink {
+#newUsername, #newName, #newEmail, #newBio, #newLink, #newTitle, #newBody{
   border: 2px solid black;
   padding: .25em .5em .3125em;
   color: black;
