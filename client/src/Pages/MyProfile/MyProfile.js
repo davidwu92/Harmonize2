@@ -404,12 +404,12 @@ const MyProfile = () => {
           </div>
           {/* BASIC INFO */}
           <div className="col s8 m10">
-            {/* USERNAME */}
-            <h4 className="black-text">{profileState.name}</h4>
             {/* NAME */}
-            <h5>{profileState.username}</h5>
+            <h4 className="white-text">{profileState.name}</h4>
+            {/* USERNAME */}
+            <h5 className="white-text">{profileState.username}</h5>
             {/* EMAIL */}
-            <h6>{profileState.email}</h6>
+            <h6 className="white-text">{profileState.email}</h6>
             {/* BIO */}
             <h6 className="grey-text">{profileState.bio}</h6>
             {/* EDIT PROFILE MODAL BUTTON */}
