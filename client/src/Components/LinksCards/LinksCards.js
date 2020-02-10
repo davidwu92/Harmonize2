@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import ProfileContext from '../../utils/ProfileContext'
 import MyProfile from '../../Pages/MyProfile'
-
+import './linkCards.css'
 
 
 const LinksCards = () => {
@@ -50,7 +50,7 @@ const LinksCards = () => {
                   <div id="cardReveal" className="card-reveal">
                     <span className="card-title grey-text text-darken-4"><i className="material-icons  white-text right">close</i></span>
                     <h5>Would you like to delete this post?</h5>
-                    <a id="delPost" href="#" onClick={() => deleteVideo(token, ylink._id)}><i className="material-icons white-text ">delete</i></a>
+                    <button id="delPost" className="btn waves-effect waves-light black col s12 white-text" href="#" onClick={() => deleteVideo(token, ylink._id)}>Delete</button>
                   </div>
                 </div>
               </div>
