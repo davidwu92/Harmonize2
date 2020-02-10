@@ -20,7 +20,9 @@ const UserAPI = {
       method: 'post',
       url: '/youtubes',
       data: {
-        link: youtubeLink
+        title: youtubeLink.newTitle,
+        body: youtubeLink.newBody,
+        link: youtubeLink.newLink
       },
       headers: {
         "Authorization": `Bearer ${token}`,

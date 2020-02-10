@@ -14,11 +14,18 @@ const LinksCards = () => {
       {
         links.map(link => link.map(ylink => {
           let str = ylink.link
+          let newBody = ylink.body
+          let newTitle = ylink.title
           if (str.includes('soundcloud')) {
             let sound = str.split(/"/)[11]
             return (
               <div className="col s12 m6 l4">
                 <div className="card black">
+                  <div>
+                    {/* David's adding title and body: NEEDS STYLING */}
+                    <h5 className = "white-text">{newTitle}</h5>
+                    <h6 className = "white-text">{newBody}</h6>
+                  </div>
                   <div className="card-img">
                     <iframe id="iframe" className="activator" scrolling="no" frameborder="no" allow="autoplay" src={sound}></iframe>
                   </div>
@@ -39,6 +46,11 @@ const LinksCards = () => {
             return (
               <div className="col s12 m6 l4">
                 <div className="card black">
+                  <div>
+                    {/* David's adding title and body: NEEDS STYLING */}
+                    <h5 className = "white-text">{newTitle}</h5>
+                    <h6 className = "white-text">{newBody}</h6>
+                  </div>
                   <div className="card-img">
                     {<iframe id="iframe" className="activator" src={youtube} frameBorder="0"
                       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>}

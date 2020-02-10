@@ -6,8 +6,12 @@ import './myProfile.css'
 import {
   Modal,
   Button,
-  TextInput
+  TextInput,
 } from 'react-materialize'
+
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import axios from 'axios'
 
 //function for making changes to profile
@@ -55,11 +59,12 @@ const MyProfile = () => {
 
   //Setting up editState VARIABLES: Allows us to edit values before submitting PUT requests to db
   const [editState, setEditState] = useState({
-    name: '', email: '', username: '', bio: '', pfPic: '',
-    newLink: '',
-    instruments: [],
-    skills: [],
-    profile: ''
+    //basic info
+    name: '', email: '', username: '', bio: '', profile: '', pfPic: '',
+    //new post info
+    newTitle: '', newBody: '', newLink: '',
+    //instruments/skills
+    instruments: [], skills: [],
   })
 
   //handles input changes for EDITING FORMS on this page.
@@ -67,6 +72,7 @@ const MyProfile = () => {
     setEditState({ ...editState, [event.target.name]: event.target.value })
   }
 
+  //edit pf picture
   const editPicture = (event) => {
     event.preventDefault()
     const file = document.getElementById('inputGroupFile01').files
@@ -100,15 +106,15 @@ const MyProfile = () => {
       .catch(e => console.error(e))
   }
 
-
   const [youtubeState, setYoutubeState] = useState({
     links: []
   })
 
-  // on page load
+  // on page load, show links.
   useEffect(() => {
     getYoutube(token)
       .then(({ data }) => {
+        console.log(data)
         let links = []
         links.push(data)
         setYoutubeState({ ...youtubeState, links })
@@ -116,17 +122,21 @@ const MyProfile = () => {
       .catch(e => console.error(e))
   }, [])
 
-
+  toast.configure();
+  const toastOptions = {
+    autoClose: 7000,
+    hideProgressBar: true,
+    type: "error"
+  }
   // Add link is working now 01/31/20 with json token authorization
   const addLink = (event) => {
     event.preventDefault()
     let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
-    let youtubeLink = editState.newLink
-
-    if (youtubeLink.includes("<iframe")) {
+    let youtubeLink = {newLink: editState.newLink, newTitle: editState.newTitle, newBody: editState.newBody}
+    if (youtubeLink.newLink.includes("<iframe")) {
       addYoutube(token, youtubeLink)
         .then(() => {
-          setEditState({ ...editState, newLink: '' })
+          setEditState({ ...editState, newLink: '', newBody: '', newTitle: '' })
           getYoutube(token)
             .then(({ data }) => {
               let links = []
@@ -137,13 +147,12 @@ const MyProfile = () => {
         })
         .catch(e => console.error(e))
     } else {
-      setEditState({ ...editState, newLink: '' })
-      // need front end error message saying it has to be a youtube embedded Link
-      console.log('error')
+      setEditState({ ...editState, newLink: '', newBody: '', newTitle: ''  })
+      return(toast(`Make sure you're using the embedded link. It should start with "<iframe>"`, toastOptions))
     }
   }
 
-
+  //DELETE a Link
   youtubeState.deleteVideo = (token, id) => {
     deleteYoutube(token, { _id: id })
       .then(() => {
@@ -171,7 +180,7 @@ const MyProfile = () => {
     }
   }
   document.addEventListener('click', updateInfoState)
-
+  //Edit PF form submission
   const editProfile = (event) => {
     event.preventDefault()
     //Any empty fields in editState will PUT old profile information.
@@ -553,16 +562,21 @@ const MyProfile = () => {
         <div className="divider"></div>
       </div>
 
-      {/* POST A NEW LINK  */}
       <div className="container">
+      {/* POST A NEW LINK  */}
         <div className="row">
           <form>
+            {/* NEEDS STYLING */}
+            <h6>Create a youtube or soundcloud post!</h6>
+            <TextInput placeholder="Title" type="newTitle" id="newTitle" name="newTitle" value={editState.newTitle} onChange={editState.handleInputChange} />
+            <TextInput placeholder="Have anything to say about your post?" type="newBody" id="newBody" name="newBody" value={editState.newBody} onChange={editState.handleInputChange} />
             <TextInput placeholder="Add a link" type="newLink" id="newLink" name="newLink" value={editState.newLink} onChange={editState.handleInputChange} />
-
             <button onClick={addLink} id="addLink" className="waves-effect waves-light" type="submit" name="action"><i className="material-icons">publish</i>
             </button>
           </form>
         </div>
+
+      {/* LINKS AND POSTS */}
         <div className="row">
           {/* LINKS/POSTS HERE */}
           <ProfileContext.Provider value={youtubeState}>
