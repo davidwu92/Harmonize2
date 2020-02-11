@@ -115,7 +115,6 @@ const MyProfile = () => {
   useEffect(() => {
     getYoutube(token)
       .then(({ data }) => {
-        console.log(data)
         let links = []
         links.push(data)
         setYoutubeState({ ...youtubeState, links })

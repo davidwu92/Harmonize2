@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import SearchedAPI from '../../utils/SearchAPI'
+import SearchAPI from '../../utils/SearchAPI'
 import ProfileContext from '../../utils/ProfileContext'
 import LinksCards from '../../Components/LinksCards'
 import UserAPI from '../../utils/UserAPI'
 
 
-const {visitProfile} = SearchedAPI
+const {visitProfile} = SearchAPI
 
 const { getOtherYoutube } = UserAPI
 
@@ -30,6 +30,7 @@ const OtherProfile = () => {
   //need a get new Other User API and route.
   visitProfile(profileId)
     .then(({data})=>{
+      console.log(data)
       setProfileState({ ...profileState, 
         name: data.name,
         email: data.email,
