@@ -50,11 +50,11 @@ const LinksCards = () => {
             let youtube = str.split(/"/)[5]
             return (
               <div className="col s12 m6 l4">
-                <div id="post" className="card black hoverable">
+                <div id="post" className="card black hoverable z-depth-5">
                   <div className="center-align">
                     {/* David's adding title and body: NEEDS STYLING */}
                     <h5 className="white-text">{newTitle}</h5>
-                    <h6 className="white-text">{newBody}</h6>
+                    <h6 className="grey-text">{newBody}</h6>
                   </div>
                   <div className="card-img">
                     {<iframe id="iframe" className="activator" src={youtube} frameBorder="0"

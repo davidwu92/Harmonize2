@@ -16,11 +16,12 @@
   color: white;
 }
 
-#post{
+#post {
+  border: solid .5px #00897b;
   padding: 5px;
-  border-radius:15px ;
-  -webkit-border-radius:15px ;
-  -moz-border-radius:15px ;
-  -ms-border-radius:15px ;
-  -o-border-radius:15px ;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
 }
