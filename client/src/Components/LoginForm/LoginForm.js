@@ -51,22 +51,25 @@ const LoginForm = () => {
 
     <div className="row">
       <form action="" className="col s12">
-        <h3>Login</h3>
-        <div className="input-field">
-          <input placeholder="Username" type="text" id="username" name="username" value={loginState.username} onChange={loginState.handleInputChange} />
-          <label htmlFor="username"></label>
-        </div>
-        <div className="input-field">
-          <input placeholder="Password" type="password" id="password" name="password" value={loginState.password} onChange={loginState.handleInputChange} />
-          <label htmlFor="password"></label>
-        </div>
-        <button onClick={loginState.handleLogin} id="login" className="btn black waves-effect waves-light col s12" type="submit" name="action">Submit
+        <h3 className="white-text center-align">Login</h3>
+        <div className="container">
+          <div id="alertMsg" className="red-text"></div>
+          <div className="input-field">
+            <input className="white-text" placeholder="Username" type="text" id="username" name="username" value={loginState.username} onChange={loginState.handleInputChange} />
+            <label htmlFor="username"></label>
+          </div>
+          <div className="input-field">
+            <input className="white-text"  placeholder="Password" type="password" id="password" name="password" value={loginState.password} onChange={loginState.handleInputChange} />
+            <label htmlFor="password"></label>
+          </div>
+          <button onClick={loginState.handleLogin} id="login" className="btn black waves-effect waves-light col s12 hoverable" type="submit" name="action">Submit
                 <i className="material-icons right">send</i>
-        </button>
-        <br></br>
-        <br></br>
-        <h6><Link to="/register">CREATE AN ACCOUNT</Link></h6>
-         <h6><Link to="/forgotPassword">FORGOT PASSWORD?</Link></h6>
+          </button>
+          <br></br>
+          <br></br>
+          <h6><Link to="/register">CREATE AN ACCOUNT</Link></h6>
+          <h6><Link to="/forgotPassword">Forgot Password?</Link></h6>
+        </div>
       </form>
     </div>
   )

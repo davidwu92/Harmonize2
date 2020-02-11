@@ -59,42 +59,50 @@ function App() {
             <Navbar />
             <Home />
           </Route>
+
           <Route path="/login">
             <Navbar />
             <LogIn />
           </Route>
+
           <Route path="/register">
             <Navbar />
             <Register />
           </Route>
+
           <Route path="/myprofile">
             <LoggedinNav />
             <MyProfile />
           </Route>
+
           <Route path="/search">
             <LoggedinNav />
             <Search />
           </Route>
-          <Route>
+
             <Route path="/messages">
               <LoggedinNav />
               <Messages />
             </Route>
+
             <Route path="/chat">
               <LoggedinNav />
               <Chat />
             </Route>
-          </Route>
+
           <Route path="/otherprofile">
             <LoggedinNav />
             <OtherProfile />
           </Route>
+
           <Route path="/forgotPassword">
             <ForgotLogin />
           </Route>
+
           <Route path="/reset/:token">
             <ResetPass />
           </Route>
+          
         </Switch>
       </Router>
     </UserContext.Provider>

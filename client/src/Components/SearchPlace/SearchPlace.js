@@ -26,7 +26,7 @@ const SearchPlace = () => {
             ({getInputProps, suggestions, getSuggestionItemProps, loading})=>(
               <div>
                 {/* Place Search Bar */}
-                <input {...getInputProps({placeholder: "City, State"})} />
+                <input {...getInputProps({placeholder: "City, State"})} className="white-text" />
                 {/* Suggestions */}
                 <div>
                   {loading ? <div>...loading</div> : null}

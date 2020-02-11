@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import UserContext from '../../utils/UserContext'
 import UserAPI from '../../utils/UserAPI'
 import { useHistory } from 'react-router-dom'
+import './register.css'
 
 import { Select } from 'react-materialize'
 
@@ -15,8 +16,8 @@ const { addUser } = UserAPI
 const RegisterForm = () => {
   const history = useHistory()
 
-  const {profile, name, email, username, password, bio, handleInputChange, resetPasswordExpires, resetPasswordToken, cityState } = useContext(UserContext)
-  
+  const { profile, name, email, username, password, bio, handleInputChange, resetPasswordExpires, resetPasswordToken, cityState } = useContext(UserContext)
+
   //configure error message.
   toast.configure();
   const toastOptions = {
@@ -24,7 +25,7 @@ const RegisterForm = () => {
     hideProgressBar: true,
     type: "error"
   }
-  
+
   // ADD USER/REGISTER BUTTON
   const handleAddUser = event => {
     event.preventDefault()
@@ -41,7 +42,7 @@ const RegisterForm = () => {
       skills: infoState.skillsAdded,
       resetPasswordToken: '',
       resetPasswordExpires: ''
-  
+
     })
       .then(({ data }) => {
         console.log(data)
@@ -50,19 +51,19 @@ const RegisterForm = () => {
           history.push('/login')
         } else if (data === "password cant be left blank") {
           //Error: Password not long enough/missing.
-          return(toast(`You must provide a password.`, toastOptions))
+          return (toast(`You must provide a password.`, toastOptions))
         } else if (data === 'need more') {
           // Error: password not long enough
-          return(toast(`Your password must be at least 4 characters long.`, toastOptions))
-        } else if (data.e.keyValue.username || null ) {
+          return (toast(`Your password must be at least 4 characters long.`, toastOptions))
+        } else if (data.e.keyValue.username || null) {
           //Error: username in use.
-          return(toast(`That username is already in use.`, toastOptions))
-        }  else if (data.e.keyValue.email || null) {
+          return (toast(`That username is already in use.`, toastOptions))
+        } else if (data.e.keyValue.email || null) {
           //Error: email in use. 
-          return(toast(`That email is already in use.`, toastOptions))
+          return (toast(`That email is already in use.`, toastOptions))
         } else {
           //Default error; most likely never triggers.
-          return(toast(`Login failed. Please check your username and password combination or click on "Forgot Password".`, toastOptions))
+          return (toast(`Login failed. Please check your username and password combination or click on "Forgot Password".`, toastOptions))
         }
       })
       .catch(e => console.error(e))
@@ -249,34 +250,34 @@ const RegisterForm = () => {
   return (
     <div className="row">
       <form id="registerForm" action="" className="col s12">
-        <h3>Register</h3>
+        <h3 className="white-text">Register</h3>
         {/* <div id="alertMsg" className="red-text"></div>  USING TOASTS INSTEAD*/}
         <div className="col s12 m6">
           {/* NAME */}
           <div className="input-field">
             <label htmlFor="name"></label>
-            <input placeholder="Full Name" type="text" id="name" name="name" value={name} onChange={handleInputChange} />
+            <input className="white-text" placeholder="Full Name" type="text" id="name" name="name" value={name} onChange={handleInputChange} />
           </div>
           {/* EMAIL */}
           <div className="input-field">
-            <input placeholder="Email" type="text" id="email" name="email" value={email} onChange={handleInputChange} />
+            <input className="white-text" placeholder="Email" type="text" id="email" name="email" value={email} onChange={handleInputChange} />
             <label htmlFor="email"></label>
           </div>
           {/* USERNAME */}
           <div className="input-field">
-            <input placeholder="Username" type="text" id="username" name="username" value={username} onChange={handleInputChange} />
+            <input className="white-text" placeholder="Username" type="text" id="username" name="username" value={username} onChange={handleInputChange} />
             <label htmlFor="username"></label>
           </div>
           {/* PASSWORD */}
           <div className="input-field">
-            <input placeholder="Password" type="password" id="password" name="password" value={password} onChange={handleInputChange} />
+            <input className="white-text" placeholder="Password" type="password" id="password" name="password" value={password} onChange={handleInputChange} />
             <label htmlFor="password"></label>
           </div>
           {/* SEARCHPLACE */}
           <SearchPlace />
           {/* BIO--optional */}
           <div className="input-field">
-            <input placeholder="(optional) Bio: Tell us about yourself!" type="text" id="bio" name="bio" value={bio} onChange={handleInputChange} />
+            <input className="white-text" placeholder="(optional) Bio: Tell us about yourself!" type="text" id="bio" name="bio" value={bio} onChange={handleInputChange} />
             <label htmlFor="bio"></label>
           </div>
         </div>
@@ -287,8 +288,8 @@ const RegisterForm = () => {
           <br></br>
           <div className="row">
             {/* DROPDOWN OF FAMILIES */}
-            <label id="instrumentsLabel">(Optional) What instruments do you play?</label>
-            <div className="col s12 m6">
+            <label id="instrumentsLabel">WHAT DO YOU PLAY? (Optional) </label>
+            <div className="col s12">
               <Select
                 id="instrumentFamily"
                 options={{
@@ -320,12 +321,12 @@ const RegisterForm = () => {
 
             {/* INSTRUMENTS ADDED SO FAR */}
             <div className="col s12">
-              <h6>Instrument(s) added: </h6>
+              <h6 className="teal-text"> YOUR INSTRUMENT(S): </h6>
               {
                 infoState.instrumentsAdded ? infoState.instrumentsAdded.map((instrument) => (
                   <p>
                     {instrument}
-                    <i id={instrument} onClick={removeInstrument} className="tiny material-icons">clear</i>
+                    <span id="trashIcon"><i id={instrument} onClick={removeInstrument} className="tiny fas fa-trash"></i></span>
                   </p>
                 )) : null
               }
@@ -341,7 +342,7 @@ const RegisterForm = () => {
 
           {/* SKILLS FORM--optional*/}
           <div className="row">
-            <label id="instrumentsLabel">(Optional) What other skills can you list?</label>
+            <label id="instrumentsLabel">WHAT OTHER SKILL CAN YOU LIST? (Optional) </label>
             <br></br>
             {/* DROPDOWN OF SKILLS */}
             <div className="col s12">
@@ -375,12 +376,12 @@ const RegisterForm = () => {
 
             {/* SKILLS ADDED SO FAR */}
             <div className="col s12">
-              <h6>Skill(s) added: </h6>
+              <h6 className="teal-text"> YOUR SKILL(S): </h6>
               {
                 infoState.skillsAdded ? infoState.skillsAdded.map((skill) => (
                   <p>
                     {skill}
-                    <i id={skill} onClick={removeSkill} className="tiny material-icons">clear</i>
+                    <span id="trashIcon"><i id={skill} onClick={removeSkill} className="tiny fas fa-trash"></i></span>
                   </p>
                 )) : null
               }
@@ -395,7 +396,7 @@ const RegisterForm = () => {
         </div>
 
         {/* SUBMIT REGISTRATION BUTTON */}
-        <button onClick={handleAddUser} id="register" className="btn black waves-effect waves-light col s12" type="submit" name="action">Register
+        <button onClick={handleAddUser} id="register" className="btn black waves-effect waves-light col s12 hoverable" type="submit" name="action">Register
               <i className="material-icons right">send</i>
         </button>
       </form>
