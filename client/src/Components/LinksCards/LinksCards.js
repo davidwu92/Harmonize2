@@ -9,6 +9,8 @@ const LinksCards = () => {
 
   let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
   const { links, deleteVideo } = useContext(ProfileContext)
+    
+  let cardActivate = (window.location.href.includes("/myprofile")) ? <span className="activator"><i className="material-icons right white-text">more_vert</i></span> : null
 
   return (
     <div>
@@ -32,9 +34,8 @@ const LinksCards = () => {
                     <iframe id="iframe" className="activator" scrolling="no" frameborder="no" allow="autoplay" src={sound}></iframe>
                   </div>
                   <div className="card-action">
-                    {/* DATE CREATED */}
                     <span className = "grey-text lighten-5">{datePosted}</span>
-                    <span className="activator"><i className="material-icons right white-text">more_vert</i></span>
+                    {cardActivate}
                     <br></br>
                   </div>
                   <div id="cardReveal" className="card-reveal">
@@ -61,7 +62,7 @@ const LinksCards = () => {
                   </div>
                   <div className="card-action">
                     <span className = "grey-text lighten-5">{datePosted}</span>
-                    <span className="activator"><i className="material-icons right white-text">more_vert</i></span>
+                    {cardActivate}
                     <br></br>
                   </div>
                   <div id="cardReveal" className="card-reveal">
