@@ -76,3 +76,11 @@
   height: 100px;
   width: 150px;
 }
+
+#pfRow{
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+}
