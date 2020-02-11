@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import SearchedAPI from '../../utils/SearchAPI'
+import SearchAPI from '../../utils/SearchAPI'
 import ProfileContext from '../../utils/ProfileContext'
 import LinksCards from '../../Components/LinksCards'
 import UserAPI from '../../utils/UserAPI'
 
 
-const {visitProfile} = SearchedAPI
+const {visitProfile} = SearchAPI
 
 const { getOtherYoutube } = UserAPI
 
@@ -35,7 +35,7 @@ const OtherProfile = () => {
         email: data.email,
         username: data.username,
         links: data.links,
-        bio: data.bio,
+        bio: (data.bio == `You currently don't have a bio. Click on the edit profile button to tell others about yourself!`) ? null : data.bio,
         pfPic: data.pfPic,
         instruments: data.instruments,
         skills: data.skills,
@@ -80,31 +80,34 @@ const OtherProfile = () => {
         </div>
 
         <div className="row">
-        <ProfileContext.Provider value={youtubeState}>
+          {/* INSTRUMENTS */}
+          <div className="col s6 m6">
+            {
+              profileState.instruments.length ? <>
+                <h6>My Instruments</h6>
+                {profileState.instruments.map(instrument => (<p>{instrument + " "}</p>))}
+              </> : 
+              null
+            }
+          </div>        
+          {/* SKILLS */}
+          <div className="col s6 m6">
+            {
+              profileState.skills.length ? <>
+              <h6>My Skills</h6>
+              {profileState.skills.map(skill => (
+                <p>{skill + " "}</p>
+              ))}
+              </> : null
+            }
+          </div>
+        </div>
+        
+        <div className="row">
+          <ProfileContext.Provider value={youtubeState}>
             <LinksCards />
           </ProfileContext.Provider>
         </div>
-          {/* SKILLS */}
-        <div className="col s6 m6">
-          {
-            profileState.skills.length ? <>
-            <h6>My Skills</h6>
-            {profileState.skills.map(skill => (
-              <p>{skill + " "}</p>
-            ))}
-            </> : null
-          }
-        </div>
-      </div>
-        
-      {/* LINKS/POSTS HERE */}
-      <div>
-        {/* {
-          profileState.links.length ? profileState.links.map((link)=>{
-            
-          })
-          : null
-        } */}
       </div>
     </>
   )

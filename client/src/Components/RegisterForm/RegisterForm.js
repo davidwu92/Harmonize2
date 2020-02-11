@@ -42,7 +42,6 @@ const RegisterForm = () => {
       skills: infoState.skillsAdded,
       resetPasswordToken: '',
       resetPasswordExpires: ''
-
     })
       .then(({ data }) => {
         console.log(data)
@@ -63,7 +62,7 @@ const RegisterForm = () => {
           return (toast(`That email is already in use.`, toastOptions))
         } else {
           //Default error; most likely never triggers.
-          return (toast(`Login failed. Please check your username and password combination or click on "Forgot Password".`, toastOptions))
+          return(toast(`Error: New user registration failed.`, toastOptions))
         }
       })
       .catch(e => console.error(e))

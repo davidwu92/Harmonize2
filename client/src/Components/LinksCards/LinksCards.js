@@ -2,12 +2,15 @@ import React, { useContext } from 'react'
 import ProfileContext from '../../utils/ProfileContext'
 import MyProfile from '../../Pages/MyProfile'
 import './linkCards.css'
+import moment from 'moment'
 
 
 const LinksCards = () => {
 
   let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
   const { links, deleteVideo } = useContext(ProfileContext)
+    
+  let cardActivate = (window.location.href.includes("/myprofile")) ? <span className="activator"><i className="material-icons right white-text">more_vert</i></span> : null
 
   return (
     <div>
@@ -16,6 +19,7 @@ const LinksCards = () => {
           let str = ylink.link
           let newBody = ylink.body
           let newTitle = ylink.title
+          let datePosted = moment(ylink.createdAt).format("MMMM Do YYYY, h:mm:ss a")
           if (str.includes('soundcloud')) {
             let sound = str.split(/"/)[11]
             return (
@@ -30,7 +34,8 @@ const LinksCards = () => {
                     <iframe id="iframe" className="activator" scrolling="no" frameborder="no" allow="autoplay" src={sound}></iframe>
                   </div>
                   <div className="card-action">
-                    <span className="activator"><i className="material-icons right white-text">more_vert</i></span>
+                    <span className = "grey-text lighten-5">{datePosted}</span>
+                    {cardActivate}
                     <br></br>
                   </div>
                   <div id="cardReveal" className="card-reveal">
@@ -56,7 +61,8 @@ const LinksCards = () => {
                       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>}
                   </div>
                   <div className="card-action">
-                    <span className="activator"><i className="material-icons right white-text">more_vert</i></span>
+                    <span className = "grey-text lighten-5">{datePosted}</span>
+                    {cardActivate}
                     <br></br>
                   </div>
                   <div id="cardReveal" className="card-reveal">
