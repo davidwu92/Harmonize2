@@ -22,7 +22,7 @@ const Home = () => {
                   <span>FIND </span>
                   <span>MUSICIANS.</span>
                 </h4>
-                <a className="sp-circle-link"><Link to="/login">Let's Go<i className="material-icons">send</i></Link></a>
+                <div className="sp-circle-link"><Link to="/login">Let's Go<i className="material-icons">send</i></Link></div>
               </div>
             </div>
           </div>

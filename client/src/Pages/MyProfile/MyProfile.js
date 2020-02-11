@@ -124,15 +124,15 @@ const MyProfile = () => {
 
   //configure error messages for addLlink.
   toast.configure();
-  const toastOptions = {autoClose: 7000, hideProgressBar: true, type: "error"}
+  const toastOptions = { autoClose: 7000, hideProgressBar: true, type: "error" }
   // COMMENTED OUT: createPost for a post modal?
   // const createPost = <button id="editBtn" className="waves-effect waves-light center-align">Create a post</button>;
   // Add link is working now 01/31/20 with json token authorization
   const addLink = (event) => {
     event.preventDefault()
     let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
-    let youtubeLink = {newLink: editState.newLink, newTitle: editState.newTitle, newBody: editState.newBody}
-    if(youtubeLink.newTitle) {
+    let youtubeLink = { newLink: editState.newLink, newTitle: editState.newTitle, newBody: editState.newBody }
+    if (youtubeLink.newTitle) {
       if (youtubeLink.newLink.includes("<iframe")) {
         addYoutube(token, youtubeLink)
           .then(() => {
@@ -147,14 +147,14 @@ const MyProfile = () => {
           })
           .catch(e => console.error(e))
       } else {
-        setEditState({ ...editState, newLink: ''})
-        return(toast(`Make sure you're providing an embedded link that starts with "<iframe>".`, toastOptions))
+        setEditState({ ...editState, newLink: '' })
+        return (toast(`Make sure you're providing an embedded link that starts with "<iframe>".`, toastOptions))
       }
     } else {
-      setEditState({ ...editState, newLink: '', newTitle: ''  })
-      return(toast(`Please provide a title for your post.`, toastOptions))
+      setEditState({ ...editState, newLink: '', newTitle: '' })
+      return (toast(`Please provide a title for your post.`, toastOptions))
     }
-    
+
   }
 
   //DELETE a Link
@@ -385,7 +385,7 @@ const MyProfile = () => {
 
           {/* PROFILE PIC */}
           <div className="col s4 m2">
-            <img className="circle responsive-img" alt="Your profile picture" src={profileState.profile} />
+            <img id="img" className="circle responsive-img" alt="Your profile picture" src={profileState.profile} />
             {/* EDIT PROF PIC */}
             <Modal id="edProfModal" className="center-align"
               actions={[
@@ -432,7 +432,7 @@ const MyProfile = () => {
           <div id="inst" className="col s6 m3">
             {
               profileState.instruments.length ? <>
-                <h6 className="white-text"><b>INSTRUMENTS</b></h6>
+                <h5 className="white-text"><b>INSTRUMENTS</b></h5>
                 {profileState.instruments.map(instrument => (<p className="teal-text">{instrument + " "}</p>))}
               </> :
                 <h6 className="white-text">You haven't added any instruments you play. Hit the edit profile button to add some instruments!</h6>
@@ -443,7 +443,7 @@ const MyProfile = () => {
           <div id="inst" className="col s6 m3">
             {
               profileState.skills.length ? <>
-                <h6 className="white-text"><b>SKILLS</b></h6>
+                <h5 className="white-text"><b>SKILLS</b></h5>
                 {profileState.skills.map(skill => (<p className="teal-text">{skill + " "}</p>))}
               </> :
                 <h6 className="white-text">You haven't added any skills to show off. Hit the edit profile button to add some instruments!</h6>
@@ -470,7 +470,7 @@ const MyProfile = () => {
             trigger={editPfButton}
           >
             <form>
-              
+
               <TextInput placeholder={profileState.name} type="newName" id="newName" name="name" value={editState.name} onChange={editState.handleInputChange} />
               <TextInput placeholder={profileState.username} type="newUsername" id="newUsername" name="username" value={editState.username} onChange={editState.handleInputChange} />
               <TextInput placeholder={profileState.email} type="newEmail" id="newEmail" name="email" value={editState.email} onChange={editState.handleInputChange} />
@@ -479,74 +479,74 @@ const MyProfile = () => {
               <div className="container">
                 {/* INSTRUMENTS FORM--optional*/}
 
-                    {/* DROPDOWN OF FAMILIES */}
-                    <select
-                      id="instrumentFamily"
-                      label="(Optional) What instruments do you play?"
-                      className="browser-default"
-                      //when family selected, run familySelect.
-                      onChange={familySelect}
-                    >
-                      <option value="0" selected>Add an Instrument</option>
-                      <option value="strings">Strings</option>
-                      <option value="woodwinds">Woodwinds</option>
-                      <option value="brass">Brass</option>
-                      <option value="percussion">Percussion</option>
-                      <option value="keyboard">Keyboard</option>
-                      <option value="voice">Voice</option>
-                    </select>
-                      <br></br>
-                    {/* INSTRUMENT DROPDOWN of selected family*/}
-                    {familyDropdowns}
-                    {/* "OTHER INSTRUMENT" INPUT FIELD*/}
-                    {otherInstrumentField}
-                    {/* INSTRUMENTS ADDED SO FAR */}
-                    <div className="teal-text">
-                      <h6 className="white-text">Instrument(s) added: </h6>
-                      {
-                        infoState.instrumentsAdded ? infoState.instrumentsAdded.map((instrument) => (
-                          <p >
-                            {instrument}
-                          <span id="trashIcon"><i id={instrument} onClick={removeInstrument} className="tiny fas fa-trash"></i></span>
-                          </p>
-                        )) : null
-                      }
-                    </div>
+                {/* DROPDOWN OF FAMILIES */}
+                <select
+                  id="instrumentFamily"
+                  label="(Optional) What instruments do you play?"
+                  className="browser-default"
+                  //when family selected, run familySelect.
+                  onChange={familySelect}
+                >
+                  <option value="0" selected>Add an Instrument</option>
+                  <option value="strings">Strings</option>
+                  <option value="woodwinds">Woodwinds</option>
+                  <option value="brass">Brass</option>
+                  <option value="percussion">Percussion</option>
+                  <option value="keyboard">Keyboard</option>
+                  <option value="voice">Voice</option>
+                </select>
+                <br></br>
+                {/* INSTRUMENT DROPDOWN of selected family*/}
+                {familyDropdowns}
+                {/* "OTHER INSTRUMENT" INPUT FIELD*/}
+                {otherInstrumentField}
+                {/* INSTRUMENTS ADDED SO FAR */}
+                <div className="teal-text">
+                  <h6 className="white-text">Instrument(s) added: </h6>
+                  {
+                    infoState.instrumentsAdded ? infoState.instrumentsAdded.map((instrument) => (
+                      <p >
+                        {instrument}
+                        <span id="trashIcon"><i id={instrument} onClick={removeInstrument} className="tiny fas fa-trash"></i></span>
+                      </p>
+                    )) : null
+                  }
+                </div>
 
                 {/* SKILLS FORM--optional*/}
-                  {/* DROPDOWN OF SKILLS */}
-                  <select
-                    id="skillsDropdown"
-                    label="(Optional) What other skills can you list?"
-                    className="browser-default"
-                    //when skill selected, run skillSelect.
-                    onChange={skillSelect}
-                  >
-                    <option value="0" selected>Add a Skill</option>
-                    <option value="Live Performer">Live Performer</option>
-                    <option value="Recording Artist">Recording Artist</option>
-                    <option value="DJ">DJ</option>
-                    <option value="Producer">Producer</option>
-                    <option value="Composer (Classical)">Composer (Classical)</option>
-                    <option value="Songwriter (Pop/Rock)">Songwriter (Pop/Rock)</option>
-                    <option value="Lyricist">Lyricist</option>
-                    <option value="Arranger">Arranger</option>
-                    <option value="Amateur/Enthusiast">Amateur/Enthusiast</option>
-                    <option value="Other">Other</option>
-                  </select>
-                  {/* "OTHER SKILL" INPUT FIELD */}
-                  {otherSkillField}
-                  {/* SKILLS ADDED SO FAR */}
-                  <div className="teal-text">
-                    <h6 className="white-text">Skill(s) added: </h6>
-                    {
-                      infoState.skillsAdded ? infoState.skillsAdded.map((skill) => (
-                        <p>
-                          {skill}
-                          <span id="trashIcon"><i id={skill} onClick={removeSkill} className="tiny fas fa-trash"></i></span>
-                        </p>
-                      )) : null
-                    }
+                {/* DROPDOWN OF SKILLS */}
+                <select
+                  id="skillsDropdown"
+                  label="(Optional) What other skills can you list?"
+                  className="browser-default"
+                  //when skill selected, run skillSelect.
+                  onChange={skillSelect}
+                >
+                  <option value="0" selected>Add a Skill</option>
+                  <option value="Live Performer">Live Performer</option>
+                  <option value="Recording Artist">Recording Artist</option>
+                  <option value="DJ">DJ</option>
+                  <option value="Producer">Producer</option>
+                  <option value="Composer (Classical)">Composer (Classical)</option>
+                  <option value="Songwriter (Pop/Rock)">Songwriter (Pop/Rock)</option>
+                  <option value="Lyricist">Lyricist</option>
+                  <option value="Arranger">Arranger</option>
+                  <option value="Amateur/Enthusiast">Amateur/Enthusiast</option>
+                  <option value="Other">Other</option>
+                </select>
+                {/* "OTHER SKILL" INPUT FIELD */}
+                {otherSkillField}
+                {/* SKILLS ADDED SO FAR */}
+                <div className="teal-text">
+                  <h6 className="white-text">Skill(s) added: </h6>
+                  {
+                    infoState.skillsAdded ? infoState.skillsAdded.map((skill) => (
+                      <p>
+                        {skill}
+                        <span id="trashIcon"><i id={skill} onClick={removeSkill} className="tiny fas fa-trash"></i></span>
+                      </p>
+                    )) : null
+                  }
                 </div>
               </div>
             </form>
