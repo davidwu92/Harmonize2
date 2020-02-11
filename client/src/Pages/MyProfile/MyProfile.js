@@ -586,7 +586,7 @@ const MyProfile = () => {
             <form>
               {/* NEEDS STYLING */}
               <h6>Create a youtube or soundcloud post!</h6>
-              <TextInput placeholder="Title" type="newTitle" id="newTitle" name="newTitle" value={editState.newTitle} onChange={editState.handleInputChange} />
+              <TextInput placeholder="Title (required)" type="newTitle" id="newTitle" name="newTitle" value={editState.newTitle} onChange={editState.handleInputChange} />
               {/* STYLING: Make the BODY input fatter! */}
               <TextInput placeholder="Have anything to say about your post?" type="newBody" id="newBody" name="newBody" value={editState.newBody} onChange={editState.handleInputChange} />
               <TextInput placeholder="Add a link" type="newLink" id="newLink" name="newLink" value={editState.newLink} onChange={editState.handleInputChange} />

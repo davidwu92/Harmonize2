@@ -3,6 +3,7 @@ module.exports = (model, Schema) => {
         title: String,
         body: String,
         link: String,
+        createdAt: { type: Date, default: Date.now },
         userLink: {
           type: Schema.Types.ObjectId, ref: 'User'
         }
