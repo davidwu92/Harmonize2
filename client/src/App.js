@@ -75,15 +75,13 @@ function App() {
             <LoggedinNav />
             <Search />
           </Route>
-          <Route>
-            <Route path="/messages">
-              <LoggedinNav />
-              <Messages />
-            </Route>
-            <Route path="/chat">
-              <LoggedinNav />
-              <Chat />
-            </Route>
+          <Route path="/messages">
+            <LoggedinNav />
+            <Messages />
+          </Route>
+          <Route path="/chat">
+            <LoggedinNav />
+            <Chat />
           </Route>
           <Route path="/otherprofile">
             <LoggedinNav />
