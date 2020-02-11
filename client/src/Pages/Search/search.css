@@ -78,6 +78,7 @@
 }
 
 #pfRow{
+  border: solid 3px #009688;
   border-radius: 15px;
   -webkit-border-radius: 15px;
   -moz-border-radius: 15px;

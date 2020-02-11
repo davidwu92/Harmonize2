@@ -51,7 +51,7 @@ const Search = () => {
       <div className="container"> {/* FOUND USERS POPULATE HERE; need styling. */}
         {
           searchState.searchedUsers.length ? searchState.searchedUsers.map((user, index) => (
-            <div id="pfRow" onClick={() => visitProfile(user._id)} className={(index % 2) ? "row grey lighten-4" : "row grey lighten-2"}>
+            <div id="pfRow" onClick={() => visitProfile(user._id)} className={(index % 2) ? "row grey lighten-1" : "row grey lighten-2"}>
               <div className="center-align">
                 <div className="col s4 m4">
                   {/* PROFILE PIC */}

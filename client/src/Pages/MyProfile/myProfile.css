@@ -15,7 +15,6 @@
 #editBtn {
   cursor: pointer;
   outline: none;
-  position: relative;
   z-index: 3;
   background: transparent;
   color: #07051a;
@@ -24,7 +23,6 @@
   border-radius: 10px;
   text-transform: uppercase;
   transition: all 0.2s linear;
-  margin: 4px;
   padding: 4px;
   padding-right: 4px;
 }
