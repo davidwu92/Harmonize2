@@ -391,20 +391,20 @@ const MyProfile = () => {
           <div className="col s4 m2">
             <img className="circle responsive-img" alt="Your pf pic" id="img" src={profileState.profile} />
             {/* EDIT PROF PIC */}
-            <Modal
+            <Modal id="edProfModal" className="center-align"
               actions={[
-                <Button onClick={editPicture} modal="close" node="button" className="black waves-effect waves-light white-text hoverable" >
-                  Upload <i className="material-icons right">send</i>
+                <Button flat modal="close" node="button" className="waves-effect waves-light hoverable" id="editBtn">
+                  Close
                 </Button>,
                 <span> </span>,
-                <Button flat modal="close" node="button" className="black waves-effect waves-light white-text hoverable" >
-                  Close
+                <Button onClick={editPicture} modal="close" node="button" className="waves-effect waves-light hoverable" id="editBtn">
+                  Upload <i className="material-icons right">send</i>
                 </Button>
               ]}
               header="Edit Your Profile Picture" trigger={editPfButton}>
               <form action="#">
                 <div className="file-field input-field">
-                  <div className="btn">
+                  <div className="btn black">
                     <span>File</span>
                     <input type="file"
                       className="custom-file-input"
@@ -474,19 +474,15 @@ const MyProfile = () => {
             trigger={editPfButton}
           >
             <form>
-              <h6>USERNAME</h6>
-              <TextInput placeholder={profileState.username} type="newUsername" id="newUsername" name="username" value={editState.username} onChange={editState.handleInputChange} />
-              <h6>FULL NAME</h6>
+              
               <TextInput placeholder={profileState.name} type="newName" id="newName" name="name" value={editState.name} onChange={editState.handleInputChange} />
-              <h6>EMAIL</h6>
+              <TextInput placeholder={profileState.username} type="newUsername" id="newUsername" name="username" value={editState.username} onChange={editState.handleInputChange} />
               <TextInput placeholder={profileState.email} type="newEmail" id="newEmail" name="email" value={editState.email} onChange={editState.handleInputChange} />
-              <h6>BIO</h6>
               <TextInput placeholder={profileState.bio} type="newBio" id="newBio" name="bio" value={editState.bio} onChange={editState.handleInputChange} />
 
               <div className="container">
                 {/* INSTRUMENTS FORM--optional*/}
-                <div className="row">
-                  <div className="row">
+
                     {/* DROPDOWN OF FAMILIES */}
                     <select
                       id="instrumentFamily"
@@ -503,30 +499,25 @@ const MyProfile = () => {
                       <option value="keyboard">Keyboard</option>
                       <option value="voice">Voice</option>
                     </select>
-                  </div>
-
-                  <div className="row">
+                      <br></br>
                     {/* INSTRUMENT DROPDOWN of selected family*/}
                     {familyDropdowns}
                     {/* "OTHER INSTRUMENT" INPUT FIELD*/}
                     {otherInstrumentField}
                     {/* INSTRUMENTS ADDED SO FAR */}
-                    <div className="black-text">
-                      <h6>Instrument(s) added: </h6>
+                    <div className="teal-text">
+                      <h6 className="white-text">Instrument(s) added: </h6>
                       {
                         infoState.instrumentsAdded ? infoState.instrumentsAdded.map((instrument) => (
                           <p >
                             {instrument}
-                            <i id={instrument} onClick={removeInstrument} className="tiny material-icons">clear</i>
+                          <span id="trashIcon"><i id={instrument} onClick={removeInstrument} className="tiny fas fa-trash"></i></span>
                           </p>
                         )) : null
                       }
                     </div>
-                  </div>
-                </div>
 
                 {/* SKILLS FORM--optional*/}
-                <div className="row">
                   {/* DROPDOWN OF SKILLS */}
                   <select
                     id="skillsDropdown"
@@ -550,17 +541,16 @@ const MyProfile = () => {
                   {/* "OTHER SKILL" INPUT FIELD */}
                   {otherSkillField}
                   {/* SKILLS ADDED SO FAR */}
-                  <div className="black-text">
-                    <h6>Skill(s) added: </h6>
+                  <div className="teal-text">
+                    <h6 className="white-text">Skill(s) added: </h6>
                     {
                       infoState.skillsAdded ? infoState.skillsAdded.map((skill) => (
                         <p>
                           {skill}
-                          <i id={skill} onClick={removeSkill} className="tiny material-icons">clear</i>
+                          <span id="trashIcon"><i id={skill} onClick={removeSkill} className="tiny fas fa-trash"></i></span>
                         </p>
                       )) : null
                     }
-                  </div>
                 </div>
               </div>
             </form>
