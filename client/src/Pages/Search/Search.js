@@ -59,11 +59,11 @@ const Search = () => {
                   {/* NAME
                   <h5>{user.name}</h5> */}
                   {/* USERNAME */}
-                  <p>{user.username}</p>
+                  <h6>{user.username}</h6>
                 </div>
                 {/* INSTRUMENTS */}
                 <div className="col s4 m4">
-                  <h6 className="teal-text">Instruments</h6>
+                  <h6 className="teal-text"><b>Instruments</b></h6>
                   {
                     user.instruments.length ? <>
                       {user.instruments.map(instrument => (
@@ -74,7 +74,7 @@ const Search = () => {
                 </div>
                 {/* SKILLS */}
                 <div className="col s4 m4">
-                  <h6 className="teal-text">Skills</h6>
+                  <h6 className="teal-text"><b>Skills</b></h6>
                   {
                     user.skills.length ? <>
                       {user.skills.map(skill => (

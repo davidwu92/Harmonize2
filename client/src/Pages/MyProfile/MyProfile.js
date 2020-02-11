@@ -385,7 +385,7 @@ const MyProfile = () => {
 
           {/* PROFILE PIC */}
           <div className="col s4 m2">
-            <img className="circle responsive-img" alt="Your pf pic" id="img" src={profileState.profile} />
+            <img className="circle responsive-img" alt="Your profile picture" src={profileState.profile} />
             {/* EDIT PROF PIC */}
             <Modal id="edProfModal" className="center-align"
               actions={[

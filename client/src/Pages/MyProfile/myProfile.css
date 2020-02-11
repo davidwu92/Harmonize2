@@ -1,15 +1,6 @@
-/* PROFILE  IMG */
-
-#img {
-  width: auto;
-  height: auto;
-  margin-top: 25px;
+#img{
+  margin-top: 15px;
 }
-
-#inst {
-  margin-top: 20px;
-}
-
 /* BUTTONS */
 
 #editBtn {

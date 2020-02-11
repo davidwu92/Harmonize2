@@ -24,11 +24,11 @@ const LinksCards = () => {
             let sound = str.split(/"/)[11]
             return (
               <div className="col s12 m6 l4">
-                <div className="card black hoverable">
+                <div className="card black hoverable z-depth-5">
                   <div>
                     {/* David's adding title and body: NEEDS STYLING */}
                     <h5 className="white-text">{newTitle}</h5>
-                    <h6 className="white-text">{newBody}</h6>
+                    <h6 className="grey-text">{newBody}</h6>
                   </div>
                   <div className="card-img">
                     <iframe id="iframe" className="activator" scrolling="no" frameborder="no" allow="autoplay" src={sound}></iframe>
