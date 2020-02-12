@@ -35,7 +35,7 @@ const RegisterForm = () => {
       //other relevant pf info that can be edited from profile.
       profile: '',
       links: [],
-      pfPic: ``,
+      pfPic: '',
       //HARMONIZE INFO
       bio: bio === '' ? `You currently don't have a bio. Click on the edit profile button to tell others about yourself!` : bio,
       instruments: infoState.instrumentsAdded,

@@ -9,6 +9,9 @@ import {
   Button,
   TextInput,
 } from 'react-materialize'
+import default_profile from '../../default_profile.jpg'
+
+
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -37,7 +40,7 @@ const MyProfile = () => {
     cityState: '',
     friends: [],
     request: [],
-    pending:[]
+    pending: []
   })
 
   let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
@@ -47,30 +50,31 @@ const MyProfile = () => {
       .then(({ data }) => {
         localStorage.setItem('userId', data._id)
         setProfileState({
-        ...profileState,
-        name: data.name,
-        email: data.email,
-        username: data.username,
-        links: data.links,
-        bio: data.bio,
-        pfPic: data.pfPic,
-        id: data._id,
-        instruments: data.instruments,
-        skills: data.skills,
-        profile: data.profile,
-        cityState: data.cityState,
-        friends: data.friends,
-        request: data.request,
-        pending: data.pending
-      })})
+          ...profileState,
+          name: data.name,
+          email: data.email,
+          username: data.username,
+          links: data.links,
+          bio: data.bio,
+          pfPic: data.pfPic,
+          id: data._id,
+          instruments: data.instruments,
+          skills: data.skills,
+          profile: data.profile,
+          cityState: data.cityState,
+          friends: data.friends,
+          request: data.request,
+          pending: data.pending
+        })
+      })
       .catch((e) => console.error(e))
-    
+
   }, [])
 
   //Setting up editState VARIABLES: Allows us to edit values before submitting PUT requests to db
   const [editState, setEditState] = useState({
     //basic info
-    name: '', email: '', username: '', bio: '', profile: '', pfPic: '', cityState:'',
+    name: '', email: '', username: '', bio: '', profile: '', pfPic: '', cityState: '',
     //new post info
     newTitle: '', newBody: '', newLink: '',
     //instruments/skills
@@ -91,8 +95,7 @@ const MyProfile = () => {
     formData.append('img', file[0])
     //Any empty fields in editState will PUT old profile information.
     let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
-    document.getElementById('img').setAttribute('src', `http://localhost:3000/${file[0].name}`)
-
+    document.getElementById('img').setAttribute('src', `http://localhost:3000/${file[0].name}`) 
     axios({
       method: 'post',
       url: '/',
@@ -164,8 +167,9 @@ const MyProfile = () => {
       setEditState({ ...editState, newLink: '', newTitle: '' })
       return (toast(`Please provide a title for your post.`, toastOptions))
     }
-
   }
+
+  
 
   //DELETE a Link
   youtubeState.deleteVideo = (token, id) => {
@@ -210,26 +214,26 @@ const MyProfile = () => {
       profile: (editState.profile === '') ? profileState.profile : editState.profile
     })
       .then(() => {
-    getUser(token)
-    .then(({ data }) => {
-      setProfileState({
-        ...profileState,
-        name: data.name,
-        email: data.email,
-        username: data.username,
-        links: data.links,
-        bio: data.bio,
-        pfPic: data.pfPic,
-        id: data._id,
-        instruments: data.instruments,
-        skills: data.skills,
-        profile: data.profile,
-        cityState: data.cityState,
-        friends: data.friends,
-        requests: data.requests
-      })
-    })
-    .catch((e) => console.error(e))
+        getUser(token)
+          .then(({ data }) => {
+            setProfileState({
+              ...profileState,
+              name: data.name,
+              email: data.email,
+              username: data.username,
+              links: data.links,
+              bio: data.bio,
+              pfPic: data.pfPic,
+              id: data._id,
+              instruments: data.instruments,
+              skills: data.skills,
+              profile: data.profile,
+              cityState: data.cityState,
+              friends: data.friends,
+              requests: data.requests
+            })
+          })
+          .catch((e) => console.error(e))
         console.log("You edited the profile.")
       })
       .catch(e => console.error(e))
@@ -409,15 +413,22 @@ const MyProfile = () => {
     </div>
     : null
 
-// see friend request
+  // see friend request
   const visitFriends = () => {
     history.push('/friends')
   }
-// see friends list
+  // see friends list
   const friendsList = () => {
     history.push('/list')
   }
 console.log(profileState.requests  === undefined)
+
+// profilePicture Ternary
+const profilePicture = (profileState.profile) ? profileState.profile : default_profile
+
+// email link variable
+let email = "mailto:" + profileState.email
+
   return (
     <>
       <div className="container">
@@ -426,12 +437,8 @@ console.log(profileState.requests  === undefined)
 
           {/* PROFILE PIC */}
           <div className="col s4 m2">
-            <img id="img" className="circle responsive-img" alt="Your profile picture" src={profileState.profile} />
-            <button type= "submit" onClick={visitFriends}>Friend Request</button>
-            <h4 onClick={friendsList}>{profileState.friends.length}</h4>
-            <h4>Following</h4>
+            <img id="img" className="circle responsive-img" alt="Your profile picture" src={profilePicture} />
             {/* EDIT PROF PIC */}
-            
             <Modal id="edProfModal" className="center-align"
               actions={[
                 <Button flat modal="close" node="button" className="waves-effect waves-light hoverable" id="editBtn">
@@ -459,6 +466,8 @@ console.log(profileState.requests  === undefined)
                 </div>
               </form>
             </Modal>
+
+            <button id="reqBtn" className="btn-small" type="submit" onClick={visitFriends}>Requests</button>
           </div>
 
           {/* BASIC INFO */}
@@ -468,9 +477,11 @@ console.log(profileState.requests  === undefined)
             {/* USERNAME */}
             <h5 className="white-text">{profileState.username}</h5>
             {/* EMAIL */}
-            <h6 className="white-text">{profileState.email}</h6>
+            <a href={email}>{profileState.email}</a>
             {/* BIO */}
             <h6 className="grey-text">{profileState.bio}</h6>
+            <span id="connect" className="teal-text" onClick={friendsList}>{profileState.friends.length} </span>
+            <span className="white-text">CONNECTIONS </span>
           </div>
 
           {/* INSTRUMENTS */}
@@ -515,13 +526,13 @@ console.log(profileState.requests  === undefined)
             trigger={editPfButton}
           >
             <form>
-
+              <span>Name</span>
               <TextInput placeholder={profileState.name} type="newName" id="newName" name="name" value={editState.name} onChange={editState.handleInputChange} />
-
+              <span>Username</span>
               <TextInput placeholder={profileState.username} type="newUsername" id="newUsername" name="username" value={editState.username} onChange={editState.handleInputChange} />
-
+              <span>Email</span>
               <TextInput placeholder={profileState.email} type="newEmail" id="newEmail" name="email" value={editState.email} onChange={editState.handleInputChange} />
-
+              <span>Bio</span>
               <TextInput placeholder={profileState.bio} type="newBio" id="newBio" name="bio" value={editState.bio} onChange={editState.handleInputChange} />
 
               <div className="container">

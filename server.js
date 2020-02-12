@@ -94,7 +94,7 @@ const storage = new GridFsStorage({
 })
 
 const upload = multer({ storage })
-
+// uploading profile img 
 app.post('/', upload.single('img'), passport.authenticate('jwt', { session: false }), (req, res) => {
   const { _id: id } = req.user
   User.findOneAndUpdate({ _id: id }, { pfPic: req.file })
@@ -103,6 +103,18 @@ app.post('/', upload.single('img'), passport.authenticate('jwt', { session: fals
 
   // res.status(201).send()
 })
+app.post('/photos', upload.single('img'), passport.authenticate('jwt', { session: false }), (req, res) => {
+  const { _id: id } = req.user
+  User.findOneAndUpdate({ _id: id }, { pfPic: req.file })
+    .then(() => res.sendStatus(200))
+    .catch(e => console.error(e))
+
+  // res.status(201).send()
+})
+
+
+
+// getting that image to show
 app.get('/:filename', (req, res) => {
   gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
     // Check if file
