@@ -20,6 +20,16 @@ const io = socketIO(server)
 
 const { User } = require('./models')
 
+// Socket io
+io.on('connection', (socket) => {
+  console.log('new user connection')
+
+  socket.on('disconnect', () => {
+    console.log('User was disconnected')
+  })
+})
+
+
 // MongoDB
 const mongoURI = process.env.NODE_ENV === 'production' ? process.env.MONGODB_URI : 'mongodb://localhost/harmonizedb'
 const mongoose = require('mongoose')
