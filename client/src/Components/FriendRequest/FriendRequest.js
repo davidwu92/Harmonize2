@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import FriendsContext from '../../utils/FriendsContext'
 import UserAPI from '../../utils/UserAPI'
 import { useHistory } from 'react-router-dom'
+import default_profile from '../../default_profile.jpg'
 
 
 const { acceptRequest } = UserAPI
@@ -27,6 +28,7 @@ return (
     if (req.status === 1) {
     let userId = JSON.parse(JSON.stringify(localStorage.getItem("userId")))
     let id = req._id
+    let ids = req.userRequest._id
     let request = {
       requester: req._id ,
       recipient: userId,
@@ -38,6 +40,12 @@ return (
       status: 3
     }
 
+  const visitProfile = (ids) => {
+    sessionStorage.setItem("token", ids)
+    history.push('/otherprofile')
+  }
+
+  const profilePicture = (req.userRequest.profile) ? req.userRequest.profile : default_profile
 
 
     return(
@@ -45,10 +53,10 @@ return (
         <div class="col s12 m7">
           <div class="card">
             <div class="card-image">
-              <img style={styleImg} src={req.userRequest.profile}/>
+              <img style={styleImg} src={profilePicture}/>
             </div>
             <div class="card-content">
-              <h4>{req.userRequest.name}</h4>
+              <h4 onClick={() => visitProfile(ids)}>{req.userRequest.name}</h4>
             </div>
             <div class="card-action">
                <button type="submit" onClick={() => acceptFriend(id, request)}>Accept</button>

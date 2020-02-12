@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import SearchAPI from '../../utils/SearchAPI'
 import { useHistory } from 'react-router-dom'
 import './search.css'
+import default_profile from '../../default_profile.jpg'
 
 const { searchUsers } = SearchAPI
 
@@ -37,6 +38,8 @@ const Search = () => {
     history.push('/otherprofile')
   }
 
+  
+
   return (
     <>
       <div className="container">
@@ -51,11 +54,12 @@ const Search = () => {
       <div className="container"> {/* FOUND USERS POPULATE HERE; need styling. */}
         {
           searchState.searchedUsers.length ? searchState.searchedUsers.map((user, index) => (
+            
             <div id="pfRow" onClick={() => visitProfile(user._id)} className={(index % 2) ? "row grey lighten-1" : "row grey lighten-2"}>
               <div className="center-align">
                 <div className="col s4 m4">
                   {/* PROFILE PIC */}
-                  {(user.profile) ? <img className="circle responsive-img" alt="Your pf pic" id="img" src={user.profile} /> : null}
+                  {(user.profile) ? <img className="circle responsive-img" alt="Your pf pic" id="img" src={user.profile}/> : <img className="circle responsive-img" alt="Your pf pic" id="img" src={default_profile}/>}
                   {/* NAME
                   <h5>{user.name}</h5> */}
                   {/* USERNAME */}
