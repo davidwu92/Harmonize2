@@ -16,28 +16,27 @@ const FriendsView = () => {
     friends: []
   })
 
-  
-  
+  let userId = JSON.parse(JSON.stringify(localStorage.getItem("userId")))
 
-let userId = JSON.parse(JSON.stringify(localStorage.getItem("userId")))
+  useEffect(() => {
+    seeFriends(userId)
+      .then(({ data }) => {
+        console.log(data)
+        let friends = []
+        friends.push(data)
+        setViewState({ ...viewState, friends })
+      })
+      .catch(e => console.error(e))
 
-useEffect(() => {
-  seeFriends(userId)
-    .then(({ data }) => {
-      console.log(data)
-      let friends = []
-      friends.push(data)
-      setViewState({ ...viewState, friends})
-    })
-    .catch(e => console.error(e))
+  }, [])
 
-}, [])
-
-console.log(viewState.friends)
+  console.log(viewState.friends)
 
   return (
-    <ViewContext.Provider value ={viewState}>
-      <FriendList />
+    <ViewContext.Provider value={viewState}>
+      <div class="container">
+        <FriendList />
+      </div>
     </ViewContext.Provider>
   )
 
