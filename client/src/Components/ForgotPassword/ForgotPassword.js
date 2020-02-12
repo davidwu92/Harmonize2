@@ -3,9 +3,6 @@ import React, { useContext, useState } from 'react'
 import ForgotContext from '../../utils/ForgotContext'
 
 
-
-
-
 const ForgotPassword = () =>  {
 
  const { email, messageFromServer, showNullError, showError, sendEmail, handleInputChange } = useContext(ForgotContext)

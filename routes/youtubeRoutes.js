@@ -13,9 +13,9 @@ module.exports = app => {
     // POST LINK
     app.post('/youtubes', passport.authenticate('jwt', { session: false }), (req, res) => {
         const { _id: userLink } = req.user
-
-        const { link } = req.body
-        Youtube.create({ link, userLink })
+        const { title, body, link } = req.body
+      
+        Youtube.create({ title, body, link, userLink })
             .then(youtube => {
              
               User.updateOne({ _id: userLink }, { $push: { links: youtube } })

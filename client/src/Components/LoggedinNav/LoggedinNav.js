@@ -1,5 +1,6 @@
-import React  from 'react'
+import React from 'react'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
+import './loggedinNav.css'
 
 const LoggedinNav = () => {
 
@@ -16,9 +17,10 @@ const LoggedinNav = () => {
       </div>
       <div className="nav-content">
         <ul className="tabs tabs-transparent">
-          <li className="tab left"><Link to="/search"><i className="far fa-compass"></i></Link></li>
-          <li className="tab"><Link to="/myprofile"><i className="fas fa-user-alt"></i></Link></li>
-          <li className="tab right" onClick={logout}><Link to="/"><i className="fas fa-sign-out-alt"></i></Link></li>
+          <li id="hovEffect" className="tab left"><Link to="/messages"><i className="fas fa-comment"></i></Link></li>
+          <li id="hovEffect" className="tab left"><Link to="/search"><i className="far fa-compass"></i></Link></li>
+          <li id="hovEffect" className="tab"><Link to="/myprofile"><i className="fas fa-user-alt"></i></Link></li>
+          <li id="hovEffect" className="tab right" onClick={logout}><Link to="/"><i className="fas fa-sign-out-alt"></i></Link></li>
         </ul>
       </div>
     </nav>
