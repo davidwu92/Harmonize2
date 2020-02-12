@@ -94,7 +94,7 @@ const RegisterForm = () => {
       case "strings":
         setInfoState({
           ...infoState, familyChosen: document.getElementById('instrumentFamily').value,
-          familyInstruments: ["Violin", "Viola", "Cello", "Double-Bass", "Bass Guitar", "Guitar: Classical", "Guitar: Rock", "Other"]
+          familyInstruments: ["Violin", "Viola", "Cello", "Double-Bass", "Bass Guitar", "Guitar: Classical", "Guitar: Rock", "Harp", "Other"]
         })
         break;
       case "woodwinds":
