@@ -101,6 +101,7 @@ const OtherProfile = () => {
 
   // email link variable
   let email = "mailto:" + profileState.email
+
   return (
     <>
       <div className="container">
@@ -125,6 +126,7 @@ const OtherProfile = () => {
             <a href={email}>{profileState.email}</a>
             {/* BIO */}
             <h6 className="grey-text">{profileState.bio}</h6>
+
           </div>
 
           {/* INSTRUMENTS */}

@@ -38,7 +38,6 @@ const Search = () => {
     history.push('/otherprofile')
   }
 
-  
 
   return (
     <>

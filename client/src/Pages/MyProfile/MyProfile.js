@@ -95,7 +95,7 @@ const MyProfile = () => {
     formData.append('img', file[0])
     //Any empty fields in editState will PUT old profile information.
     let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
-    document.getElementById('img').setAttribute('src', `http://localhost:3000/${file[0].name}`) 
+    document.getElementById('img').setAttribute('src', `http://localhost:3000/${file[0].name}`)
     axios({
       method: 'post',
       url: '/',
@@ -169,7 +169,7 @@ const MyProfile = () => {
     }
   }
 
-  
+
 
   //DELETE a Link
   youtubeState.deleteVideo = (token, id) => {
@@ -417,24 +417,23 @@ const MyProfile = () => {
   const visitFriends = () => {
     history.push('/friends')
   }
+
   // see friends list
   const friendsList = () => {
     history.push('/list')
   }
-console.log(profileState.requests  === undefined)
+  console.log(profileState.requests === undefined)
 
-// profilePicture Ternary
-const profilePicture = (profileState.profile) ? profileState.profile : default_profile
+  // profilePicture Ternary
+  const profilePicture = (profileState.profile) ? profileState.profile : default_profile
 
-// email link variable
-let email = "mailto:" + profileState.email
+  // email link variable
+  let email = "mailto:" + profileState.email
 
   return (
     <>
       <div className="container">
-
-        <div className="row"> {/* TOP ROW: PF PIC, BASIC INFO */}
-
+        <div className="row">
           {/* PROFILE PIC */}
           <div className="col s4 m2">
             <img id="img" className="circle responsive-img" alt="Your profile picture" src={profilePicture} />
@@ -466,7 +465,6 @@ let email = "mailto:" + profileState.email
                 </div>
               </form>
             </Modal>
-
             <button id="reqBtn" className="btn-small" type="submit" onClick={visitFriends}>Requests</button>
           </div>
 
@@ -481,7 +479,7 @@ let email = "mailto:" + profileState.email
             {/* BIO */}
             <h6 className="grey-text">{profileState.bio}</h6>
             <span id="connect" className="teal-text" onClick={friendsList}>{profileState.friends.length} </span>
-            <span className="white-text">CONNECTIONS </span>
+            <span className="white-text" onClick={friendsList}>CONNECTIONS </span>
           </div>
 
           {/* INSTRUMENTS */}

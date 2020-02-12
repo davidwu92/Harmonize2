@@ -13,15 +13,9 @@ const FriendRequest = () => {
 
   const { requests, acceptFriend, ignoreFriend } = useContext(FriendsContext)
 
-  const styleImg = {
-    width: "100px",
-    height: "100px"
-  }
-
-
-
   return (
     <div>
+      <h4 className="white-text center-align">REQUESTS</h4>
       {
         requests.map(request => request.map(req => {
 
@@ -40,24 +34,17 @@ const FriendRequest = () => {
               status: 3
             }
 
-            const visitProfile = (ids) => {
-              sessionStorage.setItem("token", ids)
-              history.push('/otherprofile')
-            }
-
             const profilePicture = (req.userRequest.profile) ? req.userRequest.profile : default_profile
 
             return (
               <div className="container">
-                <br></br>
                 <div id="pfRow" className="row grey">
                   <div className="col s4 m2">
-                    <img src={req.userRequest.profile} alt="Profile Img" className="circle responsive-img" />
+                    <img id="img" src={profilePicture} alt="Profile Img" className="circle responsive-img" />
                   </div>
                   <div className="col s8 m10">
                     <h5 className="black-text center-align">{req.userRequest.name} Would like to connect with you</h5>
                     <button id="editBtn" className="waves-effect waves-light btn col s12" type="submit" onClick={() => acceptFriend(id, request)}>Accept</button>
-
                     <button id="editBtn" className="waves-effect waves-light btn col s12" type="submit" onClick={() => ignoreFriend(req.userRequest._id, requests)}>Ignore</button>
                   </div>
                 </div>
