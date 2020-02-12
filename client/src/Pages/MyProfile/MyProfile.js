@@ -456,7 +456,7 @@ const MyProfile = () => {
               <Button flat modal="close" node="button" className="waves-effect waves-light" id="editBtn" >
                 Close
                 </Button>,
-
+              <span></span>,
               <Button onClick={editProfile} flat modal="close" node="button" className="waves-effect waves-light" id="editBtn">
                 Save Changes
                 </Button>
