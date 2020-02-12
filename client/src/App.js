@@ -17,6 +17,7 @@ import MyProfile from './Pages/MyProfile'
 import OtherProfile from './Pages/OtherProfile'
 import Messages from './Pages/Messages'
 import Search from './Pages/Search'
+import Gigs from './Pages/Gigs'
 import ForgotLogin from './Pages/ForgotLogin'
 import ResetPass from './Pages/ResetPass'
 import FriendsList from './Pages/FriendsList'
@@ -90,6 +91,11 @@ function App() {
             <Route path="/chat">
               <LoggedinNav />
               <Chat />
+            </Route>
+
+            <Route path="/gigs">
+              <LoggedinNav />
+              <Gigs />
             </Route>
 
           <Route path="/otherprofile">
