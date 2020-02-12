@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import './App.css'
 
 // Using Pages
@@ -9,17 +9,20 @@ import {
 } from 'react-router-dom'
 import Navbar from './Components/Navbar'
 import LoggedinNav from './Components/LoggedinNav'
+import Chat from './Components/Chat'
 import Home from './Pages/Home'
 import LogIn from './Pages/LogIn'
 import Register from './Pages/Register'
 import MyProfile from './Pages/MyProfile'
 import OtherProfile from './Pages/OtherProfile'
+import Messages from './Pages/Messages'
 import Search from './Pages/Search'
 import ForgotLogin from './Pages/ForgotLogin'
 import ResetPass from './Pages/ResetPass'
 import UserContext from './utils/UserContext'
 import UserAPI from './utils/UserAPI'
 import './App.css'
+
 
 
 //useState into PAGEs.
@@ -35,7 +38,7 @@ function App() {
     bio: '',
     cityState: '',
   })
-  
+
 
   // Working handleInputchange: call for any Text-Input field.
   userState.handleInputChange = (event) => {
@@ -44,7 +47,7 @@ function App() {
 
   //setting cityState
   userState.setCityState = (value) => {
-    setUserState({...userState, cityState: value})
+    setUserState({ ...userState, cityState: value })
   }
 
 
@@ -56,32 +59,50 @@ function App() {
             <Navbar />
             <Home />
           </Route>
+
           <Route path="/login">
             <Navbar />
             <LogIn />
           </Route>
+
           <Route path="/register">
             <Navbar />
             <Register />
           </Route>
+
           <Route path="/myprofile">
             <LoggedinNav />
             <MyProfile />
           </Route>
+
           <Route path="/search">
             <LoggedinNav />
             <Search />
           </Route>
+
+            <Route path="/messages">
+              <LoggedinNav />
+              <Messages />
+            </Route>
+
+            <Route path="/chat">
+              <LoggedinNav />
+              <Chat />
+            </Route>
+
           <Route path="/otherprofile">
             <LoggedinNav />
             <OtherProfile />
           </Route>
+
           <Route path="/forgotPassword">
-            <ForgotLogin/>
+            <ForgotLogin />
           </Route>
+
           <Route path="/reset/:token">
-            <ResetPass/>
+            <ResetPass />
           </Route>
+          
         </Switch>
       </Router>
     </UserContext.Provider>

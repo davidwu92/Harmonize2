@@ -1,6 +1,7 @@
 //Landing Page
 import React from 'react'
-import LinksCards from '../../Components/LinksCards'
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
+import './home.css'
 
 const Home = () => {
   return (
