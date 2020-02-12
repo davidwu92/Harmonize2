@@ -6,6 +6,7 @@ import UserAPI from '../../utils/UserAPI'
 import AddFriendBtn from '../../Components/AddFriendBtn'
 import OtherContext from '../../utils/OtherContext'
 import ViewContext from '../../utils/ViewContext'
+import default_profile from '../../default_profile.jpg'
 
 
 const { visitProfile, userInfo } = SearchAPI
@@ -95,14 +96,18 @@ const OtherProfile = () => {
       .catch(e => console.error(e))
   }, [])
 
+  // variable for default picture image of other profile 
+  const profilePicture = (profileState.profile) ? profileState.profile : default_profile
 
+  // email link variable
+  let email = "mailto:" + profileState.email
   return (
     <>
       <div className="container">
         <div className="row">
           {/* PROFILE PIC */}
           <div className="col s4 m2">
-            <img className="circle responsive-img" id="img" src={profileState.profile} alt="Profile Picture" />
+            <img className="circle responsive-img" id="img" src={profilePicture} alt="Profile Picture" />
             <div>
               <ViewContext.Provider value={listState}>
                 <AddFriendBtn />
@@ -117,7 +122,7 @@ const OtherProfile = () => {
             {/* NAME */}
             <h5 className="white-text">{profileState.username}</h5>
             {/* EMAIL */}
-            <h6 className="white-text">{profileState.email}</h6>
+            <a href={email}>{profileState.email}</a>
             {/* BIO */}
             <h6 className="grey-text">{profileState.bio}</h6>
           </div>

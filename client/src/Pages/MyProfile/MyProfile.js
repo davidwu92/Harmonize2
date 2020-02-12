@@ -9,6 +9,9 @@ import {
   Button,
   TextInput,
 } from 'react-materialize'
+import default_profile from '../../default_profile.jpg'
+
+
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -92,8 +95,7 @@ const MyProfile = () => {
     formData.append('img', file[0])
     //Any empty fields in editState will PUT old profile information.
     let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
-    document.getElementById('img').setAttribute('src', `http://localhost:3000/${file[0].name}`)
-
+    document.getElementById('img').setAttribute('src', `http://localhost:3000/${file[0].name}`) 
     axios({
       method: 'post',
       url: '/',
@@ -165,8 +167,9 @@ const MyProfile = () => {
       setEditState({ ...editState, newLink: '', newTitle: '' })
       return (toast(`Please provide a title for your post.`, toastOptions))
     }
-
   }
+
+  
 
   //DELETE a Link
   youtubeState.deleteVideo = (token, id) => {
@@ -418,7 +421,14 @@ const MyProfile = () => {
   const friendsList = () => {
     history.push('/list')
   }
-  console.log(profileState.requests === undefined)
+console.log(profileState.requests  === undefined)
+
+// profilePicture Ternary
+const profilePicture = (profileState.profile) ? profileState.profile : default_profile
+
+// email link variable
+let email = "mailto:" + profileState.email
+
   return (
     <>
       <div className="container">
@@ -427,7 +437,10 @@ const MyProfile = () => {
 
           {/* PROFILE PIC */}
           <div className="col s4 m2">
-            <img id="img" className="circle responsive-img" alt="Your profile picture" src={profileState.profile} />
+            <img id="img" className="circle responsive-img" alt="Your profile picture" src={profilePicture} />
+            <button type= "submit" onClick={visitFriends}>Friend Request</button>
+            <h4 onClick={friendsList}>{profileState.friends.length}</h4>
+            <h4>Following</h4>
             {/* EDIT PROF PIC */}
             <Modal id="edProfModal" className="center-align"
               actions={[
@@ -467,7 +480,7 @@ const MyProfile = () => {
             {/* USERNAME */}
             <h5 className="white-text">{profileState.username}</h5>
             {/* EMAIL */}
-            <h6 className="white-text">{profileState.email}</h6>
+            <a href={email}>{profileState.email}</a>
             {/* BIO */}
             <h6 className="grey-text">{profileState.bio}</h6>
             <span id="connect" className="teal-text" onClick={friendsList}>{profileState.friends.length} </span>

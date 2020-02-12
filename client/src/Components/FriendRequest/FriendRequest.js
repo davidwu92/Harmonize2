@@ -2,7 +2,10 @@ import React, { useContext, useState } from 'react'
 import FriendsContext from '../../utils/FriendsContext'
 import UserAPI from '../../utils/UserAPI'
 import { useHistory } from 'react-router-dom'
-import './friendRequest.css'
+import default_profile from '../../default_profile.jpg'
+
+
+const { acceptRequest } = UserAPI
 
 const FriendRequest = () => {
 
@@ -10,24 +13,27 @@ const FriendRequest = () => {
 
   const { requests, acceptFriend, ignoreFriend } = useContext(FriendsContext)
 
-  return (
-    <div>
-      {
-        requests.map(request => request.map(req => {
+    if (req.status === 1) {
+    let userId = JSON.parse(JSON.stringify(localStorage.getItem("userId")))
+    let id = req._id
+    let ids = req.userRequest._id
+    let request = {
+      requester: req._id ,
+      recipient: userId,
+      status: 2
+    }
+    let requests = {
+      requester: req._id ,
+      recipient: userId,
+      status: 3
+    }
 
-          if (req.status === 1) {
-            let userId = JSON.parse(JSON.stringify(localStorage.getItem("userId")))
-            let id = req._id
-            let request = {
-              requester: req._id,
-              recipient: userId,
-              status: 2
-            }
-            let requests = {
-              requester: req._id,
-              recipient: userId,
-              status: 3
-            }
+  const visitProfile = (ids) => {
+    sessionStorage.setItem("token", ids)
+    history.push('/otherprofile')
+  }
+
+  const profilePicture = (req.userRequest.profile) ? req.userRequest.profile : default_profile
 
             return (
               <div className="container">
