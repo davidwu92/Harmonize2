@@ -43,10 +43,10 @@ const MyProfile = () => {
   let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
   //using token to grab MY user data.
   useEffect(() => {
-  getUser(token)
-    .then(({ data }) => {
-      localStorage.setItem('userId', data._id)
-      setProfileState({
+    getUser(token)
+      .then(({ data }) => {
+        localStorage.setItem('userId', data._id)
+        setProfileState({
         ...profileState,
         name: data.name,
         email: data.email,
@@ -62,9 +62,9 @@ const MyProfile = () => {
         friends: data.friends,
         request: data.request,
         pending: data.pending
-      })
+      })})
       .catch((e) => console.error(e))
-
+    
   }, [])
 
   //Setting up editState VARIABLES: Allows us to edit values before submitting PUT requests to db

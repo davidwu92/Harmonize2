@@ -8,7 +8,7 @@ import OtherContext from '../../utils/OtherContext'
 import ViewContext from '../../utils/ViewContext'
 
 
-const {visitProfile, userInfo} = SearchedAPI
+const {visitProfile, userInfo} = SearchAPI
 
 const { getOtherYoutube, addFriend } = UserAPI
 
