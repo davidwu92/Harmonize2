@@ -424,7 +424,7 @@ console.log(profileState.requests  === undefined)
         <div className="row"> {/* TOP ROW: PF PIC, BASIC INFO */}
 
           {/* PROFILE PIC */}
-          <div className="col s4 m2">
+          <div className="col-s4-m2">
             <img id="img" className="circle responsive-img" alt="Your profile picture" src={profileState.profile} />
             <button type= "submit" onClick={visitFriends}>Friend Request</button>
             <h4 onClick={friendsList}>{profileState.friends.length}</h4>
