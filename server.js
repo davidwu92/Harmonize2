@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const { join } = require('path')
+const http = require('http')
 // passport modules
 const passport = require('passport')
 const { Strategy } = require('passport-local')
@@ -10,8 +11,12 @@ const multer = require('multer')
 const GridFsStorage = require('multer-gridfs-storage')
 const Grid = require('gridfs-stream')
 const crypto = require('crypto')
+// Socket.io
+const socketIO = require('socket.io')
 
 const app = express()
+const server = http.createServer(app)
+const io = socketIO(server)
 
 const { User } = require('./models')
 
@@ -136,7 +141,7 @@ require('mongoose')
   .then(() => {
     gfs = Grid(conn.db, mongoose.mongo)
     gfs.collection('uploads')
-    app.listen(process.env.PORT || 3001)
+    server.listen(process.env.PORT || 3001)
   })
   .catch(e => console.error(e))
 
