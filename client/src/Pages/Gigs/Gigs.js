@@ -7,6 +7,7 @@ import {
   TextInput,
   Textarea,
 } from 'react-materialize'
+import SearchPlace from '../../Components/SearchPlace'
 
 const { getUser } = UserAPI
 
@@ -17,6 +18,7 @@ const Gigs = () => {
   //set up state variables for this page.
   const [gigState, setGigState] = useState({
     gigTitle: '',
+    gigLocation: '',
     gigBody: '',
     authorName: '',
     authorId: '',
@@ -71,8 +73,10 @@ const Gigs = () => {
         {/* Post a Gig */}
         <div>
           <form>
-            <TextInput placeholder="Gig Posting Title" type="" id="gigTitle" name="gigTitle" value={gigState.gigTitle} onChange={gigState.handleInputChange} />
-            <Textarea placeholder="Tell us more about what you're looking for!" type="" id="gigBody" name="gigBody" value={gigState.gigBody} onChange={gigState.handleInputChange} />
+            <TextInput label="Title" placeholder="Harpist Needed for Wedding" type="" id="gigTitle" name="gigTitle" value={gigState.gigTitle} onChange={gigState.handleInputChange} />
+            {/* <TextInput label="Location" placeholder="" type="" id="gigLocation" name="gigLocation" value={gigState.gigLocation} onChange={gigState.handleInputChange} /> */}
+            <SearchPlace/>
+            <Textarea label="Post Body" placeholder="Tell us more about what you're looking for!" type="" id="gigBody" name="gigBody" value={gigState.gigBody} onChange={gigState.handleInputChange} />
             <button onClick={submitGig} id="postGig" className="waves-effect waves-light btn grey darken-2" type="submit" name="action"><i className="material-icons">publish</i></button>
           </form>
         </div>
