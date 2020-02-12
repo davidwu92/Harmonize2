@@ -8,7 +8,7 @@ import OtherContext from '../../utils/OtherContext'
 import ViewContext from '../../utils/ViewContext'
 
 
-const {visitProfile, userInfo} = SearchAPI
+const { visitProfile, userInfo } = SearchAPI
 
 const { getOtherYoutube, addFriend } = UserAPI
 
@@ -31,7 +31,7 @@ const OtherProfile = () => {
 
   //use an ID TO GRAB user data; ID is grabbed from Search page.
   let profileId = JSON.parse(JSON.stringify(sessionStorage.getItem("token")))
-   let userId = JSON.parse(JSON.stringify(localStorage.getItem("userId")))
+  let userId = JSON.parse(JSON.stringify(localStorage.getItem("userId")))
   //need a get new Other User API and route.
   visitProfile(profileId)
     .then(({ data }) => {
@@ -48,36 +48,38 @@ const OtherProfile = () => {
         profile: data.profile
       })
     })
-    .catch((e)=>console.error(e))
-const [listState, setListState] = useState({
-  following: false,
-  requested: false,
-  follow: true,
-  friends: [],
-})
-// adding the actual users friends list to profile
-useEffect(() => {
+    .catch((e) => console.error(e))
+  const [listState, setListState] = useState({
+    following: false,
+    requested: false,
+    follow: true,
+    friends: [],
+  })
+  // adding the actual users friends list to profile
+  useEffect(() => {
     userInfo(userId)
-        .then(({data}) => {
-          console.log(data.pending)
-          if (data.friends.includes(profileId)) {
-            setListState({ ...listState, 
+      .then(({ data }) => {
+        console.log(data.pending)
+        if (data.friends.includes(profileId)) {
+          setListState({
+            ...listState,
             friends: data.friends,
             follow: false,
             following: true
           })
-          } else if (data.pending.includes(profileId))  {
-            setListState({ ...listState, 
+        } else if (data.pending.includes(profileId)) {
+          setListState({
+            ...listState,
             friends: data.friends,
-            follow:false,
-            requested:true
+            follow: false,
+            requested: true
           })
-          } else {
+        } else {
 
-          }
-        })
-        .catch((e) => console.error(e))
-}, [])
+        }
+      })
+      .catch((e) => console.error(e))
+  }, [])
 
   const [youtubeState, setYoutubeState] = useState({
     links: []
@@ -94,8 +96,6 @@ useEffect(() => {
   }, [])
 
 
-
-
   return (
     <>
       <div className="container">
@@ -103,12 +103,13 @@ useEffect(() => {
           {/* PROFILE PIC */}
           <div className="col s4 m2">
             <img className="circle responsive-img" id="img" src={profileState.profile} alt="Profile Picture" />
+            <div>
+              <ViewContext.Provider value={listState}>
+                <AddFriendBtn />
+              </ViewContext.Provider>
+            </div>
           </div>
-          <>
-          <ViewContext.Provider value={listState}>
-          <AddFriendBtn />
-          </ViewContext.Provider>
-          </>
+
           {/* BASIC INFO */}
           <div className="col s8 m3">
             {/* USERNAME */}

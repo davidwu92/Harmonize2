@@ -456,7 +456,7 @@ const MyProfile = () => {
                 </div>
               </form>
             </Modal>
-           
+
             <button id="reqBtn" className="btn-small" type="submit" onClick={visitFriends}>Requests</button>
           </div>
 
@@ -516,13 +516,13 @@ const MyProfile = () => {
             trigger={editPfButton}
           >
             <form>
-
+              <span>Name</span>
               <TextInput placeholder={profileState.name} type="newName" id="newName" name="name" value={editState.name} onChange={editState.handleInputChange} />
-
+              <span>Username</span>
               <TextInput placeholder={profileState.username} type="newUsername" id="newUsername" name="username" value={editState.username} onChange={editState.handleInputChange} />
-
+              <span>Email</span>
               <TextInput placeholder={profileState.email} type="newEmail" id="newEmail" name="email" value={editState.email} onChange={editState.handleInputChange} />
-
+              <span>Bio</span>
               <TextInput placeholder={profileState.bio} type="newBio" id="newBio" name="bio" value={editState.bio} onChange={editState.handleInputChange} />
 
               <div className="container">
