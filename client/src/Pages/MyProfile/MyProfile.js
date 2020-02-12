@@ -579,14 +579,17 @@ const MyProfile = () => {
             trigger={createPost}
           > */}
           <form>
-            {/* NEEDS STYLING */}
             <h6 className="grey-text">Embed a youtube or soundcloud post!</h6>
             <TextInput placeholder="Title" type="newTitle" id="newTitle" name="newTitle" value={editState.newTitle} onChange={editState.handleInputChange} />
+
             <TextInput placeholder="Comment about your post?" type="newBody" id="newBody" name="newBody" value={editState.newBody} onChange={editState.handleInputChange} />
+
             <TextInput placeholder="Add a link" type="newLink" id="newLink" name="newLink" value={editState.newLink} onChange={editState.handleInputChange} />
+
             {/* Comment the button out if we put the createPost Modal back in. */}
             <button onClick={addLink} id="addLink" className="waves-effect waves-light btn" type="submit" name="action"><i className="material-icons">publish</i></button>
           </form>
+
           {/* </Modal> */}
         </div>
 

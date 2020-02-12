@@ -24,8 +24,8 @@ const LinksCards = () => {
             let sound = str.split(/"/)[11]
             return (
               <div className="col s12 m6 l4">
-                <div className="card black hoverable z-depth-5">
-                  <div>
+                <div id="post" className="card black hoverable z-depth-5">
+                  <div className="center-align">
                     {/* David's adding title and body: NEEDS STYLING */}
                     <h5 className="white-text">{newTitle}</h5>
                     <h6 className="grey-text">{newBody}</h6>
