@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import UserAPI from '../../utils/UserAPI'
 import LinksCards from '../../Components/LinksCards'
 import ProfileContext from '../../utils/ProfileContext'
+import AddFriendBtn from '../../Components/AddFriendBtn'
 import './myProfile.css'
 import {
   Modal,
@@ -13,12 +14,13 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import axios from 'axios'
+import { Redirect, useHistory } from 'react-router-dom'
 
 //function for making changes to profile
 const { getUser, updateUser, addYoutube, getYoutube, deleteYoutube } = UserAPI
 
 const MyProfile = () => {
-
+  let history = useHistory()
   //Setting up profileState Variables: CAN'T BE EDITED.
   const [profileState, setProfileState] = useState({
     name: '',
@@ -31,27 +33,35 @@ const MyProfile = () => {
     id: '',
     instruments: [],
     skills: [],
-    profile: ''
+    profile: '',
+    cityState: '',
+    friends: [],
+    request: [],
+    pending:[]
   })
 
   let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
   //using token to grab MY user data.
   useEffect(() => {
-    getUser(token)
-      .then(({ data }) => {
-        setProfileState({
-          ...profileState,
-          name: data.name,
-          email: data.email,
-          username: data.username,
-          links: data.links,
-          bio: data.bio,
-          pfPic: data.pfPic,
-          id: data._id,
-          instruments: data.instruments,
-          skills: data.skills,
-          profile: data.profile
-        })
+  getUser(token)
+    .then(({ data }) => {
+      localStorage.setItem('userId', data._id)
+      setProfileState({
+        ...profileState,
+        name: data.name,
+        email: data.email,
+        username: data.username,
+        links: data.links,
+        bio: data.bio,
+        pfPic: data.pfPic,
+        id: data._id,
+        instruments: data.instruments,
+        skills: data.skills,
+        profile: data.profile,
+        cityState: data.cityState,
+        friends: data.friends,
+        request: data.request,
+        pending: data.pending
       })
       .catch((e) => console.error(e))
 
@@ -60,7 +70,7 @@ const MyProfile = () => {
   //Setting up editState VARIABLES: Allows us to edit values before submitting PUT requests to db
   const [editState, setEditState] = useState({
     //basic info
-    name: '', email: '', username: '', bio: '', profile: '', pfPic: '',
+    name: '', email: '', username: '', bio: '', profile: '', pfPic: '', cityState:'',
     //new post info
     newTitle: '', newBody: '', newLink: '',
     //instruments/skills
@@ -192,7 +202,7 @@ const MyProfile = () => {
     updateUser(profileState.id, {
       name: (editState.name === "") ? profileState.name : editState.name,
       email: (editState.email === "") ? profileState.email : editState.email,
-      username: (editState.username === "") ? profileState.username : editState.username,
+      cityState: (editState.cityState === "") ? profileState.cityState : editState.cityState,
       bio: (editState.bio === "") ? profileState.bio : editState.bio,
       pfPic: (editState.pfPic === "") ? profileState.pfPic : editState.pfPic,
       instruments: infoState.instrumentsAdded,
@@ -200,10 +210,32 @@ const MyProfile = () => {
       profile: (editState.profile === '') ? profileState.profile : editState.profile
     })
       .then(() => {
+    getUser(token)
+    .then(({ data }) => {
+      setProfileState({
+        ...profileState,
+        name: data.name,
+        email: data.email,
+        username: data.username,
+        links: data.links,
+        bio: data.bio,
+        pfPic: data.pfPic,
+        id: data._id,
+        instruments: data.instruments,
+        skills: data.skills,
+        profile: data.profile,
+        cityState: data.cityState,
+        friends: data.friends,
+        requests: data.requests
+      })
+    })
+    .catch((e) => console.error(e))
         console.log("You edited the profile.")
       })
       .catch(e => console.error(e))
   }
+
+
 
   //~~~~EDITING INSTRUMENTS/SKILLS STUFF~~~~~~
   const [infoState, setInfoState] = useState({
@@ -377,6 +409,15 @@ const MyProfile = () => {
     </div>
     : null
 
+// see friend request
+  const visitFriends = () => {
+    history.push('/friends')
+  }
+// see friends list
+  const friendsList = () => {
+    history.push('/list')
+  }
+console.log(profileState.requests  === undefined)
   return (
     <>
       <div className="container">
@@ -386,7 +427,11 @@ const MyProfile = () => {
           {/* PROFILE PIC */}
           <div className="col s4 m2">
             <img id="img" className="circle responsive-img" alt="Your profile picture" src={profileState.profile} />
+            <button type= "submit" onClick={visitFriends}>Friend Request</button>
+            <h4 onClick={friendsList}>{profileState.friends.length}</h4>
+            <h4>Following</h4>
             {/* EDIT PROF PIC */}
+            
             <Modal id="edProfModal" className="center-align"
               actions={[
                 <Button flat modal="close" node="button" className="waves-effect waves-light hoverable" id="editBtn">

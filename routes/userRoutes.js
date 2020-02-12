@@ -8,7 +8,7 @@ module.exports = app => {
 
   // Register new user
   app.post('/users', (req, res) => {
-      const { name, email, username, links, bio, pfPic, cityState, instruments, skills, profile, resetPasswordToken, resetPasswordExpires, password } = req.body
+      const { name, email, username, links, bio, pfPic, cityState, instruments, skills, profile, resetPasswordToken, resetPasswordExpires, password, friends, request, pending } = req.body
       // changed password functionality
       
       bcrypt.hash(password, BCRYPT_SALT_ROUNDS).then(hashedPassword => {
@@ -19,7 +19,7 @@ module.exports = app => {
           res.send('need more')
         } else {
         User.create({
-          name, email, username, links, bio, pfPic, cityState, instruments, skills, profile, password: hashedPassword
+          name, email, username, links, bio, pfPic, cityState, instruments, skills, profile, password: hashedPassword, friends, request, pending
         })
         .then(() => res.sendStatus(200))
         .catch(e => {

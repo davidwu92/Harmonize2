@@ -60,8 +60,19 @@ const UserAPI = {
   deleteUser: (id) => axios.delete(`/users/${id}`),
   
   //login existing user.
-  loginUser: (user) => axios.post('/login', user)
-  
+  loginUser: (user) => axios.post('/login', user),
+
+  // add friend
+
+  addFriend: (friend) => axios.post('/request', friend),
+
+// get all request
+  getRequest: (id) => axios.get(`/request/${id}`),
+
+// accept friend request or ignore
+  acceptRequest: (id, request) => axios.put(`/request/${id}`, request),
+//  see all friends list
+seeFriends: (id) => axios.get(`/friends/${id}`)
 }
 
 export default UserAPI

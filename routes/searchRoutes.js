@@ -15,6 +15,11 @@ module.exports = app => {
       .then(user => res.json(user))
       .catch(e => console.error(e))
   })
+  app.get('/friendlist/:id', (req,res)=>{
+    User.findById(req.params.id)
+      .then(user => res.json(user))
+      .catch(e => console.error(e))
+  })
 
   // GET USERS YOUTUBE LINKS 
       app.get('/youtubes/:id', (req, res) => {

@@ -12,6 +12,8 @@ const UserContext = createContext({
   resetPasswordToken: '',
   resetPasswordExpires: '',
   cityState: '',
+  friends: [],
+  request: [],
   handleInputChange: () => { },
   // handleFormSubmit: () => { }
   setCityState: () => {},

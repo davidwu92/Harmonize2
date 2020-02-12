@@ -16,7 +16,10 @@ module.exports = (model, Schema) => {
         skills: [String],
         resetPasswordToken: String,
         resetPasswordExpires: Date,
-        password: { type: String, require: true}
+        password: { type: String, require: true},
+        friends: [{type:String, unique: true}],
+        pending:[],
+        requests: [{ type: Schema.Types.ObjectId, ref: 'FriendRequest' }]
     })
     User.plugin(require('passport-local-mongoose'))
     User.index({name: "text", username: "text", email: "text", instruments: "text", skills: "text"})
