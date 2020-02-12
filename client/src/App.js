@@ -82,15 +82,15 @@ function App() {
             <Search />
           </Route>
 
-            <Route path="/messages">
-              <LoggedinNav />
-              <Messages />
-            </Route>
+          <Route path="/messages">
+            <LoggedinNav />
+            <Messages />
+          </Route>
 
-            <Route path="/chat">
-              <LoggedinNav />
-              <Chat />
-            </Route>
+          <Route path="/chat">
+            <LoggedinNav />
+            <Chat />
+          </Route>
 
           <Route path="/otherprofile">
             <LoggedinNav />
@@ -105,12 +105,12 @@ function App() {
             <ResetPass />
           </Route>
           <Route path="/friends">
-            <LoggedinNav /> 
-          <FriendsList />
+            <LoggedinNav />
+            <FriendsList />
           </Route>
           <Route path="/list">
-            <LoggedinNav /> 
-          <FriendsView />
+            <LoggedinNav />
+            <FriendsView />
           </Route>
         </Switch>
       </Router>

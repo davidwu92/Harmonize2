@@ -2,7 +2,14 @@
   border: solid grey 1px;
   margin-top: 15px;
 }
-/* BUTTONS */
+
+#connect{
+  font-size:25px;
+}
+
+#reqBtn{
+  margin-top: 10px;
+}
 
 #editBtn {
   cursor: pointer;
