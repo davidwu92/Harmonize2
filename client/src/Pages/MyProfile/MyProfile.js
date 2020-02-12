@@ -438,9 +438,6 @@ let email = "mailto:" + profileState.email
           {/* PROFILE PIC */}
           <div className="col s4 m2">
             <img id="img" className="circle responsive-img" alt="Your profile picture" src={profilePicture} />
-            <button type= "submit" onClick={visitFriends}>Friend Request</button>
-            <h4 onClick={friendsList}>{profileState.friends.length}</h4>
-            <h4>Following</h4>
             {/* EDIT PROF PIC */}
             <Modal id="edProfModal" className="center-align"
               actions={[
