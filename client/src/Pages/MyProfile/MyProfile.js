@@ -2,18 +2,20 @@ import React, { useState, useEffect } from 'react'
 import UserAPI from '../../utils/UserAPI'
 import LinksCards from '../../Components/LinksCards'
 import ProfileContext from '../../utils/ProfileContext'
+import AddFriendBtn from '../../Components/AddFriendBtn'
 import {
    Modal,
     Button,
      TextInput
      } from 'react-materialize'
 import axios from 'axios'
+import { Redirect, useHistory } from 'react-router-dom'
 
 //function for making changes to profile
 const { getUser, updateUser, addYoutube, getYoutube, deleteYoutube } = UserAPI
 
 const MyProfile = () => {
-
+  let history = useHistory()
   //Setting up profileState Variables: CAN'T BE EDITED.
   const [profileState, setProfileState] = useState({
     name: '',
@@ -26,7 +28,11 @@ const MyProfile = () => {
     id: '',
     instruments: [],
     skills: [],
-    profile: ''
+    profile: '',
+    cityState: '',
+    friends: [],
+    request: [],
+    pending:[]
   })
 
   let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
@@ -34,6 +40,7 @@ const MyProfile = () => {
   useEffect(() => {
   getUser(token)
     .then(({ data }) => {
+      localStorage.setItem('userId', data._id)
       setProfileState({
         ...profileState,
         name: data.name,
@@ -45,7 +52,11 @@ const MyProfile = () => {
         id: data._id,
         instruments: data.instruments,
         skills: data.skills,
-        profile: data.profile
+        profile: data.profile,
+        cityState: data.cityState,
+        friends: data.friends,
+        request: data.request,
+        pending: data.pending
       })
     })
     .catch((e) => console.error(e))
@@ -58,7 +69,8 @@ const MyProfile = () => {
     newLink: '',
     instruments: [],
     skills: [],
-    profile: ''
+    profile: '',
+    cityState: ''
   })
 
   //handles input changes for EDITING FORMS on this page.
@@ -180,7 +192,7 @@ const MyProfile = () => {
     updateUser(profileState.id, {
       name: (editState.name === "") ? profileState.name : editState.name,
       email: (editState.email === "") ? profileState.email : editState.email,
-      username: (editState.username === "") ? profileState.username : editState.username,
+      cityState: (editState.cityState === "") ? profileState.cityState : editState.cityState,
       bio: (editState.bio === "") ? profileState.bio : editState.bio,
       pfPic: (editState.pfPic === "") ? profileState.pfPic : editState.pfPic,
       instruments: infoState.instrumentsAdded,
@@ -188,10 +200,32 @@ const MyProfile = () => {
       profile: (editState.profile === '') ? profileState.profile : editState.profile
     })
       .then(() => {
+    getUser(token)
+    .then(({ data }) => {
+      setProfileState({
+        ...profileState,
+        name: data.name,
+        email: data.email,
+        username: data.username,
+        links: data.links,
+        bio: data.bio,
+        pfPic: data.pfPic,
+        id: data._id,
+        instruments: data.instruments,
+        skills: data.skills,
+        profile: data.profile,
+        cityState: data.cityState,
+        friends: data.friends,
+        requests: data.requests
+      })
+    })
+    .catch((e) => console.error(e))
         console.log("You edited the profile.")
       })
       .catch(e => console.error(e))
   }
+
+
 
   //~~~~EDITING INSTRUMENTS/SKILLS STUFF~~~~~~
   const [infoState, setInfoState] = useState({
@@ -355,6 +389,15 @@ const MyProfile = () => {
   </div>
   : null
 
+// see friend request
+  const visitFriends = () => {
+    history.push('/friends')
+  }
+// see friends list
+  const friendsList = () => {
+    history.push('/list')
+  }
+console.log(profileState.requests  === undefined)
   return (
     <>
       <div className="container">
@@ -362,6 +405,9 @@ const MyProfile = () => {
           {/* PROFILE PIC */}
           <div className="col s4 m2">
             <img className="circle responsive-img"  alt="Your pf pic" id="img" src={profileState.profile} />
+            <button type= "submit" onClick={visitFriends}>Friend Request</button>
+            <h4 onClick={friendsList}>{profileState.friends.length}</h4>
+            <h4>Following</h4>
             <Modal
               actions={[
                 <Button onClick={editPicture} modal="close" node="button" className="black waves-effect waves-light white-text hoverable" >
@@ -396,12 +442,12 @@ const MyProfile = () => {
           </div>
           {/* BASIC INFO */}
           <div className="col s8 m10">
-            {/* USERNAME */}
-            <h4 className="black-text">{profileState.name}</h4>
             {/* NAME */}
-            <h5>{profileState.username}</h5>
+            <h5>{profileState.name}</h5>
             {/* EMAIL */}
             <h6>{profileState.email}</h6>
+            {/* CITY/STATE*/}
+            <h4 className="black-text">{profileState.cityState}</h4>
             {/* BIO */}
             <h6 className="grey-text">{profileState.bio}</h6>
             {/* EDIT PROFILE MODAL BUTTON */}
@@ -423,12 +469,12 @@ const MyProfile = () => {
               trigger={editPfButton}
             >
               <form>
-                <h6>USERNAME</h6>
-                <TextInput placeholder={profileState.username} type="newUsername" id="newUsername" name="username" value={editState.username} onChange={editState.handleInputChange} />
                 <h6>FULL NAME</h6>
                 <TextInput placeholder={profileState.name} type="newName" id="newName" name="name" value={editState.name} onChange={editState.handleInputChange} />
                 <h6>EMAIL</h6>
                 <TextInput placeholder={profileState.email} type="newEmail" id="newEmail" name="email" value={editState.email} onChange={editState.handleInputChange} />
+                <h6>CITY/STATE</h6>
+                <TextInput placeholder={profileState.cityState} type="newcityState" id="cityState" name="cityState" value={editState.cityState} onChange={editState.handleInputChange} />
                 <h6>BIO</h6>
                 <TextInput placeholder={profileState.bio} type="newBio" id="newBio" name="bio" value={editState.bio} onChange={editState.handleInputChange} />
                 {/* INSTRUMENTS FORM--optional*/}
