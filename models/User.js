@@ -17,7 +17,9 @@ module.exports = (model, Schema) => {
         resetPasswordToken: String,
         resetPasswordExpires: Date,
         password: { type: String, require: true},
-        friends: [{type:String, unique: true}],
+        friends: [{type:String,
+          // unique: true
+        }],
         pending:[],
         requests: [{ type: Schema.Types.ObjectId, ref: 'FriendRequest' }]
     })
