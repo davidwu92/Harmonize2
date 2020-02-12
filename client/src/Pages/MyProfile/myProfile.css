@@ -1,21 +1,12 @@
-/* PROFILE  IMG */
-
-#img {
-  width: auto;
-  height: auto;
-  margin-top: 25px;
+#img{
+  border: solid grey 1px;
+  margin-top: 15px;
 }
-
-#inst {
-  margin-top: 20px;
-}
-
 /* BUTTONS */
 
 #editBtn {
   cursor: pointer;
   outline: none;
-  position: relative;
   z-index: 3;
   background: transparent;
   color: #07051a;
@@ -24,7 +15,6 @@
   border-radius: 10px;
   text-transform: uppercase;
   transition: all 0.2s linear;
-  margin: 4px;
   padding: 4px;
   padding-right: 4px;
 }
@@ -87,7 +77,6 @@
 
 #skillsDropdown, #instrumentFamily{
   border: 2px solid black;
-  align: center;
   padding: .25em .5em .3125em;
   color: white;
   border-radius: .25em;
