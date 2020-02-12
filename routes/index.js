@@ -3,4 +3,5 @@ module.exports = app => {
   require('./youtubeRoutes.js')(app)
   require('./searchRoutes.js')(app)
   require('./forgotPassword.js')(app)
+  require('./requestRoutes.js')(app)
 }

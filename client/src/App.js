@@ -19,6 +19,8 @@ import Messages from './Pages/Messages'
 import Search from './Pages/Search'
 import ForgotLogin from './Pages/ForgotLogin'
 import ResetPass from './Pages/ResetPass'
+import FriendsList from './Pages/FriendsList'
+import FriendsView from './Pages/FriendsView'
 import UserContext from './utils/UserContext'
 import UserAPI from './utils/UserAPI'
 import './App.css'
@@ -102,7 +104,14 @@ function App() {
           <Route path="/reset/:token">
             <ResetPass />
           </Route>
-          
+          <Route path="/friends">
+            <LoggedinNav /> 
+          <FriendsList />
+          </Route>
+          <Route path="/list">
+            <LoggedinNav /> 
+          <FriendsView />
+          </Route>
         </Switch>
       </Router>
     </UserContext.Provider>

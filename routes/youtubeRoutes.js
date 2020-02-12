@@ -17,6 +17,7 @@ module.exports = app => {
       
         Youtube.create({ title, body, link, userLink })
             .then(youtube => {
+             
               User.updateOne({ _id: userLink }, { $push: { links: youtube } })
               .then(() => res.sendStatus(200))
               .catch(e => console.error(e))
