@@ -28,7 +28,6 @@
   },
   "homepage": "https://github.com/davidwu92/Harmonize2#readme",
   "dependencies": {
-    "@material-ui/core": "^4.9.1",
     "axios": "^0.19.2",
     "bcrypt": "^3.0.8",
     "concurrently": "^5.0.2",
