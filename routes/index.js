@@ -4,4 +4,5 @@ module.exports = app => {
   require('./searchRoutes.js')(app)
   require('./forgotPassword.js')(app)
   require('./requestRoutes.js')(app)
+  require('./gigRoutes.js')(app)
 }

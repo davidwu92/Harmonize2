@@ -66,6 +66,11 @@ const MyProfile = () => {
           request: data.request,
           pending: data.pending
         })
+        setInfoState({
+            ...infoState,
+            instrumentsAdded: data.instruments,
+            skillsAdded: data.skills
+        })
       })
       .catch((e) => console.error(e))
 
@@ -169,8 +174,6 @@ const MyProfile = () => {
     }
   }
 
-  
-
   //DELETE a Link
   youtubeState.deleteVideo = (token, id) => {
     deleteYoutube(token, { _id: id })
@@ -188,17 +191,6 @@ const MyProfile = () => {
 
   //EDITING PROFILE: FORM SUBMISSION
   const editPfButton = <button id="editBtn" className="waves-effect waves-light right white-text col s12"><i id="editBtnIcon" className="fas fa-user-edit"></i></button>
-  // When edit button is clicked, update infoState's instrumentsAdded/skillsAdded arrays.
-  const updateInfoState = (event) => {
-    if (event.target.id === "editBtnIcon") {
-      setInfoState({
-        ...infoState,
-        instrumentsAdded: profileState.instruments,
-        skillsAdded: profileState.skills
-      })
-    }
-  }
-  document.addEventListener('click', updateInfoState)
   //Edit PF form submission
   const editProfile = (event) => {
     event.preventDefault()
@@ -267,7 +259,7 @@ const MyProfile = () => {
       case "strings":
         setInfoState({
           ...infoState, familyChosen: document.getElementById('instrumentFamily').value,
-          familyInstruments: ["Violin", "Viola", "Cello", "Double-Bass", "Bass Guitar", "Guitar: Classical", "Guitar: Rock", "Other"]
+          familyInstruments: ["Violin", "Viola", "Cello", "Double-Bass", "Bass Guitar", "Guitar: Classical", "Guitar: Rock", "Harp", "Other"]
         })
         break;
       case "woodwinds":
