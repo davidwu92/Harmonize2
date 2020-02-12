@@ -13,47 +13,52 @@ const FriendRequest = () => {
 
   const { requests, acceptFriend, ignoreFriend } = useContext(FriendsContext)
 
-    if (req.status === 1) {
-    let userId = JSON.parse(JSON.stringify(localStorage.getItem("userId")))
-    let id = req._id
-    let ids = req.userRequest._id
-    let request = {
-      requester: req._id ,
-      recipient: userId,
-      status: 2
-    }
-    let requests = {
-      requester: req._id ,
-      recipient: userId,
-      status: 3
-    }
-
-  const visitProfile = (ids) => {
-    sessionStorage.setItem("token", ids)
-    history.push('/otherprofile')
+  const styleImg = {
+    width: "100px",
+    height: "100px"
   }
 
-  const profilePicture = (req.userRequest.profile) ? req.userRequest.profile : default_profile
+
+
+  return (
+    <div>
+      {
+        requests.map(request => request.map(req => {
+
+          if (req.status === 1) {
+            let userId = JSON.parse(JSON.stringify(localStorage.getItem("userId")))
+            let id = req._id
+            let ids = req.userRequest._id
+            let request = {
+              requester: req._id,
+              recipient: userId,
+              status: 2
+            }
+            let requests = {
+              requester: req._id,
+              recipient: userId,
+              status: 3
+            }
+
+            const visitProfile = (ids) => {
+              sessionStorage.setItem("token", ids)
+              history.push('/otherprofile')
+            }
+
+            const profilePicture = (req.userRequest.profile) ? req.userRequest.profile : default_profile
 
             return (
               <div className="container">
-                <div className="card-panel grey lighten-5 z-depth-1">
-                  <div className="row">
-                    <div className="col s4 m2">
-                      <img src={req.userRequest.profile} alt="Profile Img" className="circle responsive-img" />
-                    </div>
-                    <div className="col s8 m10">
-                      <h5>{req.userRequest.name} Would like to connect with you</h5>
-                    </div>
+                <br></br>
+                <div id="pfRow" className="row grey">
+                  <div className="col s4 m2">
+                    <img src={req.userRequest.profile} alt="Profile Img" className="circle responsive-img" />
                   </div>
+                  <div className="col s8 m10">
+                    <h5 className="black-text center-align">{req.userRequest.name} Would like to connect with you</h5>
+                    <button id="editBtn" className="waves-effect waves-light btn col s12" type="submit" onClick={() => acceptFriend(id, request)}>Accept</button>
 
-                  <div className="row">
-                    <div className="col s6">
-                      <button className="waves-effect waves-light btn col s6" type="submit" onClick={() => acceptFriend(id, request)}>Accept</button>
-                    </div>
-                    <div className="col s6">
-                      <button className="waves-effect waves-light btn col s6" type="submit" onClick={() => ignoreFriend(req.userRequest._id, requests)}>Ignore</button>
-                    </div>
+                    <button id="editBtn" className="waves-effect waves-light btn col s12" type="submit" onClick={() => ignoreFriend(req.userRequest._id, requests)}>Ignore</button>
                   </div>
                 </div>
               </div>
