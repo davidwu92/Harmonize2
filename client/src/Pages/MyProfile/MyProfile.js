@@ -487,17 +487,6 @@ const MyProfile = () => {
     </div>
     : null
 
-  // see friend request
-  const visitFriends = () => {
-    history.push('/friends')
-  }
-
-  // see friends list
-  const friendsList = () => {
-    history.push('/list')
-  }
-  console.log(profileState.requests === undefined)
-
   // profilePicture Ternary
   const profilePicture = (profileState.profile) ? profileState.profile : default_profile
 
@@ -539,8 +528,6 @@ const MyProfile = () => {
                 </div>
               </form>
             </Modal>
-            {/* FRIEND REQUESTS BTN */}
-            <button id="reqBtn" className="btn-small" type="submit" onClick={visitFriends}>Requests</button>
           </div>
 
           {/* BASIC INFO */}
@@ -553,8 +540,6 @@ const MyProfile = () => {
             <a href={email}>{profileState.email}</a>
             {/* BIO */}
             <h6 className="grey-text">{profileState.bio}</h6>
-            <span id="connect" className="teal-text" onClick={friendsList}>{profileState.friends.length} </span>
-            <span className="white-text" onClick={friendsList}>CONNECTIONS </span>
           </div>
 
           {/* INSTRUMENTS */}
