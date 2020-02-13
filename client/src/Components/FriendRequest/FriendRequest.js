@@ -13,6 +13,11 @@ const FriendRequest = () => {
 
   const { requests, acceptFriend, ignoreFriend } = useContext(FriendsContext)
 
+   const visitProfile = (id) => {
+    sessionStorage.setItem("token", id)
+    history.push('/otherprofile')
+  }
+
   return (
     <div>
       <h4 className="white-text center-align">REQUESTS</h4>
@@ -23,12 +28,13 @@ const FriendRequest = () => {
             let userId = JSON.parse(JSON.stringify(localStorage.getItem("userId")))
             let id = req._id
             let ids = req.userRequest._id
+
             let request = {
               requester: req._id,
               recipient: userId,
               status: 2
             }
-            let requests = {
+            let ignore = {
               requester: req._id,
               recipient: userId,
               status: 3
@@ -40,12 +46,12 @@ const FriendRequest = () => {
               <div className="container">
                 <div id="pfRow" className="row grey">
                   <div className="col s4 m2">
-                    <img id="img" src={profilePicture} alt="Profile Img" className="circle responsive-img" />
+                    <img onClick={() => visitProfile(ids)}id="img" src={profilePicture} alt="Profile Img" className="circle responsive-img" />
                   </div>
                   <div className="col s8 m10">
-                    <h5 className="black-text center-align">{req.userRequest.name} Would like to connect with you</h5>
+                    <h5 onClick={() => visitProfile(ids)} className="black-text center-align">{req.userRequest.name} Would like to connect with you</h5>
                     <button id="editBtn" className="waves-effect waves-light btn col s12" type="submit" onClick={() => acceptFriend(id, request)}>Accept</button>
-                    <button id="editBtn" className="waves-effect waves-light btn col s12" type="submit" onClick={() => ignoreFriend(req.userRequest._id, requests)}>Ignore</button>
+                    <button id="editBtn" className="waves-effect waves-light btn col s12" type="submit" onClick={() => ignoreFriend(id, ignore)}>Ignore</button>
                   </div>
                 </div>
               </div>

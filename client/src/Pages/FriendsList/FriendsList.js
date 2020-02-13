@@ -63,6 +63,7 @@ friendState.ignoreFriend = (id, request) => {
   }
   acceptRequest(id, ignore)
     .then(() => {
+      console.log('hi')
     getRequest(userId)
   .then(({ data }) => {
     console.log(data)
