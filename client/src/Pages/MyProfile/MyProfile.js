@@ -460,6 +460,7 @@ const MyProfile = () => {
                 </div>
               </form>
             </Modal>
+            {/* FRIEND REQUESTS BTN */}
             <button id="reqBtn" className="btn-small" type="submit" onClick={visitFriends}>Requests</button>
           </div>
 

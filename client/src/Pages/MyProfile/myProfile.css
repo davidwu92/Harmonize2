@@ -1,6 +1,7 @@
 #img{
   border: solid grey 1px;
   margin-top: 15px;
+  height: 100%;
 }
 
 #connect{
