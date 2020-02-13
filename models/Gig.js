@@ -5,13 +5,14 @@ module.exports = (model, Schema) => {
     gigDate: Date,
     gigBody: String,
     gigTags: [String],
-    gigAuthorName: String,
-    gigAuthorId: String,
-    gigAuthorEmail: String,
-    gigAuthorPic: String,
+    authorName: String,
+    authorUsername: String,
+    authorId: String,
+    authorEmail: String,
+    authorPic: String,
     createdAt: { type: Date, default: Date.now },
   })
-  Gig.index({gigLocation: "text", gigAuthorName: "text", gigTags: "text"})
+  Gig.index({gigTitle: "text", gigLocation: "text", authorName: "text", authorUsername: "text", gigTags: "text"})
 
   return model('Gig', Gig)
 }
