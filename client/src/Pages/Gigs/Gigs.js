@@ -13,22 +13,28 @@ import moment from 'moment'
 
 const { getUser } = UserAPI
 
-const { postGig, getGigs } = GigAPI
+const { postGig, getGigs, filterGigs } = GigAPI
 
 const Gigs = () => {
+  
   let history = useHistory()
+
+  //New Gig Posting Variables
   const [gigState, setGigState] = useState({
-    //Gig Info
-    gigTitle: '',    gigLocation: '',    gigDate: '',    gigBody: '', gigTags: [],
-    //Gig Author Info: updated upon pageload
-    gigAuthorName: '',    gigAuthorId: '',    gigAuthorEmail: '',    gigAuthorPic: '',
-    //All gigs stored in db
+    gigTitle: '',    gigLocation: '',    gigDate: '',    gigBody: '', gigTags: '',
+    //All gigs stored in db: updated upon pageload
     foundGigs: [],
   })
   gigState.handleInputChange = (event) => {
     setGigState({ ...gigState, [event.target.name]: event.target.value })
   }
 
+  //Gig Author Info: updated upon pageload
+  const [authorState, setAuthorState] = useState({
+    authorName: '', authorUsername:'',   authorId: '',    authorEmail: '',    authorPic: '',
+  })
+
+  // Date of new gig.
   const [dateState, setDateState] = useState({
     gigDate: '',
   })
@@ -38,37 +44,54 @@ const Gigs = () => {
 
   const [filterState, setFilterState] = useState({
     filterGigs: '',
-    filteredGigs: []
   })
   filterState.handleInputChange = (event) => {
     setFilterState({ ...filterState, [event.target.name]: event.target.value })
   }
-  const filterSubmit = (event) =>{
+  //SUBMIT FILTER FORM SUBMIT
+  const submitFilter = (event) =>{
     event.preventDefault()
-
+    filterGigs(filterState.filterGigs)
+      .then(({data})=>{
+        setGigState({...gigState, foundGigs: data})
+      })
+      .catch(e=>console.error(e))
+  }
+  //CLEAR FILTERS FUNCTION (Reload "find all gigs")
+  const clearFilter = (event) => {
+    event.preventDefault()
+    setFilterState({filterGigs: ''})
+    getGigs()
+    .then(({data: gigs})=>{
+      setGigState({...gigState, foundGigs: gigs})
+    })
+    .catch(e=>console.error(e))
   }
 
   let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
   //using token to grab MY user data on pageload.
-  useEffect(() => {
-    getUser(token)
-      .then(({ data: author }) => {
-        localStorage.setItem('userId', author._id)
-        setGigState({
-          ...gigState,
-          gigAuthorName: author.name,
-          gigAuthorId: author._id,
-          gigAuthorEmail: author.email,
-          gigAuthorPic: author.profile,
-        })
-        getGigs()
-        .then(({data: gigs})=>{
-          setGigState({...gigState, foundGigs: gigs})
-        })
-        .catch(e=>console.error(e))
+  getUser(token)
+    .then(({ data: author }) => {
+      localStorage.setItem('userId', author._id)
+      setAuthorState({
+        ...authorState,
+        authorName: author.name,
+        authorUsername: author.username,
+        authorId: author._id,
+        authorEmail: author.email,
+        authorPic: author.profile,
       })
-      .catch((e) => console.error(e))
-  }, [])
+    })
+    .catch((e) => console.error(e))
+  
+  useEffect(()=>{
+    getGigs()
+    .then(({data: gigs})=>{
+      setGigState({...gigState, foundGigs: gigs})
+    })
+    .catch(e=>console.error(e))
+  },[])
+
 
   const postGigButton = <button id="editBtn" className="waves-effect waves-light right white-text col s12">
       Post a gig opportunity <i id="editBtnIcon" className="fas fa-guitar"></i>
@@ -85,17 +108,23 @@ const Gigs = () => {
       return (toast(`Your posting needs a title.`, errorToast))
     } else if (gigState.gigBody ==='') {
       return (toast(`Your posting needs a body.`, errorToast))
-    } else{ 
+    } else if (gigState.gigLocation ==='') {
+      return (toast(`Your posting needs a location description.`, errorToast))
+    } else if (dateState.gigDate ==='') {
+      return (toast(`Your posting must have a date!`, errorToast))
+    } 
+    else{ 
       postGig({
         gigTitle: gigState.gigTitle,
         gigLocation: gigState.gigLocation,
         gigDate: dateState.gigDate,
         gigBody: gigState.gigBody,
-        gigTags: gigState.gigTags,
-        gigAuthorName: gigState.gigAuthorName,
-        gigAuthorId: gigState.gigAuthorId,
-        gigAuthorEmail: gigState.gigAuthorEmail,
-        gigAuthorPic: gigState.gigAuthorPic
+        gigTags: gigState.gigTags.split(", "),
+        authorName: authorState.authorName,
+        authorUsername: authorState.authorUsername,
+        authorId: authorState.authorId,
+        authorEmail: authorState.authorEmail,
+        authorPic: authorState.authorPic
       })
       return (toast(`Your gig "${gigState.gigTitle}" has been successfully posted.`, successToast))
     }
@@ -105,48 +134,56 @@ const Gigs = () => {
     sessionStorage.setItem("token", id)
     history.push('/otherprofile')
   }
+  
+  // const checkStates = (event) => {
+  //   event.preventDefault()
+  //   console.log(authorState)
+  //   console.log(gigState)
+  // }
 
   return (
     <>
-      <div className="container">      
+      <div className="container"> 
+      {/* CHECK STATES BUTTON */}
+      {/* <button onClick={checkStates}>CLICK ME</button>      */}
         <h4 className="center-align white-text">Gig Postings</h4>
         {/* POST A NEW GIG */}
         <div className="row">
           <Modal id="postGigModal" className="center-align"
-              actions={[
-                <Button flat modal="close" node="button" className="waves-effect waves-light" id="editBtn" >
-                  Close
-                  </Button>,
-                <span>       </span>,
-                <Button onClick={submitGig} flat modal="close" node="button" className="waves-effect waves-light" id="editBtn">
-                  Submit
-                  </Button>
-              ]}
-              header="Post A Gig Opportunity"
-              options={{
-                dismissible: true, endingTop: '10%', inDuration: 250, onCloseEnd: null,
-                onCloseStart: null, onOpenEnd: null, onOpenStart: null, opacity: 0.5,
-                outDuration: 250, preventScrolling: true, startingTop: '4%'
-              }}
-              trigger={postGigButton}
-            >
+            actions={[
+              <Button flat modal="close" node="button" className="waves-effect waves-light" id="editBtn" >
+                Close
+              </Button>,
+              <span>       </span>,
+              <Button onClick={submitGig} flat modal="close" node="button" className="waves-effect waves-light" id="editBtn">
+                Submit
+              </Button>
+            ]}
+            header="Post A Gig Opportunity"
+            options={{
+              dismissible: true, endingTop: '10%', inDuration: 250, onCloseEnd: null,
+              onCloseStart: null, onOpenEnd: null, onOpenStart: null, opacity: 0.5,
+              outDuration: 250, preventScrolling: true, startingTop: '4%'
+            }}
+            trigger={postGigButton}
+          >
             <form>
               {/* <h6 className="grey-text">Post a New Gig</h6> */}
               <br></br>
               <TextInput 
-                label="Title (required)" 
+                label="Title" 
                 placeholder="i.e. Harpist Wanted for Wedding" 
                 type="" id="" name="gigTitle" 
                 value={gigState.gigTitle} onChange={gigState.handleInputChange} />
                 <br/>
                 
-              <TextInput label="Location" placeholder="(Optional) Where's this gig located?" 
+              <TextInput label="Location" placeholder="Where's this gig located?" 
                 type="" id="" name="gigLocation" 
                 value={gigState.gigLocation} onChange={gigState.handleInputChange} />          
               <br/>
               <DatePicker
                 label="Date"
-                placeholder="(Optional) Gig Date"
+                placeholder="Gig Date"
                 className=""
                 options={{
                   autoClose: false,    container: null,    defaultDate: null,    disableDayFn: null,
@@ -167,57 +204,85 @@ const Gigs = () => {
                 onChange={dateState.handleDatePick}
               />
               <br/>
-              <Textarea label="Body (required)" placeholder="Tell users more about your gig." 
+              <Textarea label="Body" placeholder="Tell users more about your gig." 
                 // id="newBody" 
                 name="gigBody" 
                 value={gigState.gigBody} onChange={gigState.handleInputChange} />
+              <Textarea label="Tags (Must be separated by commas)" placeholder="Harp, wedding, live performer"
+                name="gigTags"
+                value={gigState.gigTags} onChange={gigState.handleInputChange}
+              />
             </form>
           </Modal>
+          <p className="grey-text right">*Note: past gigs will not show up in postings.</p>
         </div>
-
+    <br></br>
         {/* GIGS POSTED */}
         <div className="row">
           <div className="row">
-            <h4 className="white-text">Gig Postings</h4>
-            {/* FILTER GIGS BY TAG */}
-            <TextInput
-              label="Filter Postings" 
-              placeholder="Search Gigs" 
-              type="" id="newBody" name="filterGigs" 
-              value={filterState.filterGigs} onChange={filterState.handleInputChange} 
-            />
+            <h5 className="white-text">Recent Postings</h5>
+            {/* FILTER GIGS BY TAG/LOCATION */}
+            <form>
+              <TextInput
+                // label="Filter Postings" 
+                placeholder="Filter by City, Username, or Tags" 
+                type="" id="newBody" name="filterGigs" 
+                value={filterState.filterGigs} onChange={filterState.handleInputChange} 
+              />
+              <button onClick={submitFilter} id="editBtn" className="waves-effect waves-light btn white-text" type="submit" name="action">
+                Filter Results<i className="fas fa-tags"></i>
+              </button>
+              <button onClick={clearFilter} id="editBtn" className="waves-effect waves-light btn white-text right" type="submit" name="action">
+                Clear Filters<i className="fas fa-tags"></i>
+              </button>
+            </form>
           </div>
           {/* FOUND GIGS */}
           <div className="row">
           {
-            gigState.foundGigs.length ? gigState.foundGigs.map((gig, index)=>(
-              
+            gigState.foundGigs.length ? gigState.foundGigs.filter(
+              gig => (moment(gig.gigDate) - moment(Date.now()) > 0)
+              ).map((gig, index)=> (
             <div id="pfRow" className={(index % 2) ? "row grey lighten-1" : "row grey lighten-2"}>
               <div className="center-align">
-                  <h4>{gig.gigTitle}</h4>
-                  <h6 className="left">Date: {moment(gig.gigDate).format("MMM Do, YYYY")}</h6>
-                  <h6 className="right">Located: {gig.gigLocation}</h6>
+                {/* TITLE, DATE, LOCATION */}
                 <div className="row">
-                  <div className="col s4 m4">
-                    {/* PICTURE */}
-                    {(gig.gigAuthorPic) ? <img onClick={() => visitProfile(gig.gigAuthorId)} className="circle responsive-img" alt="Your pf pic" id="img" src={gig.gigAuthorPic}/> : <img onClick={() => visitProfile(gig.gigAuthorId)} className="circle responsive-img" alt="Your pf pic" id="img" src={default_profile}/>}                  
+                  <h5>{gig.gigTitle}</h5>
+                  <div className="col s1 m1"></div>
+                  <div className="col s10 m10">
+                    <h6 className="left">{moment(gig.gigDate).format("MMM Do, YYYY")}</h6>
+                    <h6 className="right">{gig.gigLocation}</h6>
+                  </div>
+                  <div className="col s1 m1"></div>
+                </div>
+                {/* PIC + BODY */}
+                <div className="row">
+                  <div onClick={() => visitProfile(gig.authorId)} className="col s4 m4">
+                    {(gig.authorPic) ? <img className="circle responsive-img" alt="Your pf pic" id="img" src={gig.authorPic}/> : <img className="circle responsive-img" alt="Your pf pic" id="img" src={default_profile}/>}                  
                   </div>
                   <div className="col s8 m8">
-                    <h5>Details</h5>
                     <h6 className="left-align">{gig.gigBody}</h6>
+                    <p>Posted {moment(gig.createdAt).format("L")}</p>
                   </div>
                 </div>
+                {/* EMAIL/PROFILE/TAGS */}
                 <div className="row">
-                  <div className="col s4 m4">
-                    <h6 onClick={() => visitProfile(gig.gigAuthorId)}>Posted by {gig.gigAuthorName}</h6>
+                  <div onClick={() => visitProfile(gig.authorId)} className="col s4 m4">
+                    <p>Posted By: <a>{gig.authorName} ({gig.authorUsername})</a></p>
                   </div>
                   <div className="col s8 m8">
-                    <p>Contact: <a href={"mailto:" + gig.gigAuthorEmail}>{gig.gigAuthorEmail}</a></p>
+                    <p>Contact: <a href={"mailto:" + gig.authorEmail}>{gig.authorEmail}</a></p>
+                    <span>
+                      Tag(s): 
+                      {gig.gigTags.length>1 ? 
+                      gig.gigTags.map(gig => (<span>{gig}, </span>)) :
+                       <span>{gig.gigTags[0] ? gig.gigTags[0]:" None"}</span>}
+                    </span>
                   </div>
                 </div>
               </div>
             </div>
-            )).reverse(): <><h5>No gigs found.</h5></>
+            )).reverse(): <><h5 className="white-text">No gigs found.</h5></>
           }
           </div>
         </div>
