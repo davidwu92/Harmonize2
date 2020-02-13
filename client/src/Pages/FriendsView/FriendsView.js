@@ -30,7 +30,6 @@ const FriendsView = () => {
 
   }, [])
 
-}, [])
 
 viewState.unfollowFriend = (id, friendId) => {
   unfollowFriends(id, friendId)
