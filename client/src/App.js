@@ -113,11 +113,12 @@ function App() {
           <Route path="/friends">
             <LoggedinNav />
             <FriendsList />
-          </Route>
-          <Route path="/list">
-            <LoggedinNav />
             <FriendsView />
           </Route>
+          {/* <Route path="/list">
+            <LoggedinNav />
+            <FriendsView />
+          </Route> */}
         </Switch>
       </Router>
     </UserContext.Provider>
