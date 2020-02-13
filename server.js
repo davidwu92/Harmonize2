@@ -30,10 +30,10 @@ app.use(express.static(join(__dirname, 'client', 'build')))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-// //DEPLOYING TO HEROKU
-// if (process.env.NODE_ENV === "production") {
-//   app.use(express.static("client/build"))
-// }
+//DEPLOYING TO HEROKU
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"))
+}
 
 // passport middleware
 // start the passport engine
@@ -123,13 +123,8 @@ app.get('/:filename', (req, res) => {
 let gfs
 
 
-//DEPLOYING TO HEROKU
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"))
-}
 //Catches all; sends any routes NOT found in the server directly into our home.
-// app.get('*', (req, res) => res.sendFile(join(__dirname, 'client', 'build', 'index.html')))
-app.get('*', (req, res) => res.sendFile(join(__dirname, 'client/build', 'index.html')))
+app.get('*', (req, res) => res.sendFile(join(__dirname, 'client', 'build', 'index.html')))
 
 //connect to the database and listen on a port
 require('mongoose')
