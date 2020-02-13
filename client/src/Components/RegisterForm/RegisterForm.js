@@ -140,7 +140,7 @@ const RegisterForm = () => {
         setInfoState({ ...infoState, familyChosen: '', otherInstrumentSelected: false, instrumentsAdded: tempInstruments })
         document.getElementById('instrumentFamily').value = '0'
       } else {
-        alert("You already added that instrument.")
+        toast("You already added that instrument.", toastOptions)
         document.getElementById('instrumentFamily').value = '0'
       }
     } else {
@@ -157,7 +157,7 @@ const RegisterForm = () => {
       setInfoState({ ...infoState, familyChosen: '', otherInstrument: "", otherInstrumentSelected: false, instrumentsAdded: tempInstruments })
       document.getElementById('instrumentFamily').value = '0'
     } else {
-      alert("Invalid instrument input.")
+      toast("Invalid instrument input.", toastOptions)
     }
   }
   //Remove an instrument
@@ -210,7 +210,7 @@ const RegisterForm = () => {
         document.getElementById('skillsDropdown').value = '0'
       } else {
         document.getElementById('skillsDropdown').value = '0'
-        alert("You already added that skill.")
+        toast("You already added that skill.", toastOptions)
       }
     } else {
       //Selected "Other"
@@ -226,7 +226,7 @@ const RegisterForm = () => {
       setInfoState({ ...infoState, otherSkillSelected: false, otherSkill: "", skillssAdded: tempSkills })
       document.getElementById('skillsDropdown').value = '0'
     } else {
-      alert("Invalid skill input.")
+      toast("Invalid skill input.", toastOptions)
     }
   }
   //Remove a skill
