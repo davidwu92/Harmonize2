@@ -82,11 +82,12 @@
 }
 
 
-#skillsDropdown, #instrumentFamily{
+#skillsDropdown, #instrumentFamily, #instrumentSelection{
   border: 2px solid black;
   padding: .25em .5em .3125em;
   border-radius: .25em;
   background: transparent;
   transition: all .100s;
   box-sizing: border-box;
+  color: grey;
 }
