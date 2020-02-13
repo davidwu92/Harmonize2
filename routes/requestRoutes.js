@@ -74,6 +74,18 @@ app.put('/request/:id', (req, res) => {
     .catch(e => console.error(e))
 })
 
+// unfollow friend
+
+app.put('/friends/:id', (req, res) => {
+  User.updateOne({ _id: req.params.id}, {$pull:{friends: req.body.friendId  }})
+    .then(() => {
+      User.updateOne({ _id: req.body.friendId}, {$pull: {friends: req.params.id}})
+      .then(() => res.sendStatus(200))
+      .catch(e => console.error(e))
+    })
+    .catch(e => console.error(e))
+})
+
 
 // see all friends
 app.get('/friends/:id', (req, res) => {
