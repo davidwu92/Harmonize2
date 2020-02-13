@@ -13,7 +13,7 @@ import moment from 'moment'
 
 const { getUser } = UserAPI
 
-const { postGig, getGigs, filterGigs } = GigAPI
+const { postGig, getGigs, filterGigs, removeGig, updateGig } = GigAPI
 
 const Gigs = () => {
   
@@ -135,6 +135,38 @@ const Gigs = () => {
     history.push('/otherprofile')
   }
   
+  //DELETE A GIG BUTTON FUNCTION
+  const deleteGig = (id) =>{
+    console.log(`Gig ${id} deleted`)
+    removeGig(id)
+      .then(()=>{
+        //Refresh Page?
+        window.location.reload()
+      })
+      .catch(e=>console.error(e))
+  }
+
+  const editGigBtn = <button className="btn-floating grey darken-3 btn-small"><i className="tiny fas fa-edit"></i></button>
+  const editGig = (id) => {
+    console.log(`Gig ${id} editing window.`)
+    updateGig(id, {
+      gigTitle: gigState.gigTitle,
+      gigLocation: gigState.gigLocation,
+      gigDate: dateState.gigDate,
+      gigBody: gigState.gigBody,
+      gigTags: gigState.gigTags.split(", "),
+      authorName: authorState.authorName,
+      authorUsername: authorState.authorUsername,
+      authorId: authorState.authorId,
+      authorEmail: authorState.authorEmail,
+      authorPic: authorState.authorPic
+    })
+    .then(()=>{
+      window.location.reload()
+    })
+    .catch(e=>console.error(e))
+  }
+
   // const checkStates = (event) => {
   //   event.preventDefault()
   //   console.log(authorState)
@@ -214,7 +246,7 @@ const Gigs = () => {
               />
             </form>
           </Modal>
-          <p className="grey-text right">*Note: past gigs will not show up in postings.</p>
+          <p className="grey-text center">*Note: past gigs will not show up in postings.</p>
         </div>
     <br></br>
         {/* GIGS POSTED */}
@@ -225,7 +257,7 @@ const Gigs = () => {
             <form>
               <TextInput
                 // label="Filter Postings" 
-                placeholder="Filter by City, Username, or Tags" 
+                placeholder="Filter by City, Author, or Tags" 
                 type="" id="newBody" name="filterGigs" 
                 value={filterState.filterGigs} onChange={filterState.handleInputChange} 
               />
@@ -275,12 +307,90 @@ const Gigs = () => {
                     <span>
                       Tag(s): 
                       {gig.gigTags.length>1 ? 
-                      gig.gigTags.map(gig => (<span>{gig}, </span>)) :
+                      gig.gigTags.map(gig => (<span> {gig}</span>)) :
                        <span>{gig.gigTags[0] ? gig.gigTags[0]:" None"}</span>}
                     </span>
                   </div>
                 </div>
               </div>
+              {/* DELETE/EDIT GIG BUTTONS */}
+              {
+                gig.authorId==localStorage.getItem('userId') ? 
+                <div className="right">
+                  {/* EDIT GIG MODAL */}
+                  <Modal id="postGigModal" className="center-align"
+                    actions={[
+                      <Button flat modal="close" node="button" className="waves-effect waves-light" id="editBtn" >
+                        Close
+                      </Button>,
+                      <span>       </span>,
+                      <Button onClick={()=>editGig(gig._id)} flat modal="close" node="button" className="waves-effect waves-light" id="editBtn">
+                        Submit
+                      </Button>
+                    ]}
+                    header="Edit Selected Gig"
+                    options={{
+                      dismissible: true, endingTop: '10%', inDuration: 250, onCloseEnd: null,
+                      onCloseStart: null, onOpenEnd: null, onOpenStart: null, opacity: 0.5,
+                      outDuration: 250, preventScrolling: true, startingTop: '4%'
+                    }}
+                    trigger={editGigBtn}
+                  >
+                    <form>
+                      <br></br>
+                      <TextInput 
+                        label="Title" 
+                        placeholder= {gig.gigTitle}
+                        type="" id="" name="gigTitle" 
+                        value={gigState.gigTitle} onChange={gigState.handleInputChange} />
+                        <br/>
+                        
+                      <TextInput label="Location" placeholder={gig.gigLocation} 
+                        type="" id="" name="gigLocation" 
+                        value={gigState.gigLocation} onChange={gigState.handleInputChange} />          
+                      <br/>
+                      <DatePicker
+                        label="Date"
+                        placeholder={moment(gig.gigDate).format("MMM Do, YYYY")}
+                        className=""
+                        options={{
+                          autoClose: false,    container: null,    defaultDate: null,    disableDayFn: null,
+                          disableWeekends: false,    events: [],    firstDay: 0,    format: 'mmm dd, yyyy',
+                          i18n: {cancel: 'Cancel',clear: 'Clear',done: 'Ok',
+                            months: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+                            monthsShort: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                            nextMonth: '›',
+                            previousMonth: '‹',
+                            weekdays: ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+                            weekdaysAbbrev: ['S','M','T','W','T','F','S'],
+                            weekdaysShort: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+                          },
+                          isRTL: false,maxDate: null,minDate: new Date(),onClose: null,onDraw: null,onOpen: null,onSelect: null,
+                          parse: null,setDefaultDate: false,showClearBtn: false,showDaysInNextAndPreviousMonths: false,showMonthAfterYear: false,
+                          yearRange: 10
+                        }}
+                        onChange={dateState.handleDatePick}
+                      />
+                      <br/>
+                      <Textarea label="Body" placeholder={gig.gigBody} 
+                        // id="newBody" 
+                        name="gigBody" 
+                        value={gigState.gigBody} onChange={gigState.handleInputChange} />
+                      <Textarea label="Tags (Must be separated by commas)" 
+                        placeholder={gig.gigTags.map(tag => " "+tag)}
+                        name="gigTags"
+                        value={gigState.gigTags} onChange={gigState.handleInputChange}
+                      />
+                    </form>
+                  </Modal>
+                  <span>  </span>
+                  {/* DELETE GIG BUTTON */}
+                  <button className="btn-floating grey darken-3 btn-small" onClick={()=>deleteGig(gig._id)}>
+                    <i className="tiny fas fa-trash"></i>
+                  </button>
+                </div> :
+                null
+              }
             </div>
             )).reverse(): <><h5 className="white-text">No gigs found.</h5></>
           }

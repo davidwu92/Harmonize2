@@ -8,6 +8,7 @@ import {
   Modal,
   Button,
   TextInput,
+  Select,
 } from 'react-materialize'
 import default_profile from '../../default_profile.jpg'
 
@@ -124,48 +125,9 @@ const MyProfile = () => {
       .catch(e => console.error(e))
   }
 
-  // test function for adding picture
-   const uploadPicture = (event) => {
-    event.preventDefault()
-    const file = document.getElementById('inputGroupFile02').files
-    const formData = new FormData()
-
-    formData.append('img', file[0])
-    //Any empty fields in editState will PUT old profile information.
-    let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
-    axios({
-      method: 'post',
-      url: '/',
-      data: formData,
-      headers: {
-        "Authorization": `Bearer ${token}`,
-        "Content-Type": "application/json"
-      }
-    })
-      .then(({ data }) => {
-        console.log(data)
-let youtubeLink = { newLink: file[0].name, newTitle: editState.newTitle, newBody: editState.newBody }
-console.log(youtubeLink)
-addYoutube(token, youtubeLink)
-          .then(() => {
-            setEditState({ ...editState, newLink: '', newBody: '', newTitle: '' })
-            getYoutube(token)
-              .then(({ data }) => {
-                console.log(data)
-                let links = []
-                links.push(data)
-                setYoutubeState({ ...youtubeState, links })
-              })
-              .catch(e => console.error(e))
-          })
-          .catch(e => console.error(e))
-        
-      })
-      .catch(e => console.error(e))
-  }
-
   //~~~~~~~~~~ADDING LINKS STUFF~~~~~~~~~
   const [youtubeState, setYoutubeState] = useState({
+    embeddingLink: Boolean,
     links: []
   })
 
@@ -183,9 +145,88 @@ addYoutube(token, youtubeLink)
   //configure error messages for addLlink.
   toast.configure();
   const toastOptions = { autoClose: 7000, hideProgressBar: true, type: "error" }
+  
+  //Selector Value
+  const postTypeSelect = () =>{
+    switch (document.getElementById('postType').value) {
+      case "embedLink":
+        setYoutubeState({
+          ...youtubeState, embeddingLink: true
+        })
+        break;
+      case "photoFile":
+        setYoutubeState({
+          ...youtubeState, embeddingLink: false
+        })
+        break;
+      default:
+          console.log("You selected nothing.")
+    }
+  }
+  //Determines new post modal's input type
+  const linkOrPhoto =  (youtubeState.embeddingLink) ? 
+    <TextInput placeholder="Embed Youtube or Soundcloud link" type="newLink" id="newLink" name="newLink" value={editState.newLink} onChange={editState.handleInputChange} />
+    :
+    <div className="file-field input-field">
+      <div className="btn black">
+        <span>File</span>
+        <input type="file"
+          className="custom-file-input"
+          id="inputGroupFile02"
+          aria-describedby="inputGroupFileAddon02"
+        ></input>
+      </div>
+      <div className="file-path-wrapper">
+        <input className="file-path validate" type="text"></input>
+      </div>
+    </div>
+
+
+  //UPLOAD picture post
+  const uploadPicture = (event) => {
+    event.preventDefault()
+    if (editState.newTitle) {
+      const file = document.getElementById('inputGroupFile02').files
+      const formData = new FormData()
+      formData.append('img', file[0])
+      //Any empty fields in editState will PUT old profile information.
+      let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
+      axios({
+        method: 'post',
+        url: '/',
+        data: formData,
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
+      })
+        .then(({ data }) => {
+          console.log(data)
+          let youtubeLink = { newLink: file[0].name, newTitle: editState.newTitle, newBody: editState.newBody }
+          console.log(youtubeLink)
+          addYoutube(token, youtubeLink)
+            .then(() => {
+              setEditState({ ...editState, newLink: '', newBody: '', newTitle: '' })
+              getYoutube(token)
+                .then(({ data }) => {
+                  console.log(data)
+                  let links = []
+                  links.push(data)
+                  setYoutubeState({ ...youtubeState, links })
+                })
+                .catch(e => console.error(e))
+            })
+            .catch(e => console.error(e))
+        })
+        .catch(e => console.error(e))
+      } else {
+      setEditState({ ...editState, newLink: '', newTitle: '' })
+      return (toast(`Please provide a title for your post.`, toastOptions))
+      }
+  }
   // COMMENTED OUT: createPost for a post modal?
-  // const createPost = <button id="editBtn" className="waves-effect waves-light center-align">Create a post</button>;
-  // Add link is working now 01/31/20 with json token authorization
+  const createPost = <button id="editBtn" className="waves-effect waves-light center-align white-text col s12">Create a post</button>;
+  // ADD EMBEDDING LINK
   const addLink = (event) => {
     event.preventDefault()
     let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
@@ -213,10 +254,7 @@ addYoutube(token, youtubeLink)
       return (toast(`Please provide a title for your post.`, toastOptions))
     }
   }
-
-
-
-  //DELETE a Link
+  //DELETE a Link/Post
   youtubeState.deleteVideo = (token, id) => {
     deleteYoutube(token, { _id: id })
       .then(() => {
@@ -230,6 +268,7 @@ addYoutube(token, youtubeLink)
       })
       .catch(e => console.error(e))
   }
+
 
   //EDITING PROFILE: FORM SUBMISSION
   const editPfButton = <button id="editBtn" className="waves-effect waves-light right white-text col s12"><i id="editBtnIcon" className="fas fa-user-edit"></i></button>
@@ -347,8 +386,9 @@ addYoutube(token, youtubeLink)
         setInfoState({ ...infoState, familyChosen: '', otherInstrumentSelected: false, instrumentsAdded: tempInstruments })
         document.getElementById('instrumentFamily').value = '0'
       } else {
-        alert("You already added that instrument.")
+        toast("You already added that instrument.", toastOptions)
         document.getElementById('instrumentFamily').value = '0'
+        
       }
     } else {
       //Selected "Other"
@@ -364,7 +404,7 @@ addYoutube(token, youtubeLink)
       setInfoState({ ...infoState, familyChosen: '', otherInstrument: "", otherInstrumentSelected: false, instrumentsAdded: tempInstruments })
       document.getElementById('instrumentFamily').value = '0'
     } else {
-      alert("Invalid instrument input.")
+      toast("Invalid instrument input.", toastOptions)
     }
   }
   //Remove an instrument
@@ -411,7 +451,7 @@ addYoutube(token, youtubeLink)
         document.getElementById('skillsDropdown').value = '0'
       } else {
         document.getElementById('skillsDropdown').value = '0'
-        alert("You already added that skill.")
+        toast("You already added that skill.", toastOptions)
       }
     } else {
       //Selected "Other"
@@ -427,7 +467,7 @@ addYoutube(token, youtubeLink)
       setInfoState({ ...infoState, otherSkillSelected: false, otherSkill: "", skillssAdded: tempSkills })
       document.getElementById('skillsDropdown').value = '0'
     } else {
-      alert("Invalid skill input.")
+      toast("Invalid skill input.", toastOptions)
     }
   }
   //Remove a skill
@@ -499,6 +539,7 @@ addYoutube(token, youtubeLink)
                 </div>
               </form>
             </Modal>
+            {/* FRIEND REQUESTS BTN */}
             <button id="reqBtn" className="btn-small" type="submit" onClick={visitFriends}>Requests</button>
           </div>
 
@@ -544,7 +585,7 @@ addYoutube(token, youtubeLink)
               <Button flat modal="close" node="button" className="waves-effect waves-light" id="editBtn" >
                 Close
                 </Button>,
-              <span></span>,
+              <span>  </span>,
               <Button onClick={editProfile} flat modal="close" node="button" className="waves-effect waves-light" id="editBtn">
                 Save Changes
                 </Button>
@@ -649,16 +690,18 @@ addYoutube(token, youtubeLink)
       </div>
 
       <div className="container">
-        {/* POST A NEW LINK  */}
+        {/* POST A NEW LINK/PHOTO  */}
         <div className="row center-align">
+          <div className="row"></div>
           {/* CREATEPOST MODAL BUTTON (commented out for now) */}
-          {/* <Modal id="edProfModal" className="center-align"
+          <Modal id="edProfModal" className="center-align"
             actions={[
               <Button flat modal="close" node="button" className="waves-effect waves-light" id="editBtn" >
                 Close
               </Button>,
-              <Button onClick={addLink} flat modal="close" node="button" className="waves-effect waves-light" id="editBtn">
-                Save Changes
+              <span>  </span>,
+              <Button onClick={(youtubeState.embeddingLink) ? addLink : uploadPicture} flat modal="close" node="button" className="waves-effect waves-light" id="editBtn">
+                Post
               </Button>
             ]}
             header="Create a post"
@@ -668,55 +711,35 @@ addYoutube(token, youtubeLink)
               outDuration: 250, preventScrolling: true, startingTop: '4%'
             }}
             trigger={createPost}
-          > */}
-          <form>
-            <h6 className="grey-text">Embed a youtube or soundcloud post!</h6>
-            <TextInput placeholder="Title" type="newTitle" id="newTitle" name="newTitle" value={editState.newTitle} onChange={editState.handleInputChange} />
-
-            <TextInput placeholder="Comment about your post?" type="newBody" id="newBody" name="newBody" value={editState.newBody} onChange={editState.handleInputChange} />
-
-            <TextInput placeholder="Add a link" type="newLink" id="newLink" name="newLink" value={editState.newLink} onChange={editState.handleInputChange} />
-
-            {/* Comment the button out if we put the createPost Modal back in. */}
-            <button onClick={addLink} id="addLink" className="waves-effect waves-light btn" type="submit" name="action"><i className="material-icons">publish</i></button>
-          </form>
-
-          {/* test post */}
-             <Modal id="edPhotoModal" className="center-align"
-              actions={[
-                <Button flat modal="close" node="button" className="waves-effect waves-light hoverable" id="editBtn">
-                  Close
-                </Button>,
-                <span> </span>,
-                <Button onClick={uploadPicture} modal="close" node="button" className="waves-effect waves-light hoverable" id="editBtn">
-                  Upload <i className="material-icons right">send</i>
-                </Button>
-              ]}
-              header="Upload Photo" trigger={editPfButton}>
-              <form action="#">
-                <div className="file-field input-field">
-                  <div className="btn black">
-                    <span>File</span>
-                    <input type="file"
-                      className="custom-file-input"
-                      id="inputGroupFile02"
-                      aria-describedby="inputGroupFileAddon02"
-                    ></input>
-              <br/>
-            <br/>
-            <br/>
-                     <TextInput placeholder="Title" type="newTitle" id="newTitle" name="newTitle" value={editState.newTitle} onChange={editState.handleInputChange} />
-
-            <TextInput placeholder="Comment about your post?" type="newBody" id="newBody" name="newBody" value={editState.newBody} onChange={editState.handleInputChange} />
-                  </div>
-                  <div className="file-path-wrapper">
-                    <input className="file-path validate" type="text"></input>
-                  </div>
-                </div>
-              </form>
-            </Modal>
-
-          {/* </Modal> */}
+          >
+          
+            {/* EMBED LINK FORM */}
+            <form action="#">
+              <h6 className="grey-text">Embed a link or upload a photo</h6>
+              <TextInput placeholder="Title (required)" type="newTitle" id="newTitle" name="newTitle" value={editState.newTitle} onChange={editState.handleInputChange} />
+              <TextInput placeholder="Comment about your post?" type="newBody" id="newBody" name="newBody" value={editState.newBody} onChange={editState.handleInputChange} />
+              {/* Choose type of post */}
+              <select
+                  id="postType"
+                  className="browser-default"
+                  options={{
+                    classes: '', dropdownOptions: {
+                      alignment: 'left',
+                      autoTrigger: true, closeOnClick: true, constrainWidth: true,
+                      container: null, coverTrigger: true, hover: false,
+                      inDuration: 150, onCloseEnd: null, onCloseStart: null,
+                      onOpenEnd: null, onOpenStart: null, outDuration: 250
+                    }
+                  }}
+                  onChange={postTypeSelect}
+                >
+                  {/* <option value="0" selected>Select Type</option> */}
+                  <option value="embedLink" selected>Youtube/Soundcloud Embedding Link</option>
+                  <option value="photoFile">Photo File</option>
+              </select>
+              {linkOrPhoto} 
+            </form>
+          </Modal> {/* -KEEP THIS FOR ADDLINK MODAL */}
         </div>
 
         {/* LINKS AND POSTS */}

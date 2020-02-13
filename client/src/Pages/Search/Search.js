@@ -62,7 +62,8 @@ const Search = () => {
                   {/* NAME
                   <h5>{user.name}</h5> */}
                   {/* USERNAME */}
-                  <h6>{user.username}</h6>
+                  <h6>{user.name}</h6>
+                  <h6>({user.username})</h6>
                 </div>
                 {/* INSTRUMENTS */}
                 <div className="col s4 m4">
