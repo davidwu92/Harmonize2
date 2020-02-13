@@ -30,23 +30,7 @@ const FriendsView = () => {
 
   }, [])
 
-
-viewState.unfollowFriend = (id, friendId) => {
-  unfollowFriends(id, friendId)
-    .then(({ data }) => {
-      seeFriends(userId)
-        .then(({ data }) => {
-          console.log(data)
-        let friends = []
-       friends.push(data)
-      setViewState({ ...viewState, friends})
-        })
-        .catch(e => console.error(e))
-    })
-      .catch(e => console.error(e))
-}
-
-console.log(viewState.friends)
+  console.log(viewState.friends)
 
   return (
     <ViewContext.Provider value={viewState}>
