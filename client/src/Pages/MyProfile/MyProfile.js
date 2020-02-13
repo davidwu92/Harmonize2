@@ -549,7 +549,10 @@ const MyProfile = () => {
                 <h5 className="white-text"><b>INSTRUMENTS</b></h5>
                 {profileState.instruments.map(instrument => (<p className="teal-text">{instrument + " "}</p>))}
               </> :
-                <h6 className="white-text">You haven't added any instruments you play. Hit the edit profile button to add some instruments!</h6>
+              <>
+                <h5 className="white-text"><b>INSTRUMENTS</b></h5>
+                <h6 className="grey-text">You haven't added any instruments you play. Add some with the edit profile button below!</h6>
+              </>
             }
           </div>
 
@@ -560,7 +563,10 @@ const MyProfile = () => {
                 <h5 className="white-text"><b>SKILLS</b></h5>
                 {profileState.skills.map(skill => (<p className="teal-text">{skill + " "}</p>))}
               </> :
-                <h6 className="white-text">You haven't added any skills to show off. Hit the edit profile button to add some instruments!</h6>
+              <>
+                <h5 className="white-text"><b>SKILLS</b></h5>
+                <h6 className="grey-text">You haven't added any skills to show off. Add some with the edit profile button below!</h6>
+              </>
             }
           </div>
 
