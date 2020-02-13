@@ -72,7 +72,10 @@ const UserAPI = {
 // accept friend request or ignore
   acceptRequest: (id, request) => axios.put(`/request/${id}`, request),
 //  see all friends list
-seeFriends: (id) => axios.get(`/friends/${id}`)
+seeFriends: (id) => axios.get(`/friends/${id}`),
+
+unfollowFriends: (id, friendId) => axios.put(`/friends/${id}`, friendId)
+
 }
 
 export default UserAPI

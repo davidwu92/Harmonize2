@@ -61,10 +61,10 @@ friendState.acceptFriend = (id, requests) => {
 
 // ignore friend
 friendState.ignoreFriend = (id, request) => {
-  let requests = {
+  let ignore = {
     status: 3
   }
-  acceptRequest(id, requests)
+  acceptRequest(id, ignore)
     .then(() => {
     getRequest(userId)
   .then(({ data }) => {

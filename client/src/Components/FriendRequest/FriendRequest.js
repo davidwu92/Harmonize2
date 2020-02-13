@@ -60,7 +60,7 @@ return (
             </div>
             <div class="card-action">
                <button type="submit" onClick={() => acceptFriend(id, request)}>Accept</button>
-               <button type="submit" onClick={() => ignoreFriend(req.userRequest._id, requests)}>Ignore</button>
+               <button type="submit" onClick={() => ignoreFriend(id, requests)}>Ignore</button>
             </div>
           </div>
         </div>

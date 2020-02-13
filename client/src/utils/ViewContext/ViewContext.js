@@ -3,7 +3,8 @@ import React, { createContext } from 'react'
 const ViewContext = createContext({
   friends: [],
   seeFriends: () => {},
-  addFriend: () => {}
+  addFriend: () => {},
+  unfollowFriend: () => {}
 })
 
 export default ViewContext

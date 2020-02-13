@@ -8,7 +8,7 @@ import { BrowserRouter } from 'react-router-dom'
 import FriendList from '../../Components/FriendList'
 
 
-const { getRequest, seeFriends } = UserAPI
+const { getRequest, seeFriends, unfollowFriends } = UserAPI
 
 const FriendsView = () => {
 
@@ -32,6 +32,21 @@ useEffect(() => {
     .catch(e => console.error(e))
 
 }, [])
+
+viewState.unfollowFriend = (id, friendId) => {
+  unfollowFriends(id, friendId)
+    .then(({ data }) => {
+      seeFriends(userId)
+        .then(({ data }) => {
+          console.log(data)
+        let friends = []
+       friends.push(data)
+      setViewState({ ...viewState, friends})
+        })
+        .catch(e => console.error(e))
+    })
+      .catch(e => console.error(e))
+}
 
 console.log(viewState.friends)
 
