@@ -80,8 +80,10 @@ const storage = new GridFsStorage({
 const upload = multer({ storage })
 // uploading profile img 
 app.post('/', upload.single('img'), passport.authenticate('jwt', { session: false }), (req, res) => {
+ 
   const { _id: id } = req.user
-  User.findOneAndUpdate({ _id: id }, { pfPic: req.file })
+  console.log(id)
+  User.findOne({ _id: id })
     .then(() => res.sendStatus(200))
     .catch(e => console.error(e))
 

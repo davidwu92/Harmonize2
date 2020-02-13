@@ -124,6 +124,46 @@ const MyProfile = () => {
       .catch(e => console.error(e))
   }
 
+  // test function for adding picture
+   const uploadPicture = (event) => {
+    event.preventDefault()
+    const file = document.getElementById('inputGroupFile02').files
+    const formData = new FormData()
+
+    formData.append('img', file[0])
+    //Any empty fields in editState will PUT old profile information.
+    let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
+    axios({
+      method: 'post',
+      url: '/',
+      data: formData,
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+      }
+    })
+      .then(({ data }) => {
+        console.log(data)
+let youtubeLink = { newLink: file[0].name, newTitle: editState.newTitle, newBody: editState.newBody }
+console.log(youtubeLink)
+addYoutube(token, youtubeLink)
+          .then(() => {
+            setEditState({ ...editState, newLink: '', newBody: '', newTitle: '' })
+            getYoutube(token)
+              .then(({ data }) => {
+                console.log(data)
+                let links = []
+                links.push(data)
+                setYoutubeState({ ...youtubeState, links })
+              })
+              .catch(e => console.error(e))
+          })
+          .catch(e => console.error(e))
+        
+      })
+      .catch(e => console.error(e))
+  }
+
   //~~~~~~~~~~ADDING LINKS STUFF~~~~~~~~~
   const [youtubeState, setYoutubeState] = useState({
     links: []
@@ -640,6 +680,41 @@ const MyProfile = () => {
             {/* Comment the button out if we put the createPost Modal back in. */}
             <button onClick={addLink} id="addLink" className="waves-effect waves-light btn" type="submit" name="action"><i className="material-icons">publish</i></button>
           </form>
+
+          {/* test post */}
+             <Modal id="edPhotoModal" className="center-align"
+              actions={[
+                <Button flat modal="close" node="button" className="waves-effect waves-light hoverable" id="editBtn">
+                  Close
+                </Button>,
+                <span> </span>,
+                <Button onClick={uploadPicture} modal="close" node="button" className="waves-effect waves-light hoverable" id="editBtn">
+                  Upload <i className="material-icons right">send</i>
+                </Button>
+              ]}
+              header="Upload Photo" trigger={editPfButton}>
+              <form action="#">
+                <div className="file-field input-field">
+                  <div className="btn black">
+                    <span>File</span>
+                    <input type="file"
+                      className="custom-file-input"
+                      id="inputGroupFile02"
+                      aria-describedby="inputGroupFileAddon02"
+                    ></input>
+              <br/>
+            <br/>
+            <br/>
+                     <TextInput placeholder="Title" type="newTitle" id="newTitle" name="newTitle" value={editState.newTitle} onChange={editState.handleInputChange} />
+
+            <TextInput placeholder="Comment about your post?" type="newBody" id="newBody" name="newBody" value={editState.newBody} onChange={editState.handleInputChange} />
+                  </div>
+                  <div className="file-path-wrapper">
+                    <input className="file-path validate" type="text"></input>
+                  </div>
+                </div>
+              </form>
+            </Modal>
 
           {/* </Modal> */}
         </div>
