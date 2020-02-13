@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Chat from '../../Components/Chat'
 import './messages.css'
 
 const Messages = () => {
-  
+
+  const [message, setMessage] = useState("")
 
   return (
     <>
@@ -15,7 +16,7 @@ const Messages = () => {
         <div className="divider"></div>
 
         <form>
-          <input type="text" name="message" placeholder="message" />
+          <input type="text" name="message" placeholder="message" value={message} onChange={event => setMessage(event.target.value} />
           <button className="btn" type="submit">Submit</button>
         </form>
       </div>
