@@ -16,6 +16,7 @@ import Register from './Pages/Register'
 import MyProfile from './Pages/MyProfile'
 import OtherProfile from './Pages/OtherProfile'
 import Messages from './Pages/Messages'
+import Gigs from './Pages/Gigs'
 import Search from './Pages/Search'
 import ForgotLogin from './Pages/ForgotLogin'
 import ResetPass from './Pages/ResetPass'
@@ -82,15 +83,20 @@ function App() {
             <Search />
           </Route>
 
-            <Route path="/messages">
-              <LoggedinNav />
-              <Messages />
-            </Route>
+          <Route path="/gigs">
+            <LoggedinNav />
+            <Gigs />
+          </Route>
 
-            <Route path="/chat">
-              <LoggedinNav />
-              <Chat />
-            </Route>
+          <Route path="/messages">
+            <LoggedinNav />
+            <Messages />
+          </Route>
+
+          <Route path="/chat">
+            <LoggedinNav />
+            <Chat />
+          </Route>
 
           <Route path="/otherprofile">
             <LoggedinNav />
@@ -105,12 +111,12 @@ function App() {
             <ResetPass />
           </Route>
           <Route path="/friends">
-            <LoggedinNav /> 
-          <FriendsList />
+            <LoggedinNav />
+            <FriendsList />
           </Route>
           <Route path="/list">
-            <LoggedinNav /> 
-          <FriendsView />
+            <LoggedinNav />
+            <FriendsView />
           </Route>
         </Switch>
       </Router>

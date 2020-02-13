@@ -33,7 +33,6 @@ useEffect(() => {
 }, [])
 
 
-
 // accept friend
 friendState.acceptFriend = (id, requests) => {
   let approve = {
@@ -57,8 +56,6 @@ friendState.acceptFriend = (id, requests) => {
 }
 
 
-
-
 // ignore friend
 friendState.ignoreFriend = (id, request) => {
   let ignore = {
@@ -78,7 +75,6 @@ friendState.ignoreFriend = (id, request) => {
       .catch(e => console.error(e))
 }
 
-// ignore friend request
 
 
 return (

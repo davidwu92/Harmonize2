@@ -61,10 +61,10 @@
 
 /* Edit Prof Modal */
 
-#edProfModal{
-  color: white;
-  background: rgb(25,25,25);
-  background: linear-gradient(159deg, rgba(25,25,25,1) 41%, rgba(175,175,175,1) 100%);
+#postGigModal{
+  /* color: white; */
+  /* background: rgb(25,25,25);
+  background: linear-gradient(159deg, rgba(25,25,25,1) 41%, rgba(175,175,175,1) 100%); */
   border-radius: 15px;
 }
 
