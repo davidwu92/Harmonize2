@@ -12,6 +12,8 @@ const LinksCards = () => {
 
   let cardActivate = (window.location.href.includes("/myprofile")) ? <span className="activator"><i className="material-icons right white-text">more_vert</i></span> : null
 
+
+
   return (
     <div>
       {
@@ -46,7 +48,7 @@ const LinksCards = () => {
                 </div>
               </div>
             )
-          } else {
+          } else if (str.includes('youtube')) {
             let youtube = str.split(/"/)[5]
             return (
               <div className="col s12 m6 l4">
@@ -59,6 +61,32 @@ const LinksCards = () => {
                   <div className="card-img">
                     {<iframe id="iframe" className="activator" src={youtube} frameBorder="0"
                       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>}
+                  </div>
+                  <div className="card-action">
+                    <span className="grey-text lighten-5">{datePosted}</span>
+                    {cardActivate}
+                    <br></br>
+                  </div>
+                  <div id="cardReveal" className="card-reveal">
+                    <span className="card-title grey-text text-darken-4"><i className="material-icons white-text right">close</i></span>
+                    <br></br>
+                    <h5 className="center-align">Would you like to delete this post?</h5>
+                    <button id="delPost" className="btn waves-effect waves-light black col s12 white-text" href="#" onClick={() => deleteVideo(token, ylink._id)}>Delete</button>
+                  </div>
+                </div>
+              </div>
+            )
+          } else {
+                        return (
+              <div className="col s12 m6 l4">
+                <div id="post" className="card black hoverable z-depth-5">
+                  <div className="center-align">
+                    {/* David's adding title and body: NEEDS STYLING */}
+                    <h5 className="white-text">{newTitle}</h5>
+                    <h6 className="grey-text">{newBody}</h6>
+                  </div>
+                  <div className="card-img">
+                    <img className="card-img-pic" src={str} />
                   </div>
                   <div className="card-action">
                     <span className="grey-text lighten-5">{datePosted}</span>

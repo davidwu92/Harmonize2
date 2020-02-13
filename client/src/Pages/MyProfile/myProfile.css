@@ -68,6 +68,13 @@
   border-radius: 15px;
 }
 
+#edPhotoModal{
+  color: white;
+  background: rgb(25,25,25);
+  background: linear-gradient(159deg, rgba(25,25,25,1) 41%, rgba(175,175,175,1) 100%);
+  border-radius: 5px;
+}
+
 #newUsername, #newName, #newEmail, #newBio, #newLink, #newTitle, #newBody{
   border: 2px solid black;
   padding: .25em .5em .3125em;
