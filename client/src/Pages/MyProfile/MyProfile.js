@@ -8,6 +8,7 @@ import {
   Modal,
   Button,
   TextInput,
+  Select,
 } from 'react-materialize'
 import default_profile from '../../default_profile.jpg'
 
@@ -126,6 +127,7 @@ const MyProfile = () => {
 
   //~~~~~~~~~~ADDING LINKS STUFF~~~~~~~~~
   const [youtubeState, setYoutubeState] = useState({
+    embeddingLink: Boolean,
     links: []
   })
 
@@ -144,46 +146,87 @@ const MyProfile = () => {
   toast.configure();
   const toastOptions = { autoClose: 7000, hideProgressBar: true, type: "error" }
   
-  //~~~~~~~~~~ADDING PICTURE STUFF~~~~~~~~~
+  //Selector Value
+  const postTypeSelect = () =>{
+    switch (document.getElementById('postType').value) {
+      case "embedLink":
+        setYoutubeState({
+          ...youtubeState, embeddingLink: true
+        })
+        break;
+      case "photoFile":
+        setYoutubeState({
+          ...youtubeState, embeddingLink: false
+        })
+        break;
+      default:
+          console.log("You selected nothing.")
+    }
+  }
+  //Determines new post modal's input type
+  const linkOrPhoto =  (youtubeState.embeddingLink) ? 
+    <TextInput placeholder="Add a link" type="newLink" id="newLink" name="newLink" value={editState.newLink} onChange={editState.handleInputChange} />
+    :
+    <div className="file-field input-field">
+      <div className="btn black">
+        <span>File</span>
+        <input type="file"
+          className="custom-file-input"
+          id="inputGroupFile02"
+          aria-describedby="inputGroupFileAddon02"
+        ></input>
+      </div>
+      <div className="file-path-wrapper">
+        <input className="file-path validate" type="text"></input>
+      </div>
+    </div>
+
+
+  //UPLOAD picture post
   const uploadPicture = (event) => {
     event.preventDefault()
-    const file = document.getElementById('inputGroupFile02').files
-    const formData = new FormData()
-    formData.append('img', file[0])
-    //Any empty fields in editState will PUT old profile information.
-    let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
-    axios({
-      method: 'post',
-      url: '/',
-      data: formData,
-      headers: {
-        "Authorization": `Bearer ${token}`,
-        "Content-Type": "application/json"
-      }
-    })
-      .then(({ data }) => {
-        console.log(data)
-        let youtubeLink = { newLink: file[0].name, newTitle: editState.newTitle, newBody: editState.newBody }
-        console.log(youtubeLink)
-        addYoutube(token, youtubeLink)
-          .then(() => {
-            setEditState({ ...editState, newLink: '', newBody: '', newTitle: '' })
-            getYoutube(token)
-              .then(({ data }) => {
-                console.log(data)
-                let links = []
-                links.push(data)
-                setYoutubeState({ ...youtubeState, links })
-              })
-              .catch(e => console.error(e))
-          })
-          .catch(e => console.error(e))
+    if (editState.newTitle) {
+      const file = document.getElementById('inputGroupFile02').files
+      const formData = new FormData()
+      formData.append('img', file[0])
+      //Any empty fields in editState will PUT old profile information.
+      let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
+      axios({
+        method: 'post',
+        url: '/',
+        data: formData,
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
       })
-      .catch(e => console.error(e))
+        .then(({ data }) => {
+          console.log(data)
+          let youtubeLink = { newLink: file[0].name, newTitle: editState.newTitle, newBody: editState.newBody }
+          console.log(youtubeLink)
+          addYoutube(token, youtubeLink)
+            .then(() => {
+              setEditState({ ...editState, newLink: '', newBody: '', newTitle: '' })
+              getYoutube(token)
+                .then(({ data }) => {
+                  console.log(data)
+                  let links = []
+                  links.push(data)
+                  setYoutubeState({ ...youtubeState, links })
+                })
+                .catch(e => console.error(e))
+            })
+            .catch(e => console.error(e))
+        })
+        .catch(e => console.error(e))
+      } else {
+      setEditState({ ...editState, newLink: '', newTitle: '' })
+      return (toast(`Please provide a title for your post.`, toastOptions))
+      }
   }
   // COMMENTED OUT: createPost for a post modal?
   const createPost = <button id="editBtn" className="waves-effect waves-light center-align">Create a post</button>;
-  // Add link is working now 01/31/20 with json token authorization
+  // ADD EMBEDDING LINK
   const addLink = (event) => {
     event.preventDefault()
     let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
@@ -211,7 +254,6 @@ const MyProfile = () => {
       return (toast(`Please provide a title for your post.`, toastOptions))
     }
   }
-
   //DELETE a Link/Post
   youtubeState.deleteVideo = (token, id) => {
     deleteYoutube(token, { _id: id })
@@ -656,7 +698,7 @@ const MyProfile = () => {
               <Button flat modal="close" node="button" className="waves-effect waves-light" id="editBtn" >
                 Close
               </Button>,
-              <Button onClick={addLink} flat modal="close" node="button" className="waves-effect waves-light" id="editBtn">
+              <Button onClick={(youtubeState.embeddingLink) ? addLink : uploadPicture} flat modal="close" node="button" className="waves-effect waves-light" id="editBtn">
                 Save Changes
               </Button>
             ]}
@@ -671,76 +713,32 @@ const MyProfile = () => {
           
             {/* EMBED LINK FORM */}
             <form action="#">
-            <h6 className="grey-text">Embed a youtube or soundcloud post!</h6>
-            <TextInput placeholder="Title" type="newTitle" id="newTitle" name="newTitle" value={editState.newTitle} onChange={editState.handleInputChange} />
+              <h6 className="grey-text">Embed a youtube or soundcloud post!</h6>
+              <TextInput placeholder="Title" type="newTitle" id="newTitle" name="newTitle" value={editState.newTitle} onChange={editState.handleInputChange} />
 
-            <TextInput placeholder="Comment about your post?" type="newBody" id="newBody" name="newBody" value={editState.newBody} onChange={editState.handleInputChange} />
-
-            {/* <Select
-                id="postType"
-                options={{
-                  classes: '', dropdownOptions: {
-                    alignment: 'left',
-                    autoTrigger: true, closeOnClick: true, constrainWidth: true,
-                    container: null, coverTrigger: true, hover: false,
-                    inDuration: 150, onCloseEnd: null, onCloseStart: null,
-                    onOpenEnd: null, onOpenStart: null, outDuration: 250
-                  }
-                }}
-              >
-                <option value="0" selected>Select Type</option>
-                <option value="youtube">Youtube/Soundcloud Embedding Link</option>
-                <option value="photo">Photo File</option>
-              </Select> */}
-              {/* add photo */}
-              <div className="file-field input-field">
-                <div className="btn black">
-                  <span>File</span>
-                  <input type="file"
-                    className="custom-file-input"
-                    id="inputGroupFile02"
-                    aria-describedby="inputGroupFileAddon02"
-                  ></input>
-                </div>
-                <div className="file-path-wrapper">
-                  <input className="file-path validate" type="text"></input>
-                </div>
-              </div>
-              {/* add link */}
-              <TextInput placeholder="Add a link" type="newLink" id="newLink" name="newLink" value={editState.newLink} onChange={editState.handleInputChange} />
+              <TextInput placeholder="Comment about your post?" type="newBody" id="newBody" name="newBody" value={editState.newBody} onChange={editState.handleInputChange} />
+              {/* Choose type of post */}
+              <select
+                  id="postType"
+                  className="browser-default"
+                  options={{
+                    classes: '', dropdownOptions: {
+                      alignment: 'left',
+                      autoTrigger: true, closeOnClick: true, constrainWidth: true,
+                      container: null, coverTrigger: true, hover: false,
+                      inDuration: 150, onCloseEnd: null, onCloseStart: null,
+                      onOpenEnd: null, onOpenStart: null, outDuration: 250
+                    }
+                  }}
+                  onChange={postTypeSelect}
+                >
+                  {/* <option value="0" selected>Select Type</option> */}
+                  <option value="embedLink" selected>Youtube/Soundcloud Embedding Link</option>
+                  <option value="photoFile">Photo File</option>
+              </select>
+              {linkOrPhoto} 
             </form>
           </Modal> {/* -KEEP THIS FOR ADDLINK MODAL */}
-          
-          {/* Add Photo Modal */}
-             <Modal id="edPhotoModal" className="center-align"
-              actions={[
-                <Button flat modal="close" node="button" className="waves-effect waves-light hoverable" id="editBtn">
-                  Close
-                </Button>,
-                <span> </span>,
-                <Button onClick={uploadPicture} modal="close" node="button" className="waves-effect waves-light hoverable" id="editBtn">
-                  Upload <i className="material-icons right">send</i>
-                </Button>
-              ]}
-              header="Upload Photo" trigger={editPfButton}>
-              <form action="#">
-                <div className="file-field input-field">
-                  <div className="btn black">
-                    <span>File</span>
-                    <input type="file"
-                      className="custom-file-input"
-                      id="inputGroupFile02"
-                      aria-describedby="inputGroupFileAddon02"
-                    ></input>
-                  </div>
-                  <div className="file-path-wrapper">
-                    <input className="file-path validate" type="text"></input>
-                  </div>
-                </div>
-                <TextInput placeholder="Title" type="newTitle" id="newTitle" name="newTitle" value={editState.newTitle} onChange={editState.handleInputChange} />
-                <TextInput placeholder="Comment about your post?" type="newBody" id="newBody" name="newBody" value={editState.newBody} onChange={editState.handleInputChange} />
-              </form>
-            </Modal>
         </div>
 
         {/* LINKS AND POSTS */}
