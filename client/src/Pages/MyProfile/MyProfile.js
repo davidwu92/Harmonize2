@@ -165,7 +165,7 @@ const MyProfile = () => {
   }
   //Determines new post modal's input type
   const linkOrPhoto =  (youtubeState.embeddingLink) ? 
-    <TextInput placeholder="Add a link" type="newLink" id="newLink" name="newLink" value={editState.newLink} onChange={editState.handleInputChange} />
+    <TextInput placeholder="Embed Youtube or Soundcloud link" type="newLink" id="newLink" name="newLink" value={editState.newLink} onChange={editState.handleInputChange} />
     :
     <div className="file-field input-field">
       <div className="btn black">
@@ -225,7 +225,7 @@ const MyProfile = () => {
       }
   }
   // COMMENTED OUT: createPost for a post modal?
-  const createPost = <button id="editBtn" className="waves-effect waves-light center-align">Create a post</button>;
+  const createPost = <button id="editBtn" className="waves-effect waves-light center-align white-text col s12">Create a post</button>;
   // ADD EMBEDDING LINK
   const addLink = (event) => {
     event.preventDefault()
@@ -585,7 +585,7 @@ const MyProfile = () => {
               <Button flat modal="close" node="button" className="waves-effect waves-light" id="editBtn" >
                 Close
                 </Button>,
-              <span></span>,
+              <span>  </span>,
               <Button onClick={editProfile} flat modal="close" node="button" className="waves-effect waves-light" id="editBtn">
                 Save Changes
                 </Button>
@@ -692,14 +692,16 @@ const MyProfile = () => {
       <div className="container">
         {/* POST A NEW LINK/PHOTO  */}
         <div className="row center-align">
+          <div className="row"></div>
           {/* CREATEPOST MODAL BUTTON (commented out for now) */}
           <Modal id="edProfModal" className="center-align"
             actions={[
               <Button flat modal="close" node="button" className="waves-effect waves-light" id="editBtn" >
                 Close
               </Button>,
+              <span>  </span>,
               <Button onClick={(youtubeState.embeddingLink) ? addLink : uploadPicture} flat modal="close" node="button" className="waves-effect waves-light" id="editBtn">
-                Save Changes
+                Post
               </Button>
             ]}
             header="Create a post"
@@ -713,9 +715,8 @@ const MyProfile = () => {
           
             {/* EMBED LINK FORM */}
             <form action="#">
-              <h6 className="grey-text">Embed a youtube or soundcloud post!</h6>
-              <TextInput placeholder="Title" type="newTitle" id="newTitle" name="newTitle" value={editState.newTitle} onChange={editState.handleInputChange} />
-
+              <h6 className="grey-text">Embed a link or upload a photo</h6>
+              <TextInput placeholder="Title (required)" type="newTitle" id="newTitle" name="newTitle" value={editState.newTitle} onChange={editState.handleInputChange} />
               <TextInput placeholder="Comment about your post?" type="newBody" id="newBody" name="newBody" value={editState.newBody} onChange={editState.handleInputChange} />
               {/* Choose type of post */}
               <select
