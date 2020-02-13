@@ -138,6 +138,8 @@ require('mongoose')
   .then(() => {
     gfs = Grid(conn.db, mongoose.mongo)
     gfs.collection('uploads')
+    //Catches all; sends any routes NOT found in the server directly into our home.
+    app.get('*', (req, res) => res.sendFile(join(__dirname, 'client', 'build', 'index.html')))
     app.listen(process.env.PORT || 3001)
   })
   .catch(e => console.error(e))
