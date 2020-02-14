@@ -122,8 +122,8 @@ app.get('/:filename', (req, res) => {
         // })
         return res.sendFile(join(__dirname, 'client', 'build', 'index.html'))
       }
-    }
-  })
+    })
+  }
 })
 let gfs
 
