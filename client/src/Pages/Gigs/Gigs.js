@@ -301,24 +301,27 @@ const Gigs = () => {
                       </div>
                       <p onClick={() => visitProfile(gig.authorId)}>Posted By: <a>{gig.authorName} ({gig.authorUsername})</a></p>
                     </div>
+                    <div className="col s12 m8">
+                      <div className="row">
+                        <div className="col s6 m4">
+                          <p>Posted {moment(gig.createdAt).format("L")}</p>
+                          <p>Contact: <a href={"mailto:" + gig.authorEmail}>{gig.authorEmail}</a></p>
+                        </div>
+                        <div className="col s6 m4">
+                          <p><span className="teal-text"><b>DATE:</b></span> {moment(gig.gigDate).format("MMM Do, YYYY")}</p>
+                          <p><span className="teal-text">LOCATION:</span>{gig.gigLocation}</p>
+                        </div>
 
-                    <div className="col s6 m4">
-                      <p>Posted {moment(gig.createdAt).format("L")}</p>
-                      <p>Contact: <a href={"mailto:" + gig.authorEmail}>{gig.authorEmail}</a></p>
-                      <span onClick={() => visitProfile(gig.authorId)}>
-                        Tag(s):
+                        <div className="col s12">
+                          <p><span className="teal-text">DETAILS:</span> {gig.gigBody}</p>
+                          <span onClick={() => visitProfile(gig.authorId)}>
+                            Tag(s):
                       {gig.gigTags.length > 1 ?
-                          gig.gigTags.map(gig => (<span> {gig}</span>)) :
-                          <span>{gig.gigTags[0] ? gig.gigTags[0] : " None"}</span>}
-                      </span>
-                    </div>
-
-                    <div className="col s6 m4">
-                      <p><span className="teal-text"><b>DATE:</b></span> {moment(gig.gigDate).format("MMM Do, YYYY")}</p>
-
-                      <p><span className="teal-text">LOCATION:</span>{gig.gigLocation}</p>
-
-                      <p><span className="teal-text">DETAILS:</span> {gig.gigBody}</p>
+                              gig.gigTags.map(gig => (<span> {gig}</span>)) :
+                              <span>{gig.gigTags[0] ? gig.gigTags[0] : " None"}</span>}
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -350,13 +353,14 @@ const Gigs = () => {
                       <form>
                         <br></br>
                         <TextInput
+                          className="white-text"
                           label="Title"
                           placeholder={gig.gigTitle}
                           type="" id="" name="gigTitle"
                           value={gigState.gigTitle} onChange={gigState.handleInputChange} />
                         <br />
 
-                        <TextInput label="Location" placeholder={gig.gigLocation}
+                        <TextInput className="white-text" label="Location" placeholder={gig.gigLocation}
                           type="" id="" name="gigLocation"
                           value={gigState.gigLocation} onChange={gigState.handleInputChange} />
                         <br />
@@ -384,11 +388,10 @@ const Gigs = () => {
                           onChange={dateState.handleDatePick}
                         />
                         <br />
-                        <Textarea label="Body" placeholder={gig.gigBody}
-                          // id="newBody" 
+                        <Textarea className="white-text" label="Body" placeholder={gig.gigBody}
                           name="gigBody"
                           value={gigState.gigBody} onChange={gigState.handleInputChange} />
-                        <Textarea label="Tags (Must be separated by commas)"
+                        <Textarea className="white-text" label="Tags (Must be separated by commas)"
                           placeholder={gig.gigTags.map(tag => " " + tag)}
                           name="gigTags"
                           value={gigState.gigTags} onChange={gigState.handleInputChange}
