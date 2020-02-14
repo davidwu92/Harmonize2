@@ -83,7 +83,7 @@ function App() {
             <Search />
           </Route>
 
-          <Route path="/gigs">
+          <Route path="/gigpostings">
             <LoggedinNav />
             <Gigpage />
           </Route>
