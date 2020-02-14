@@ -21,7 +21,7 @@ const LoggedinNav = () => {
           <li id="hovEffect" className="tab left"><Link to="/search"><i className="far fa-compass"></i></Link></li>
           <li id="hovEffect" className="tab"><Link to="/myprofile"><i className="fas fa-user-alt"></i></Link></li>
           <li id="hovEffect" className="tab"><Link to="/friends"><i className="fas fa-user-friends"></i></Link></li>
-          <li id="hovEffect" className="tab left"><Link to="/gigs"><i className="fas fa-guitar"></i></Link></li>
+          <li id="hovEffect" className="tab left"><Link to="/gigpostings"><i className="fas fa-guitar"></i></Link></li>
           <li id="hovEffect" className="tab right" onClick={logout}><Link to="/"><i className="fas fa-sign-out-alt"></i></Link></li>
         </ul>
       </div>

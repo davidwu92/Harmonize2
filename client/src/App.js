@@ -16,7 +16,7 @@ import Register from './Pages/Register'
 import MyProfile from './Pages/MyProfile'
 import OtherProfile from './Pages/OtherProfile'
 import Messages from './Pages/Messages'
-import Gigs from './Pages/Gigs'
+import Gigpage from './Pages/Gigpage'
 import Search from './Pages/Search'
 import ForgotLogin from './Pages/ForgotLogin'
 import ResetPass from './Pages/ResetPass'
@@ -83,9 +83,9 @@ function App() {
             <Search />
           </Route>
 
-          <Route path="/gigs">
+          <Route path="/gigpostings">
             <LoggedinNav />
-            <Gigs />
+            <Gigpage />
           </Route>
 
           <Route path="/messages">

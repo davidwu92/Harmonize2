@@ -15,8 +15,8 @@ const { getUser } = UserAPI
 
 const { postGig, getGigs, filterGigs, removeGig, updateGig } = GigAPI
 
-const Gigs = () => {
-
+const Gigpage = () => {
+  
   let history = useHistory()
 
   //New Gig Posting Variables
@@ -62,10 +62,10 @@ const Gigs = () => {
     event.preventDefault()
     setFilterState({ filterGigs: '' })
     getGigs()
-      .then(({ data: gigs }) => {
-        setGigState({ ...gigState, foundGigs: gigs })
-      })
-      .catch(e => console.error(e))
+    .then(({data: allthegigs})=>{
+      setGigState({...gigState, foundGigs: allthegigs})
+    })
+    .catch(e=>console.error(e))
   }
 
   let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
@@ -86,11 +86,11 @@ const Gigs = () => {
 
   useEffect(() => {
     getGigs()
-      .then(({ data: gigs }) => {
-        setGigState({ ...gigState, foundGigs: gigs })
-      })
-      .catch(e => console.error(e))
-  }, [])
+    .then(({data: allthegigs})=>{
+      setGigState({...gigState, foundGigs: allthegigs})
+    })
+    .catch(e=>console.error(e))
+  },[])
 
 
   const postGigButton = <button id="editBtn" className="waves-effect waves-light right white-text col s12">
@@ -416,4 +416,4 @@ const Gigs = () => {
   )
 }
 
-export default Gigs
+export default Gigpage

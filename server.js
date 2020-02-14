@@ -89,36 +89,41 @@ app.post('/', upload.single('img'), passport.authenticate('jwt', { session: fals
 
   // res.status(201).send()
 })
-app.post('/photos', upload.single('img'), passport.authenticate('jwt', { session: false }), (req, res) => {
-  const { _id: id } = req.user
-  User.findOneAndUpdate({ _id: id }, { pfPic: req.file })
-    .then(() => res.sendStatus(200))
-    .catch(e => console.error(e))
+// app.post('/photos', upload.single('img'), passport.authenticate('jwt', { session: false }), (req, res) => {
+//   const { _id: id } = req.user
+//   User.findOneAndUpdate({ _id: id }, { pfPic: req.file })
+//     .then(() => res.sendStatus(200))
+//     .catch(e => console.error(e))
 
-  // res.status(201).send()
-})
+//   // res.status(201).send()
+// })
 
 // getting that image to show
 app.get('/:filename', (req, res) => {
-  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
-    // Check if file
-    if (!file || file.length === 0) {
-      return res.status(404).json({
-        err: 'No file exists',
-      })
-    }
+  if (req.params.filename !== "gigs"){
+    gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+      // Check if file
+      if (!file || file.length === 0) {
+        // return res.status(404).json({
+        //   err: 'No file exists',
+        // })
+        return res.sendFile(join(__dirname, 'client', 'build', 'index.html'))
+      }
 
-    // Check if image
-    if (file.contentType === 'image/jpeg' || file.contentType === 'image/png') {
-      // Read output to browser
-      const readstream = gfs.createReadStream(file.filename)
-      readstream.pipe(res)
-    } else {
-      res.status(404).json({
-        err: 'Not an image',
-      })
-    }
-  })
+      // Check if image
+      if (file.contentType === 'image/jpeg' || file.contentType === 'image/png') {
+        // Read output to browser
+        const readstream = gfs.createReadStream(file.filename)
+        readstream.pipe(res)
+        
+      } else {
+        // res.status(404).json({
+        //   err: 'Not an image',
+        // })
+        return res.sendFile(join(__dirname, 'client', 'build', 'index.html'))
+      }
+    })
+  }
 })
 let gfs
 
