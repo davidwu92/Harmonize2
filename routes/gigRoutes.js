@@ -14,14 +14,14 @@ module.exports = app => {
   // GET ALL GIGS
   app.get('/gigs', (req, res) => {
     Gig.find({})
-    .then(gigs => res.json(gigs))
+    .then(data => res.json(data))
     .catch(e => console.error(e))
   })
 
   // GET FILTERED GIGS
   app.get('/gigs/:query', (req, res) => {
     Gig.find({$text: {$search: req.params.query}})
-        .then(gigs => res.json(gigs))
+        .then(data => res.json(data))
         .catch(e => console.error(e))
   })
 
