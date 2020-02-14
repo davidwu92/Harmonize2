@@ -19,6 +19,7 @@ const LinksCards = () => {
       {
         links.map(link => link.map(ylink => {
           let str = ylink.link
+          // console.log(str.split(/''/))
           let newBody = ylink.body
           let newTitle = ylink.title
           let datePosted = moment(ylink.createdAt).format("MMMM Do YYYY, h:mm:ss a")
