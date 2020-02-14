@@ -100,27 +100,28 @@ app.post('/', upload.single('img'), passport.authenticate('jwt', { session: fals
 
 // getting that image to show
 app.get('/:filename', (req, res) => {
-  // if (req.params.filename !== "gigs" && req.params.filename !== "")
-  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
-    // Check if file
-    if (!file || file.length === 0) {
-      // return res.status(404).json({
-      //   err: 'No file exists',
-      // })
-      return res.sendFile(join(__dirname, 'client', 'build', 'index.html'))
-    }
+  if (req.params.filename !== "gigs"){
+    gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+      // Check if file
+      if (!file || file.length === 0) {
+        // return res.status(404).json({
+        //   err: 'No file exists',
+        // })
+        return res.sendFile(join(__dirname, 'client', 'build', 'index.html'))
+      }
 
-    // Check if image
-    if (file.contentType === 'image/jpeg' || file.contentType === 'image/png') {
-      // Read output to browser
-      const readstream = gfs.createReadStream(file.filename)
-      readstream.pipe(res)
-      
-    } else {
-      // res.status(404).json({
-      //   err: 'Not an image',
-      // })
-      return res.sendFile(join(__dirname, 'client', 'build', 'index.html'))
+      // Check if image
+      if (file.contentType === 'image/jpeg' || file.contentType === 'image/png') {
+        // Read output to browser
+        const readstream = gfs.createReadStream(file.filename)
+        readstream.pipe(res)
+        
+      } else {
+        // res.status(404).json({
+        //   err: 'Not an image',
+        // })
+        return res.sendFile(join(__dirname, 'client', 'build', 'index.html'))
+      }
     }
   })
 })
