@@ -21,6 +21,7 @@ const FriendRequest = () => {
   return (
     <div>
       <h4 className="white-text center-align">REQUESTS</h4>
+      
       {
         requests.map(request => request.map(req => {
 

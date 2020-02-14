@@ -7,7 +7,7 @@ import FriendRequest from '../../Components/FriendRequest'
 import { BrowserRouter } from 'react-router-dom'
 
 
-const {  getRequest, acceptRequest, ignoreRequest, seeFriends } = UserAPI
+const { getRequest, acceptRequest, ignoreRequest, seeFriends } = UserAPI
 
 const FriendsList = () => {
 
@@ -17,72 +17,76 @@ const FriendsList = () => {
   })
 
 
-let userId = JSON.parse(JSON.stringify(localStorage.getItem("userId")))
+  let userId = JSON.parse(JSON.stringify(localStorage.getItem("userId")))
 
-// see requests
-useEffect(() => {
+  // see requests
+  useEffect(() => {
 
-  getRequest(userId)
-  .then(({ data }) => {
-    console.log(data)
-   let requests = []
-   requests.push(data)
-   setFriendState({ ...friendState, requests })
-  })
-  .catch(e => console.error(e))
-}, [])
-
-
-// accept friend
-friendState.acceptFriend = (id, requests) => {
-  let approve = {
-    status: 2
-  }
-  acceptRequest(id, approve)
-    .then(() => {
-     getRequest(userId)
-      .then(({ data }) => {
-      console.log(data)
-        let requests = []
-      requests.push(data)
-   setFriendState({ ...friendState, requests })
-  })
-  .then(() => {
-  })
-  .catch(e => console.error(e))
-  .catch(e => console.error(e))
-    })
-    .catch(e => console.error(e))
-}
-
-
-// ignore friend
-friendState.ignoreFriend = (id, request) => {
-  let ignore = {
-    status: 3
-  }
-  acceptRequest(id, ignore)
-    .then(() => {
-      console.log('hi')
     getRequest(userId)
-  .then(({ data }) => {
-    console.log(data)
-   let requests = []
-   requests.push(data)
-   setFriendState({ ...friendState, requests })
-  })
-  .catch(e => console.error(e))
+      .then(({ data }) => {
+        console.log(data)
+        let requests = []
+        requests.push(data)
+        setFriendState({ ...friendState, requests })
       })
       .catch(e => console.error(e))
-}
+  }, [])
+
+
+  // accept friend
+  friendState.acceptFriend = (id, requests) => {
+    let approve = {
+      status: 2
+    }
+    acceptRequest(id, approve)
+      .then(() => {
+        getRequest(userId)
+          .then(({ data }) => {
+            console.log(data)
+            let requests = []
+            requests.push(data)
+            setFriendState({ ...friendState, requests })
+          })
+          .then(() => {
+          })
+          .catch(e => console.error(e))
+          .catch(e => console.error(e))
+      })
+      .catch(e => console.error(e))
+  }
+
+
+  // ignore friend
+  friendState.ignoreFriend = (id, request) => {
+    let ignore = {
+      status: 3
+    }
+    acceptRequest(id, ignore)
+      .then(() => {
+        console.log('hi')
+        getRequest(userId)
+          .then(({ data }) => {
+            console.log(data)
+            let requests = []
+            requests.push(data)
+            setFriendState({ ...friendState, requests })
+          })
+          .catch(e => console.error(e))
+      })
+      .catch(e => console.error(e))
+  }
 
 
 
-return (
+  return (
     <FriendsContext.Provider value={friendState}>
-        <FriendRequest />
+      <FriendRequest />
+      <div className="container">
+        <br></br>
+        <div className="divider"></div>
+      </div>
     </FriendsContext.Provider>
-)
+  )
 
 }
 
