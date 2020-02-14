@@ -10,15 +10,8 @@ const multer = require('multer')
 const GridFsStorage = require('multer-gridfs-storage')
 const Grid = require('gridfs-stream')
 const crypto = require('crypto')
-// Socket.io
-const socketio = require('socket.io')
-const http = require('http')
 
 const app = express()
-
-// for Socketio use
-const server = http.createServer(app)
-const io = socketio(server)
 
 const { User } = require('./models')
 
@@ -32,15 +25,6 @@ const conn = mongoose.createConnection(mongoURI, {
 })
 // const url = 'mongodb://localhost/harmonizedb';
 
-// Socketio
-io.on('connect', (socket) => {
-  console.log('We have a new connection!!')
-
-  socket.on('disconnect', () => {
-    console.log('User left!!!')
-  })
-})
-
 //middleware
 app.use(express.static(join(__dirname, 'client', 'build')))
 app.use(express.urlencoded({ extended: true }))
@@ -48,7 +32,7 @@ app.use(express.json())
 
 //DEPLOYING TO HEROKU
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
+  app.use(express.static("client/build"))
 }
 
 // passport middleware
@@ -94,8 +78,18 @@ const storage = new GridFsStorage({
 })
 
 const upload = multer({ storage })
-
+// uploading profile img 
 app.post('/', upload.single('img'), passport.authenticate('jwt', { session: false }), (req, res) => {
+ 
+  const { _id: id } = req.user
+  console.log(id)
+  User.findOne({ _id: id })
+    .then(() => res.sendStatus(200))
+    .catch(e => console.error(e))
+
+  // res.status(201).send()
+})
+app.post('/photos', upload.single('img'), passport.authenticate('jwt', { session: false }), (req, res) => {
   const { _id: id } = req.user
   User.findOneAndUpdate({ _id: id }, { pfPic: req.file })
     .then(() => res.sendStatus(200))
@@ -103,6 +97,8 @@ app.post('/', upload.single('img'), passport.authenticate('jwt', { session: fals
 
   // res.status(201).send()
 })
+
+// getting that image to show
 app.get('/:filename', (req, res) => {
   gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
     // Check if file

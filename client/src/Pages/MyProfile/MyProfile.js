@@ -8,7 +8,11 @@ import {
   Modal,
   Button,
   TextInput,
+  Select,
 } from 'react-materialize'
+import default_profile from '../../default_profile.jpg'
+
+
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -37,7 +41,7 @@ const MyProfile = () => {
     cityState: '',
     friends: [],
     request: [],
-    pending:[]
+    pending: []
   })
 
   let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
@@ -47,30 +51,36 @@ const MyProfile = () => {
       .then(({ data }) => {
         localStorage.setItem('userId', data._id)
         setProfileState({
-        ...profileState,
-        name: data.name,
-        email: data.email,
-        username: data.username,
-        links: data.links,
-        bio: data.bio,
-        pfPic: data.pfPic,
-        id: data._id,
-        instruments: data.instruments,
-        skills: data.skills,
-        profile: data.profile,
-        cityState: data.cityState,
-        friends: data.friends,
-        request: data.request,
-        pending: data.pending
-      })})
+          ...profileState,
+          name: data.name,
+          email: data.email,
+          username: data.username,
+          links: data.links,
+          bio: data.bio,
+          pfPic: data.pfPic,
+          id: data._id,
+          instruments: data.instruments,
+          skills: data.skills,
+          profile: data.profile,
+          cityState: data.cityState,
+          friends: data.friends,
+          request: data.request,
+          pending: data.pending
+        })
+        setInfoState({
+            ...infoState,
+            instrumentsAdded: data.instruments,
+            skillsAdded: data.skills
+        })
+      })
       .catch((e) => console.error(e))
-    
+
   }, [])
 
   //Setting up editState VARIABLES: Allows us to edit values before submitting PUT requests to db
   const [editState, setEditState] = useState({
     //basic info
-    name: '', email: '', username: '', bio: '', profile: '', pfPic: '', cityState:'',
+    name: '', email: '', username: '', bio: '', profile: '', pfPic: '', cityState: '',
     //new post info
     newTitle: '', newBody: '', newLink: '',
     //instruments/skills
@@ -92,7 +102,6 @@ const MyProfile = () => {
     //Any empty fields in editState will PUT old profile information.
     let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
     document.getElementById('img').setAttribute('src', `http://localhost:3000/${file[0].name}`)
-
     axios({
       method: 'post',
       url: '/',
@@ -118,6 +127,7 @@ const MyProfile = () => {
 
   //~~~~~~~~~~ADDING LINKS STUFF~~~~~~~~~
   const [youtubeState, setYoutubeState] = useState({
+    embeddingLink: Boolean,
     links: []
   })
 
@@ -135,9 +145,88 @@ const MyProfile = () => {
   //configure error messages for addLlink.
   toast.configure();
   const toastOptions = { autoClose: 7000, hideProgressBar: true, type: "error" }
+  
+  //Selector Value
+  const postTypeSelect = () =>{
+    switch (document.getElementById('postType').value) {
+      case "embedLink":
+        setYoutubeState({
+          ...youtubeState, embeddingLink: true
+        })
+        break;
+      case "photoFile":
+        setYoutubeState({
+          ...youtubeState, embeddingLink: false
+        })
+        break;
+      default:
+          console.log("You selected nothing.")
+    }
+  }
+  //Determines new post modal's input type
+  const linkOrPhoto =  (youtubeState.embeddingLink) ? 
+    <TextInput placeholder="Embed Youtube or Soundcloud link" type="newLink" id="newLink" name="newLink" value={editState.newLink} onChange={editState.handleInputChange} />
+    :
+    <div className="file-field input-field">
+      <div className="btn black">
+        <span>File</span>
+        <input type="file"
+          className="custom-file-input"
+          id="inputGroupFile02"
+          aria-describedby="inputGroupFileAddon02"
+        ></input>
+      </div>
+      <div className="file-path-wrapper">
+        <input className="file-path validate" type="text"></input>
+      </div>
+    </div>
+
+
+  //UPLOAD picture post
+  const uploadPicture = (event) => {
+    event.preventDefault()
+    if (editState.newTitle) {
+      const file = document.getElementById('inputGroupFile02').files
+      const formData = new FormData()
+      formData.append('img', file[0])
+      //Any empty fields in editState will PUT old profile information.
+      let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
+      axios({
+        method: 'post',
+        url: '/',
+        data: formData,
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
+      })
+        .then(({ data }) => {
+          console.log(data)
+          let youtubeLink = { newLink: file[0].name, newTitle: editState.newTitle, newBody: editState.newBody }
+          console.log(youtubeLink)
+          addYoutube(token, youtubeLink)
+            .then(() => {
+              setEditState({ ...editState, newLink: '', newBody: '', newTitle: '' })
+              getYoutube(token)
+                .then(({ data }) => {
+                  console.log(data)
+                  let links = []
+                  links.push(data)
+                  setYoutubeState({ ...youtubeState, links })
+                })
+                .catch(e => console.error(e))
+            })
+            .catch(e => console.error(e))
+        })
+        .catch(e => console.error(e))
+      } else {
+      setEditState({ ...editState, newLink: '', newTitle: '' })
+      return (toast(`Please provide a title for your post.`, toastOptions))
+      }
+  }
   // COMMENTED OUT: createPost for a post modal?
-  // const createPost = <button id="editBtn" className="waves-effect waves-light center-align">Create a post</button>;
-  // Add link is working now 01/31/20 with json token authorization
+  const createPost = <button id="editBtn" className="waves-effect waves-light center-align white-text col s12">Create a post</button>;
+  // ADD EMBEDDING LINK
   const addLink = (event) => {
     event.preventDefault()
     let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
@@ -164,10 +253,8 @@ const MyProfile = () => {
       setEditState({ ...editState, newLink: '', newTitle: '' })
       return (toast(`Please provide a title for your post.`, toastOptions))
     }
-
   }
-
-  //DELETE a Link
+  //DELETE a Link/Post
   youtubeState.deleteVideo = (token, id) => {
     deleteYoutube(token, { _id: id })
       .then(() => {
@@ -182,19 +269,9 @@ const MyProfile = () => {
       .catch(e => console.error(e))
   }
 
+
   //EDITING PROFILE: FORM SUBMISSION
   const editPfButton = <button id="editBtn" className="waves-effect waves-light right white-text col s12"><i id="editBtnIcon" className="fas fa-user-edit"></i></button>
-  // When edit button is clicked, update infoState's instrumentsAdded/skillsAdded arrays.
-  const updateInfoState = (event) => {
-    if (event.target.id === "editBtnIcon") {
-      setInfoState({
-        ...infoState,
-        instrumentsAdded: profileState.instruments,
-        skillsAdded: profileState.skills
-      })
-    }
-  }
-  document.addEventListener('click', updateInfoState)
   //Edit PF form submission
   const editProfile = (event) => {
     event.preventDefault()
@@ -210,26 +287,26 @@ const MyProfile = () => {
       profile: (editState.profile === '') ? profileState.profile : editState.profile
     })
       .then(() => {
-    getUser(token)
-    .then(({ data }) => {
-      setProfileState({
-        ...profileState,
-        name: data.name,
-        email: data.email,
-        username: data.username,
-        links: data.links,
-        bio: data.bio,
-        pfPic: data.pfPic,
-        id: data._id,
-        instruments: data.instruments,
-        skills: data.skills,
-        profile: data.profile,
-        cityState: data.cityState,
-        friends: data.friends,
-        requests: data.requests
-      })
-    })
-    .catch((e) => console.error(e))
+        getUser(token)
+          .then(({ data }) => {
+            setProfileState({
+              ...profileState,
+              name: data.name,
+              email: data.email,
+              username: data.username,
+              links: data.links,
+              bio: data.bio,
+              pfPic: data.pfPic,
+              id: data._id,
+              instruments: data.instruments,
+              skills: data.skills,
+              profile: data.profile,
+              cityState: data.cityState,
+              friends: data.friends,
+              requests: data.requests
+            })
+          })
+          .catch((e) => console.error(e))
         console.log("You edited the profile.")
       })
       .catch(e => console.error(e))
@@ -263,7 +340,7 @@ const MyProfile = () => {
       case "strings":
         setInfoState({
           ...infoState, familyChosen: document.getElementById('instrumentFamily').value,
-          familyInstruments: ["Violin", "Viola", "Cello", "Double-Bass", "Bass Guitar", "Guitar: Classical", "Guitar: Rock", "Other"]
+          familyInstruments: ["Violin", "Viola", "Cello", "Double-Bass", "Bass Guitar", "Guitar: Classical", "Guitar: Rock", "Harp", "Other"]
         })
         break;
       case "woodwinds":
@@ -309,8 +386,9 @@ const MyProfile = () => {
         setInfoState({ ...infoState, familyChosen: '', otherInstrumentSelected: false, instrumentsAdded: tempInstruments })
         document.getElementById('instrumentFamily').value = '0'
       } else {
-        alert("You already added that instrument.")
+        toast("You already added that instrument.", toastOptions)
         document.getElementById('instrumentFamily').value = '0'
+        
       }
     } else {
       //Selected "Other"
@@ -326,7 +404,7 @@ const MyProfile = () => {
       setInfoState({ ...infoState, familyChosen: '', otherInstrument: "", otherInstrumentSelected: false, instrumentsAdded: tempInstruments })
       document.getElementById('instrumentFamily').value = '0'
     } else {
-      alert("Invalid instrument input.")
+      toast("Invalid instrument input.", toastOptions)
     }
   }
   //Remove an instrument
@@ -373,7 +451,7 @@ const MyProfile = () => {
         document.getElementById('skillsDropdown').value = '0'
       } else {
         document.getElementById('skillsDropdown').value = '0'
-        alert("You already added that skill.")
+        toast("You already added that skill.", toastOptions)
       }
     } else {
       //Selected "Other"
@@ -389,7 +467,7 @@ const MyProfile = () => {
       setInfoState({ ...infoState, otherSkillSelected: false, otherSkill: "", skillssAdded: tempSkills })
       document.getElementById('skillsDropdown').value = '0'
     } else {
-      alert("Invalid skill input.")
+      toast("Invalid skill input.", toastOptions)
     }
   }
   //Remove a skill
@@ -409,15 +487,12 @@ const MyProfile = () => {
     </div>
     : null
 
-// see friend request
-  const visitFriends = () => {
-    history.push('/friends')
-  }
-// see friends list
-  const friendsList = () => {
-    history.push('/list')
-  }
-console.log(profileState.requests  === undefined)
+  // profilePicture Ternary
+  const profilePicture = (profileState.profile) ? profileState.profile : default_profile
+
+  // email link variable
+  let email = "mailto:" + profileState.email
+
   return (
     <>
       <div className="container2">
@@ -430,7 +505,6 @@ console.log(profileState.requests  === undefined)
             <h4 onClick={friendsList}>{profileState.friends.length}</h4>
             <h4>Following</h4>
             {/* EDIT PROF PIC */}
-            
             <Modal id="edProfModal" className="center-align"
               actions={[
                 <Button flat modal="close" node="button" className="waves-effect waves-light hoverable" id="editBtn">
@@ -469,7 +543,7 @@ console.log(profileState.requests  === undefined)
             {/* USERNAME */}
             <h5 className="white-text">{profileState.username}</h5>
             {/* EMAIL */}
-            <h6 className="white-text">{profileState.email}</h6>
+            <a href={email}>{profileState.email}</a>
             {/* BIO */}
             <h6 className="grey-text">{profileState.bio}</h6>
             {/* EDIT PROFILE MODAL BUTTON */}
@@ -588,7 +662,10 @@ console.log(profileState.requests  === undefined)
                 <h5 className="white-text"><b>INSTRUMENTS</b></h5>
                 {profileState.instruments.map(instrument => (<p className="teal-text">{instrument + " "}</p>))}
               </> :
-                <h6 className="white-text">You haven't added any instruments you play. Hit the edit profile button to add some instruments!</h6>
+              <>
+                <h5 className="white-text"><b>INSTRUMENTS</b></h5>
+                <h6 className="grey-text">You haven't added any instruments you play. Add some with the edit profile button below!</h6>
+              </>
             }
           </div>
 
@@ -599,7 +676,10 @@ console.log(profileState.requests  === undefined)
                 <h5 className="white-text"><b>SKILLS</b></h5>
                 {profileState.skills.map(skill => (<p className="teal-text">{skill + " "}</p>))}
               </> :
-                <h6 className="white-text">You haven't added any skills to show off. Hit the edit profile button to add some instruments!</h6>
+              <>
+                <h5 className="white-text"><b>SKILLS</b></h5>
+                <h6 className="grey-text">You haven't added any skills to show off. Add some with the edit profile button below!</h6>
+              </>
             }
           </div>
 
@@ -609,7 +689,7 @@ console.log(profileState.requests  === undefined)
               <Button flat modal="close" node="button" className="waves-effect waves-light" id="editBtn" >
                 Close
                 </Button>,
-              <span></span>,
+              <span>  </span>,
               <Button onClick={editProfile} flat modal="close" node="button" className="waves-effect waves-light" id="editBtn">
                 Save Changes
                 </Button>
@@ -623,13 +703,13 @@ console.log(profileState.requests  === undefined)
             trigger={editPfButton}
           >
             <form>
-
+              <span>Name</span>
               <TextInput placeholder={profileState.name} type="newName" id="newName" name="name" value={editState.name} onChange={editState.handleInputChange} />
-
+              <span>Username</span>
               <TextInput placeholder={profileState.username} type="newUsername" id="newUsername" name="username" value={editState.username} onChange={editState.handleInputChange} />
-
+              <span>Email</span>
               <TextInput placeholder={profileState.email} type="newEmail" id="newEmail" name="email" value={editState.email} onChange={editState.handleInputChange} />
-
+              <span>Bio</span>
               <TextInput placeholder={profileState.bio} type="newBio" id="newBio" name="bio" value={editState.bio} onChange={editState.handleInputChange} />
 
               <div className="container">
@@ -714,20 +794,56 @@ console.log(profileState.requests  === undefined)
       </div>
 
       <div className="container">
-        <div className="row2">
-          <form>
-            <h6 className="grey-text">Embed a youtube or soundcloud post!</h6>
-            <TextInput placeholder="Title" type="newTitle" id="newTitle" name="newTitle" value={editState.newTitle} onChange={editState.handleInputChange} />
-
-            <TextInput placeholder="Comment about your post?" type="newBody" id="newBody" name="newBody" value={editState.newBody} onChange={editState.handleInputChange} />
-
-            <TextInput placeholder="Add a link" type="newLink" id="newLink" name="newLink" value={editState.newLink} onChange={editState.handleInputChange} />
-
-            {/* Comment the button out if we put the createPost Modal back in. */}
-            <button onClick={addLink} id="addLink" className="waves-effect waves-light btn" type="submit" name="action"><i className="material-icons">publish</i></button>
-          </form>
-
-          {/* </Modal> */}
+        {/* POST A NEW LINK/PHOTO  */}
+        <div className="row center-align">
+          <div className="row"></div>
+          {/* CREATEPOST MODAL BUTTON (commented out for now) */}
+          <Modal id="edProfModal" className="center-align"
+            actions={[
+              <Button flat modal="close" node="button" className="waves-effect waves-light" id="editBtn" >
+                Close
+              </Button>,
+              <span>  </span>,
+              <Button onClick={(youtubeState.embeddingLink) ? addLink : uploadPicture} flat modal="close" node="button" className="waves-effect waves-light" id="editBtn">
+                Post
+              </Button>
+            ]}
+            header="Create a post"
+            options={{
+              dismissible: true, endingTop: '10%', inDuration: 250, onCloseEnd: null,
+              onCloseStart: null, onOpenEnd: null, onOpenStart: null, opacity: 0.5,
+              outDuration: 250, preventScrolling: true, startingTop: '4%'
+            }}
+            trigger={createPost}
+          >
+          
+            {/* EMBED LINK FORM */}
+            <form action="#">
+              <h6 className="grey-text">Embed a link or upload a photo</h6>
+              <TextInput placeholder="Title (required)" type="newTitle" id="newTitle" name="newTitle" value={editState.newTitle} onChange={editState.handleInputChange} />
+              <TextInput placeholder="Comment about your post?" type="newBody" id="newBody" name="newBody" value={editState.newBody} onChange={editState.handleInputChange} />
+              {/* Choose type of post */}
+              <select
+                  id="postType"
+                  className="browser-default"
+                  options={{
+                    classes: '', dropdownOptions: {
+                      alignment: 'left',
+                      autoTrigger: true, closeOnClick: true, constrainWidth: true,
+                      container: null, coverTrigger: true, hover: false,
+                      inDuration: 150, onCloseEnd: null, onCloseStart: null,
+                      onOpenEnd: null, onOpenStart: null, outDuration: 250
+                    }
+                  }}
+                  onChange={postTypeSelect}
+                >
+                  {/* <option value="0" selected>Select Type</option> */}
+                  <option value="embedLink" selected>Youtube/Soundcloud Embedding Link</option>
+                  <option value="photoFile">Photo File</option>
+              </select>
+              {linkOrPhoto} 
+            </form>
+          </Modal> {/* -KEEP THIS FOR ADDLINK MODAL */}
         </div>
         <div className="row2">
           {/* LINKS/POSTS HERE */}
