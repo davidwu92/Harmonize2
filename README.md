@@ -1,7 +1,5 @@
 # HARMONIZE 
 
-Deployed Application: https://salty-dawn-09701.herokuapp.com/
-
 <h2>Introduction</h2>
 This is a social media platform for musicians looking to find other musicians to collaborate with.
 
@@ -39,6 +37,8 @@ Technologies Used for this Application:
 -  Jawed Ekhlas
 -  Kamelesh Sarki
 
+<h3>Deployed Link</h3>
+Deployed Application: https://salty-dawn-09701.herokuapp.com/
 
 
 
