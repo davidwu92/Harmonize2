@@ -15,7 +15,7 @@ const { getUser } = UserAPI
 
 const { postGig, getGigs, filterGigs, removeGig, updateGig } = GigAPI
 
-const Gigs = () => {
+const Gigpage = () => {
   
   let history = useHistory()
 
@@ -402,4 +402,4 @@ const Gigs = () => {
   )
 }
 
-export default Gigs
+export default Gigpage
