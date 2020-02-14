@@ -23,8 +23,6 @@ const [alertState, setAlertState] = useState({
       .catch(e => console.error(e))
  }, [])
   
-
-
   const logout = (e) => {
     e.preventDefault()
     localStorage.clear('token')
