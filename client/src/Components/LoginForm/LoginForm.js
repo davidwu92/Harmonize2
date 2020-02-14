@@ -36,7 +36,7 @@ const LoginForm = () => {
       password: loginState.password
     })
       .then(({ data }) => {
-        console.log(data)
+        // console.log(data)
         if (data.token && loginUser) {
           localStorage.setItem('token', data.token)
           history.push('/myprofile')

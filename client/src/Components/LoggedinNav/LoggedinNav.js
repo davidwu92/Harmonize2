@@ -1,13 +1,38 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import './loggedinNav.css'
+import UserAPI from '../../utils/UserAPI'
+
+const { getRequest } = UserAPI
 
 const LoggedinNav = () => {
+
+  let userId = JSON.parse(JSON.stringify(localStorage.getItem("userId")))
+
+const [alertState, setAlertState] = useState({
+  requests: []
+})
+
+ useEffect(() => {
+    getRequest(userId)
+      .then(({ data }) => {
+        let requests = data
+       setAlertState({ requests })
+
+      })
+      .catch(e => console.error(e))
+ }, [])
+  
+
 
   const logout = (e) => {
     e.preventDefault()
     localStorage.clear('token')
   }
+
+const friendsButton = alertState.requests.length ?     <li id="hovEffect" className="tab"><Link to="/friends"><i className="red-text fas fa-user-friends"></i></Link></li>
+  :
+   <li id="hovEffect" className="tab"><Link to="/friends"><i className="fas fa-user-friends"></i></Link></li>
 
   return (
     <nav id="bottomNav" className="nav-extended black">
