@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <>
       <div className="container center-align">
-        <h5 className="white-text">FIND MUSICIONS, JAM BUDDIES, OR BAND MEMBERS IN YOUR AREA.</h5>
+        <h5 className="white-text">FIND MUSICIANS, JAM BUDDIES, OR BAND MEMBERS IN YOUR AREA.</h5>
         <div id="homeCard" className="row">
           <div className="col s12">
             <div className="sp-container">
