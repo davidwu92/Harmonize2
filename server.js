@@ -100,6 +100,7 @@ app.post('/', upload.single('img'), passport.authenticate('jwt', { session: fals
 
 // getting that image to show
 app.get('/:filename', (req, res) => {
+  // if (req.params.filename !== "gigs" && req.params.filename !== "")
   gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
     // Check if file
     if (!file || file.length === 0) {
