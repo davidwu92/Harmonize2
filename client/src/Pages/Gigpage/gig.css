@@ -1,17 +1,17 @@
-#img{
+#img {
   border: solid grey 1px;
   margin-top: 15px;
 }
 
-#connect{
-  font-size:25px;
+#connect {
+  font-size: 25px;
 }
 
-#reqBtn{
+#reqBtn {
   margin-top: 10px;
 }
 
-#editBtn {
+#filterBtn {
   cursor: pointer;
   outline: none;
   z-index: 3;
@@ -26,20 +26,21 @@
   padding-right: 4px;
 }
 
-#editBtn:hover {
+#filterBtn:hover {
   background: #009688;
   color: white;
   transition: all 0.2s linear;
 }
 
-#editBtn:active {
+#filterBtn:active {
   border-radius: 10px;
 }
 
-#editBtn {
-  padding:2px;
+#filterBtn {
+  padding: 2px;
   font-weight: 700;
   border-color: black;
+  margin-top: 15px;
 }
 
 #addLink {
@@ -61,14 +62,14 @@
 
 /* Edit Prof Modal */
 
-#postGigModal{
-  /* color: white; */
-  /* background: rgb(25,25,25);
-  background: linear-gradient(159deg, rgba(25,25,25,1) 41%, rgba(175,175,175,1) 100%); */
+#postGigModal {
+  color: #009688;
+  background: rgb(25, 25, 25);
+  background: linear-gradient(159deg, rgba(25, 25, 25, 1) 41%, rgba(175, 175, 175, 1) 100%);
   border-radius: 15px;
 }
 
-#newUsername, #newName, #newEmail, #newBio, #newLink, #newTitle, #newBody{
+#newUsername, #newName, #newEmail, #newBio, #newLink, #newTitle, #newBody {
   border: 2px solid black;
   padding: .25em .5em .3125em;
   color: white;
@@ -81,8 +82,7 @@
   box-sizing: border-box;
 }
 
-
-#skillsDropdown, #instrumentFamily{
+#skillsDropdown, #instrumentFamily {
   border: 2px solid black;
   padding: .25em .5em .3125em;
   border-radius: .25em;
