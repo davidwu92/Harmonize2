@@ -114,6 +114,7 @@ app.get('/:filename', (req, res) => {
       // Read output to browser
       const readstream = gfs.createReadStream(file.filename)
       readstream.pipe(res)
+      return res.sendFile(join(__dirname, 'client', 'build', 'index.html'))
     } else {
       // res.status(404).json({
       //   err: 'Not an image',
