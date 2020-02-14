@@ -62,9 +62,8 @@ const Gigs = () => {
     event.preventDefault()
     setFilterState({filterGigs: ''})
     getGigs()
-    .then(({data: gigs})=>{
-      const newgigs = JSON.parse(JSON.stringify(gigs))
-      setGigState({...gigState, foundGigs: newgigs})
+    .then(({data: allthegigs})=>{
+      setGigState({...gigState, foundGigs: allthegigs})
     })
     .catch(e=>console.error(e))
   }
@@ -87,10 +86,8 @@ const Gigs = () => {
   
   useEffect(()=>{
     getGigs()
-    .then(({data: gigs})=>{
-      const newgigs = JSON.parse(JSON.stringify(gigs))
-      setGigState({...gigState, foundGigs: newgigsy
-      })
+    .then(({data: allthegigs})=>{
+      setGigState({...gigState, foundGigs: allthegigs})
     })
     .catch(e=>console.error(e))
   },[])
