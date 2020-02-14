@@ -725,7 +725,7 @@ const MyProfile = () => {
                   onChange={postTypeSelect}
                 >
                   {/* <option value="0" selected>Select Type</option> */}
-                  <option value="embedLink" selected>Youtube/Soundcloud Embedding Link</option>
+                  <option value="embedLink" selected>Embed Youtube/Soundcloud/Spotify Link</option>
                   <option value="photoFile">Photo File</option>
               </select>
               {linkOrPhoto} 
