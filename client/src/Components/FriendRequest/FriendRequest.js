@@ -13,7 +13,7 @@ const FriendRequest = () => {
 
   const { requests, acceptFriend, ignoreFriend } = useContext(FriendsContext)
 
-   const visitProfile = (id) => {
+  const visitProfile = (id) => {
     sessionStorage.setItem("token", id)
     history.push('/otherprofile')
   }
@@ -44,9 +44,9 @@ const FriendRequest = () => {
 
             return (
               <div className="container">
-                <div id="pfRow" className="row grey">
+                <div id="pfRow" className="row grey lighten-3">
                   <div className="col s4 m2">
-                    <img onClick={() => visitProfile(ids)}id="img" src={profilePicture} alt="Profile Img" className="circle responsive-img" />
+                    <img onClick={() => visitProfile(ids)} id="img" src={profilePicture} alt="Profile Img" className="circle responsive-img" />
                   </div>
                   <div className="col s8 m10">
                     <h5 onClick={() => visitProfile(ids)} className="black-text center-align">{req.userRequest.name} Would like to connect with you</h5>
