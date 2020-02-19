@@ -329,7 +329,7 @@ const Gigpage = () => {
 
               {/* DELETE/EDIT GIG BUTTONS */}
               {
-                gig.authorId == localStorage.getItem('userId') ?
+                gig.authorId === localStorage.getItem('userId') ?
                   <div className="right">
                     {/* EDIT GIG MODAL */}
                     <Modal id="postGigModal" className="center-align"

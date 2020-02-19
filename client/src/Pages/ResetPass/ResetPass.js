@@ -21,7 +21,6 @@ const [resetState, setResetState] = useState({
   let { token } = useParams()
 
 useEffect(() => {
-  console.log(token)
   axios.get('/reset', { params: {
     resetPasswordToken: token
   }})

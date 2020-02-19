@@ -16,7 +16,7 @@ const { addUser } = UserAPI
 const RegisterForm = () => {
   const history = useHistory()
 
-  const { profile, name, email, username, password, bio, handleInputChange, resetPasswordExpires, resetPasswordToken, cityState } = useContext(UserContext)
+  const { name, email, username, password, bio, handleInputChange, cityState } = useContext(UserContext)
 
   //configure error message.
   toast.configure();

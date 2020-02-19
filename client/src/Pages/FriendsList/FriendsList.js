@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import UserAPI from '../../utils/UserAPI'
 import FriendsContext from '../../utils/FriendsContext'
-import LoggedinNav from '../../Components/LoggedinNav'
 import FriendRequest from '../../Components/FriendRequest'
-import { BrowserRouter } from 'react-router-dom'
 
 
-const { getRequest, acceptRequest, ignoreRequest, seeFriends } = UserAPI
+const { getRequest, acceptRequest } = UserAPI
 
 const FriendsList = () => {
 
@@ -21,7 +18,7 @@ const FriendsList = () => {
 
   // see requests
   useEffect(() => {
-
+ let userId = JSON.parse(JSON.stringify(localStorage.getItem("userId")))
     getRequest(userId)
       .then(({ data }) => {
         console.log(data)
@@ -48,12 +45,12 @@ const FriendsList = () => {
             setFriendState({ ...friendState, requests })
           })
           .then(() => {
-          })
-          .catch(e => console.error(e))
-          .catch(e => console.error(e))
-      })
+            window.location.reload()
+       })
+    })
       .catch(e => console.error(e))
   }
+  
 
 
   // ignore friend
@@ -63,15 +60,15 @@ const FriendsList = () => {
     }
     acceptRequest(id, ignore)
       .then(() => {
-        console.log('hi')
         getRequest(userId)
           .then(({ data }) => {
-            console.log(data)
             let requests = []
             requests.push(data)
             setFriendState({ ...friendState, requests })
           })
-          .catch(e => console.error(e))
+          .then(() => {
+            window.location.reload()
+          })
       })
       .catch(e => console.error(e))
   }
