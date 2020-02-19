@@ -21,7 +21,6 @@ const FriendsView = () => {
   useEffect(() => {
     seeFriends(userId)
       .then(({ data }) => {
-        console.log(data)
         let friends = []
         friends.push(data)
         setViewState({ ...viewState, friends })
@@ -35,10 +34,8 @@ const FriendsView = () => {
 
     unfollowFriends(id, friendId)
       .then(() => {
-        console.log('hi')
         seeFriends(userId)
           .then(({data }) => {
-            console.log(data)
            let friends = []
           friends.push(data)
           setViewState({ ...viewState, friends })

@@ -4,12 +4,14 @@ import UserAPI from '../../utils/UserAPI'
 import FriendsContext from '../../utils/FriendsContext'
 import LoggedinNav from '../../Components/LoggedinNav'
 import FriendRequest from '../../Components/FriendRequest'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, useHistory } from 'react-router-dom'
 
 
 const { getRequest, acceptRequest, ignoreRequest, seeFriends } = UserAPI
 
 const FriendsList = () => {
+
+    let history = useHistory()
 
   const [friendState, setFriendState] = useState({
     requests: [],
@@ -48,12 +50,12 @@ const FriendsList = () => {
             setFriendState({ ...friendState, requests })
           })
           .then(() => {
-          })
-          .catch(e => console.error(e))
-          .catch(e => console.error(e))
-      })
+            window.location.reload()
+       })
+    })
       .catch(e => console.error(e))
   }
+  
 
 
   // ignore friend
@@ -63,15 +65,15 @@ const FriendsList = () => {
     }
     acceptRequest(id, ignore)
       .then(() => {
-        console.log('hi')
         getRequest(userId)
           .then(({ data }) => {
-            console.log(data)
             let requests = []
             requests.push(data)
             setFriendState({ ...friendState, requests })
           })
-          .catch(e => console.error(e))
+          .then(() => {
+            window.location.reload()
+          })
       })
       .catch(e => console.error(e))
   }

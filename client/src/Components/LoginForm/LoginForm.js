@@ -6,10 +6,14 @@ import { Redirect, useHistory } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const { loginUser } = UserAPI
+const { loginUser, getRequest, getUser } = UserAPI
+
 
 const LoginForm = () => {
   let history = useHistory()
+
+  let userId = JSON.parse(JSON.stringify(localStorage.getItem("userId")))
+  let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
 
   //using LoginState to track username/password on this page only.
   const [loginState, setLoginState] = useState({
@@ -36,10 +40,20 @@ const LoginForm = () => {
       password: loginState.password
     })
       .then(({ data }) => {
-        // console.log(data)
+        // grabbing this before setting it to call getUser
+       let tempToken = data.token
+        
         if (data.token && loginUser) {
           localStorage.setItem('token', data.token)
-          history.push('/myprofile')
+          // get userId to set up LoggedinNavbar for friends request
+            getUser(tempToken)
+             .then(({ data }) => {
+              localStorage.setItem('userId', data._id)
+          })
+          .then(() => {
+            history.push('/myprofile')
+          })
+          .catch(e => console.error(e))
         } else {
           // ALERT MESSAGE
           return(toast(`Login failed. Please check your username and password combination or click on "Forgot Password".`, toastOptions))

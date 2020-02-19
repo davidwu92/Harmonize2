@@ -34,37 +34,40 @@ let { requester: userRequest} = req.body
 // request or reject friend request if accpeted then user gets friend list 
 
 app.put('/request/:id', (req, res) => {
-  
-  FriendRequest.findOneAndUpdate({ _id: req.params.id}, {$set: { status: req.body.status }})
+// new:true gives us the updated document
+  FriendRequest.findOneAndUpdate({ _id: req.params.id}, {$set: { status: req.body.status }}, {new: true})
     .then(request => {
-      console.log(request.status)
-      if (request.status === 1 || 2) {
-        console.log('one')
+      if (request.status ===  2) {
         // Requester receives friend
         User.updateOne({ _id: request.requester}, {$addToSet: { friends: request.recipient}})
           .then(() => {
             // Recipient loses request
-            console.log('two')
             User.updateOne({_id: request.recipient}, {$pull: {requests: request.requester}})
               .then(() => {
                 // Requester loses pending
-                console.log('three')
                 User.updateOne({_id: request.requester}, {$pull: {pending: request.recipient}})
                   .then(() => {
                     // Recipient receives friend
-                    console.log('four')
                     User.updateOne({_id: request.recipient}, {$addToSet: {friends: request.requester}})
-                      .then(() => res.sendStatus(200))
+                      .then(() => {
+                       FriendRequest.deleteOne({ _id: request._id })
+                       .then(() => res.sendStatus(200))
                        .catch(e => console.error(e))
+                      })
                   })
+                   .catch(e => console.error(e))
               })
           })
           // takes request off both people/ignored!
       } else if (request.status === 3) {
-        console.log(request.status)
         User.updateOne({ _id: request.recipient}, {$pull: { requests: request.requester}})
-          .then(() => { User.updateOne({_id: request.requester}, {$pull: { pending: request.recipient}})
-              .then(() => res.sendStatus(200))
+          .then(() => { 
+              User.updateOne({_id: request.requester}, {$pull: { pending: request.recipient}})
+              .then(() => {
+                FriendRequest.deleteOne({ _id: request._id })
+                  .then(() => res.sendStatus(200))
+                  .catch(e => console.error(e))
+                })
           })
           .catch(e => console.error(e))
       } else {
