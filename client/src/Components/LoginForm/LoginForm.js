@@ -1,19 +1,19 @@
 import React, { useState } from 'react'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import UserAPI from '../../utils/UserAPI'
-import { Redirect, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const { loginUser, getRequest, getUser } = UserAPI
+const { loginUser, getUser } = UserAPI
 
 
 const LoginForm = () => {
   let history = useHistory()
 
-  let userId = JSON.parse(JSON.stringify(localStorage.getItem("userId")))
-  let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
+  // let userId = JSON.parse(JSON.stringify(localStorage.getItem("userId")))
+  // let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
 
   //using LoginState to track username/password on this page only.
   const [loginState, setLoginState] = useState({

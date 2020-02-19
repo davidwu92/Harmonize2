@@ -1,5 +1,5 @@
 //client/src/Pages/Register.js
-import React, { useState } from 'react'
+import React from 'react'
 import RegisterForm from '../../Components/RegisterForm'
 
 const Register = () => {

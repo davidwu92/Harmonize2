@@ -1,11 +1,8 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import FriendsContext from '../../utils/FriendsContext'
-import UserAPI from '../../utils/UserAPI'
 import { useHistory } from 'react-router-dom'
 import default_profile from '../../default_profile.jpg'
 
-
-const { acceptRequest } = UserAPI
 
 const FriendRequest = () => {
 

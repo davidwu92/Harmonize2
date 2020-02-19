@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import UserAPI from '../../utils/UserAPI'
 import ViewContext from '../../utils/ViewContext'
-import LoggedinNav from '../../Components/LoggedinNav'
-import FriendRequest from '../../Components/FriendRequest'
-import { BrowserRouter } from 'react-router-dom'
 import FriendList from '../../Components/FriendList'
 
 
-const { getRequest, seeFriends, unfollowFriends } = UserAPI
+const {  seeFriends, unfollowFriends } = UserAPI
 
 const FriendsView = () => {
 
@@ -19,6 +15,7 @@ const FriendsView = () => {
   let userId = JSON.parse(JSON.stringify(localStorage.getItem("userId")))
 
   useEffect(() => {
+      let userId = JSON.parse(JSON.stringify(localStorage.getItem("userId")))
     seeFriends(userId)
       .then(({ data }) => {
         let friends = []

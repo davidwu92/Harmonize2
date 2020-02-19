@@ -1,10 +1,10 @@
 //For Location bar
 import React, {useState , useContext} from 'react'
-import PlacesAutocomplete, {geocodeByAddress, getLatLng} from 'react-places-autocomplete'
+import PlacesAutocomplete from 'react-places-autocomplete'
 import UserContext from '../../utils/UserContext'
 
 const SearchPlace = () => {
-  const { cityState,  setCityState } = useContext(UserContext)
+  const {  setCityState } = useContext(UserContext)
 
   const [addressState, setAddressState] = useState("")
 

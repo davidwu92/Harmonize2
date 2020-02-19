@@ -4,14 +4,13 @@ import ProfileContext from '../../utils/ProfileContext'
 import LinksCards from '../../Components/LinksCards'
 import UserAPI from '../../utils/UserAPI'
 import AddFriendBtn from '../../Components/AddFriendBtn'
-import OtherContext from '../../utils/OtherContext'
 import ViewContext from '../../utils/ViewContext'
 import default_profile from '../../default_profile.jpg'
 
 
 const { visitProfile, userInfo } = SearchAPI
 
-const { getOtherYoutube, addFriend } = UserAPI
+const { getOtherYoutube } = UserAPI
 
 const OtherProfile = () => {
 
@@ -32,7 +31,7 @@ const OtherProfile = () => {
 
   //use an ID TO GRAB user data; ID is grabbed from Search page.
   let profileId = JSON.parse(JSON.stringify(sessionStorage.getItem("token")))
-  let userId = JSON.parse(JSON.stringify(localStorage.getItem("userId")))
+  // let userId = JSON.parse(JSON.stringify(localStorage.getItem("userId")))
   //need a get new Other User API and route.
   visitProfile(profileId)
     .then(({ data }) => {
@@ -42,7 +41,7 @@ const OtherProfile = () => {
         email: data.email,
         username: data.username,
         links: data.links,
-        bio: (data.bio == `You currently don't have a bio. Click on the edit profile button to tell others about yourself!`) ? null : data.bio,
+        bio: (data.bio === `You currently don't have a bio. Click on the edit profile button to tell others about yourself!`) ? null : data.bio,
         pfPic: data.pfPic,
         instruments: data.instruments,
         skills: data.skills,
@@ -58,6 +57,8 @@ const OtherProfile = () => {
   })
   // adding the actual users friends list to profile
   useEffect(() => {
+  let profileId = JSON.parse(JSON.stringify(sessionStorage.getItem("token")))
+  let userId = JSON.parse(JSON.stringify(localStorage.getItem("userId")))
     userInfo(userId)
       .then(({ data }) => {
         console.log(data.pending)
@@ -80,13 +81,14 @@ const OtherProfile = () => {
         }
       })
       .catch((e) => console.error(e))
-  }, [])
+  }, [listState])
 
   const [youtubeState, setYoutubeState] = useState({
     links: []
   })
 
   useEffect(() => {
+    let profileId = JSON.parse(JSON.stringify(sessionStorage.getItem("token")))
     getOtherYoutube(profileId)
       .then(({ data }) => {
         let links = []
@@ -94,7 +96,7 @@ const OtherProfile = () => {
         setYoutubeState({ ...youtubeState, links })
       })
       .catch(e => console.error(e))
-  }, [])
+  }, [youtubeState])
 
   // variable for default picture image of other profile 
   const profilePicture = (profileState.profile) ? profileState.profile : default_profile
@@ -108,7 +110,7 @@ const OtherProfile = () => {
         <div className="row">
           {/* PROFILE PIC */}
           <div className="col s4 m2">
-            <img className="circle responsive-img" id="img" src={profilePicture} alt="Profile Picture" />
+            <img className="circle responsive-img" id="img" src={profilePicture} alt="nothing"/>
             <div>
               <ViewContext.Provider value={listState}>
                 <AddFriendBtn />

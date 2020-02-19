@@ -1,17 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import UserAPI from '../../utils/UserAPI'
 import FriendsContext from '../../utils/FriendsContext'
-import LoggedinNav from '../../Components/LoggedinNav'
 import FriendRequest from '../../Components/FriendRequest'
-import { BrowserRouter, useHistory } from 'react-router-dom'
 
 
-const { getRequest, acceptRequest, ignoreRequest, seeFriends } = UserAPI
+const { getRequest, acceptRequest } = UserAPI
 
 const FriendsList = () => {
-
-    let history = useHistory()
 
   const [friendState, setFriendState] = useState({
     requests: [],
@@ -23,7 +18,7 @@ const FriendsList = () => {
 
   // see requests
   useEffect(() => {
-
+ let userId = JSON.parse(JSON.stringify(localStorage.getItem("userId")))
     getRequest(userId)
       .then(({ data }) => {
         console.log(data)
