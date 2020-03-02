@@ -1,9 +1,10 @@
 //Landing Page
 import React from 'react'
-import { BrowserRouter as Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import './home.css'
 
 const Home = () => {
+  const history = useHistory()
   return (
     <>
       <div className="container center-align">
@@ -22,7 +23,7 @@ const Home = () => {
                   <span>FIND </span>
                   <span>MUSICIANS.</span>
                 </h4>
-                <div className="sp-circle-link"><Link to="/login">Let's Go<i className="material-icons">send</i></Link></div>
+                <div className="sp-circle-link" onClick={()=>{history.push('/login')}}>Let's Go<i className="material-icons">send</i></div>
               </div>
             </div>
           </div>
