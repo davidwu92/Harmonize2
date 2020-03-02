@@ -46,7 +46,7 @@ const Search = () => {
         <br></br>
         <form id="searchForm">
           <input id="searchInput" type="search" name="searchBar" value={searchState.searchBar} onChange={searchState.handleInputChange} />
-          <button onClick={handleSearch}><i className="fa fa-search"></i></button>
+          <button className="btn-flat" onClick={handleSearch}><i className="fa fa-search"></i></button>
         </form>
       </div>
 

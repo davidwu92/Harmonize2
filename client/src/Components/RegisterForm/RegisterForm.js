@@ -340,7 +340,7 @@ const RegisterForm = () => {
 
           {/* SKILLS FORM--optional*/}
           <div className="row">
-            <label id="instrumentsLabel">WHAT OTHER SKILL CAN YOU LIST? (Optional) </label>
+            <label id="instrumentsLabel">WHAT OTHER SKILLS CAN YOU LIST? (Optional) </label>
             <br></br>
             {/* DROPDOWN OF SKILLS */}
             <div className="col s12">
