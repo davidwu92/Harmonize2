@@ -498,8 +498,10 @@ const MyProfile = () => {
       <div className="container">
         <div className="row">
           {/* PROFILE PIC */}
-          <div className="col s4 m2">
+          <div className="col s4 m2 center">            
+            
             <img id="img" className="circle responsive-img" alt="Your profile picture" src={profilePicture} />
+
             {/* EDIT PROF PIC */}
             <Modal id="edProfModal" className="center-align"
               actions={[
