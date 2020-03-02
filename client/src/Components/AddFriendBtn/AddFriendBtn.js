@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import UserAPI from '../../utils/UserAPI'
 import ViewContext from '../../utils/ViewContext'
 
@@ -8,7 +8,7 @@ const { addFriend } = UserAPI
 const AddFriendBtn = () => {
 
 
-  const { friends, following, requested, follow } = useContext(ViewContext)
+  const { following, requested, follow } = useContext(ViewContext)
 
 
   let friendId = JSON.parse(JSON.stringify(sessionStorage.getItem("token")))

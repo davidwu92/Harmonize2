@@ -2,13 +2,11 @@ import React, { useState, useEffect } from 'react'
 import UserAPI from '../../utils/UserAPI'
 import LinksCards from '../../Components/LinksCards'
 import ProfileContext from '../../utils/ProfileContext'
-import AddFriendBtn from '../../Components/AddFriendBtn'
 import './myProfile.css'
 import {
   Modal,
   Button,
-  TextInput,
-  Select,
+  TextInput
 } from 'react-materialize'
 import default_profile from '../../default_profile.jpg'
 
@@ -18,13 +16,12 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import axios from 'axios'
-import { Redirect, useHistory } from 'react-router-dom'
 
 //function for making changes to profile
 const { getUser, updateUser, addYoutube, getYoutube, deleteYoutube } = UserAPI
 
 const MyProfile = () => {
-  let history = useHistory()
+  // let history = useHistory()
   //Setting up profileState Variables: CAN'T BE EDITED.
   const [profileState, setProfileState] = useState({
     name: '',

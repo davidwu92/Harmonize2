@@ -23,7 +23,6 @@ import ResetPass from './Pages/ResetPass'
 import FriendsList from './Pages/FriendsList'
 import FriendsView from './Pages/FriendsView'
 import UserContext from './utils/UserContext'
-import UserAPI from './utils/UserAPI'
 import './App.css'
 
 

@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import ForgotPassword from '../../Components/ForgotPassword'
 import ForgotAPI from '../../utils/ForgotAPI'
 import ForgotContext from '../../utils/ForgotContext'
-import { BrowserRouter } from 'react-router-dom'
 
 const { sendForgot } = ForgotAPI
 

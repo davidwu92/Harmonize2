@@ -1,16 +1,13 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import ViewContext from '../../utils/ViewContext'
 import { useHistory } from 'react-router-dom'
-import SearchAPI from '../../utils/SearchAPI'
 import default_profile from '../../default_profile.jpg'
-import UserAPI from '../../utils/UserAPI'
 
-const { unfollowFriends } = UserAPI
 
 const FriendList = () => {
   let history = useHistory()
 
-  const { friends, acceptFriend, unfollowFriend } = useContext(ViewContext)
+  const { friends, unfollowFriend } = useContext(ViewContext)
 
   const visitProfile = (id) => {
     sessionStorage.setItem("token", id)
