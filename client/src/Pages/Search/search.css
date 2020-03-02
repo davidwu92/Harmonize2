@@ -73,8 +73,32 @@
 /*POPULATED PROFILES */
 
 #img {
-  height: 100px;
-  width: 150px;
+  object-fit: cover;
+  height: 130px;
+  width: 130px;
+}
+/* SMALL SCREEN STYLING */
+@media only screen 
+and (min-device-width : 300px) 
+and (max-device-width : 600px)  {
+  #img {
+    object-fit: cover;
+    height: 95px;
+    width: 95px;
+  }
+}
+/* MEDIUM SCREEN */
+@media only screen 
+and (min-device-width : 601px) 
+and (max-device-width : 1030px)  {
+  #img {
+    object-fit: cover;
+    height: 110px;
+    width: 110px;
+  }
+  .container {
+    width: 90%
+  }
 }
 
 #pfRow{

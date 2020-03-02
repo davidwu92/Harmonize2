@@ -30,7 +30,7 @@ const FriendList = () => {
         }
         return (
           <>
-            <div className="container">
+            <div>
               <div id="pfRow" class="row grey valign-wrapper">
                 <div class="col s4 m3">
                   <img id="img" src={profilePicture} alt="" class="circle responsive-img" />
