@@ -4,8 +4,6 @@ import UserAPI from '../../utils/UserAPI'
 import { useHistory } from 'react-router-dom'
 import './register.css'
 
-import { Select } from 'react-materialize'
-
 import SearchPlace from '../SearchPlace'
 
 import { toast } from 'react-toastify';
@@ -171,7 +169,7 @@ const RegisterForm = () => {
   //dropdown created upon selecting an instrument family. Disappears once an instrument selected.
   const familyDropdowns = (infoState.familyChosen) ?
     <div>
-      <Select className="col s12"
+      <select className="browser-default"
         onChange={instrumentSelected}
         id="instrumentSelection"
         options={{
@@ -186,7 +184,7 @@ const RegisterForm = () => {
         {infoState.familyInstruments.length ? infoState.familyInstruments.map(chosenInstrument => (
           <option value={chosenInstrument}>{chosenInstrument}</option>
         )) : null}
-      </Select>
+      </select>
     </div>
     : null
   //text input created upon selecting Other. Disappears once Add Instrument btn clicked.
@@ -281,7 +279,7 @@ const RegisterForm = () => {
           </div>
         </div>
 
-        <div className="col s12 m6 grey lighten-4 ">
+        <div className="col s12 m6 grey lighten-3 ">
           {/* INSTRUMENTS FORM--optional*/}
           <br></br>
           <br></br>
@@ -289,7 +287,8 @@ const RegisterForm = () => {
             {/* DROPDOWN OF FAMILIES */}
             <label id="instrumentsLabel">WHAT DO YOU PLAY? (Optional) </label>
             <div className="col s12">
-              <Select
+              <select
+                className="browser-default"
                 id="instrumentFamily"
                 options={{
                   classes: '', dropdownOptions: {
@@ -310,7 +309,7 @@ const RegisterForm = () => {
                 <option value="percussion">Percussion</option>
                 <option value="keyboard">Keyboard</option>
                 <option value="voice">Voice</option>
-              </Select>
+              </select>
             </div>
 
             {/* INSTRUMENT DROPDOWN of selected family*/}
@@ -345,7 +344,8 @@ const RegisterForm = () => {
             <br></br>
             {/* DROPDOWN OF SKILLS */}
             <div className="col s12">
-              <Select
+              <select
+                className="browser-default"
                 id="skillsDropdown"
                 options={{
                   classes: '', dropdownOptions: {
@@ -370,7 +370,7 @@ const RegisterForm = () => {
                 <option value="Arranger">Arranger</option>
                 <option value="Amateur/Enthusiast">Amateur/Enthusiast</option>
                 <option value="Other">Other</option>
-              </Select>
+              </select>
             </div>
 
             {/* SKILLS ADDED SO FAR */}
