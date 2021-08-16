@@ -98,7 +98,7 @@ const MyProfile = () => {
     formData.append('img', file[0])
     //Any empty fields in editState will PUT old profile information.
     let token = JSON.parse(JSON.stringify(localStorage.getItem("token")))
-    document.getElementById('img').setAttribute('src', `http://localhost:3000/${file[0].name}`)
+    document.getElementById('img').setAttribute('src', `http://localhost:3000/${file[0] ? file[0].name : "img"}`)
     axios({
       method: 'post',
       url: '/',

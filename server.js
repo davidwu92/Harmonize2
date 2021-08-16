@@ -101,7 +101,8 @@ app.post('/', upload.single('img'), passport.authenticate('jwt', { session: fals
 // getting that image to show
 app.get('/:filename', (req, res) => {
   if (req.params.filename !== "gigs"){
-    gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+    // gridFSBucket.files.findOne({ filename: req.params.filename }, (err, file) => {
+      conn.db.collection("uploads.files").findOne({ filename: req.params.filename }, (err, file) => {
       // Check if file
       if (!file || file.length === 0) {
         // return res.status(404).json({
@@ -113,7 +114,7 @@ app.get('/:filename', (req, res) => {
       // Check if image
       if (file.contentType === 'image/jpeg' || file.contentType === 'image/png') {
         // Read output to browser
-        const readstream = gfs.createReadStream(file.filename)
+        const readstream = gridFSBucket.openDownloadStreamByName(file.filename)
         readstream.pipe(res)
         
       } else {
@@ -125,13 +126,13 @@ app.get('/:filename', (req, res) => {
     })
   }
 })
-let gfs
+let gridFSBucket
 
 
 //Catches all; sends any routes NOT found in the server directly into our home.
 app.get('*', (req, res) => res.sendFile(join(__dirname, 'client', 'build', 'index.html')))
 
-//connect to the database and listen on a port
+// //connect to the database and listen on a port
 require('mongoose')
   .connect(process.env.NODE_ENV === 'production' ? process.env.MONGODB_URI : 'mongodb://localhost/harmonizedb', {
     // these methods are rarely used
@@ -141,10 +142,10 @@ require('mongoose')
     useUnifiedTopology: true
   })
   .then(() => {
-    gfs = Grid(conn.db, mongoose.mongo)
-    gfs.collection('uploads')
+    // gfs = Grid(conn.db, mongoose.mongo)
+    // gfs.collection('uploads')
+    gridFSBucket = new mongoose.mongo.GridFSBucket(conn.db, {bucketName: 'uploads'});
+    const writeStream = gridFSBucket.openUploadStream('test.dat');
     app.listen(process.env.PORT || 3001)
   })
   .catch(e => console.error(e))
-
-  // Create storage engine
