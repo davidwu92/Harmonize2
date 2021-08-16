@@ -38,7 +38,7 @@ Technologies Used for this Application:
 -  Kamelesh Sarki
 
 <h3>Deployed Link</h3>
-Deployed Application: https://salty-dawn-09701.herokuapp.com/
+Deployed Application: https://harmonizers.herokuapp.com/
 
 
 
