@@ -253,7 +253,14 @@ const RegisterForm = () => {
           {/* NAME */}
           <div className="input-field">
             <label htmlFor="name"></label>
-            <input className="white-text" placeholder="Full Name" type="text" id="name" name="name" value={name} onChange={handleInputChange} />
+            <input 
+              className="white-text" 
+              placeholder="Full Name"
+              type="text" 
+              id="name" 
+              name="name" 
+              value={name} 
+              onChange={handleInputChange} />
           </div>
           {/* EMAIL */}
           <div className="input-field">
